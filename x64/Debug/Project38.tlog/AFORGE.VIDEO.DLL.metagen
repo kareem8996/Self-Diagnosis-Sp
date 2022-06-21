@@ -1,0 +1,258 @@
+ImageRuntimeVersion: v2.0.50727
+Assembly AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401: 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb: 
+	hash=None, flags=None
+Interface AForge.Video.IVideoSource: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract
+  Properties:
+    System.String Source 'get ' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Boolean IsRunning 'get ' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_Source(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    get_IsRunning(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName
+    Start(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    SignalToStop(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    WaitForStop(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    Stop(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+Class AForge.Video.AsyncVideoSource: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(AForge.Video.IVideoSource): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(AForge.Video.IVideoSource, Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    AForge.Video.IVideoSource NestedVideoSource 'get ' : 
+    Boolean SkipFramesIfBusy 'get set' : 
+    System.String Source 'get ' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Int32 FramesProcessed 'get ' : 
+    Boolean IsRunning 'get ' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_NestedVideoSource(): PrivateScope, Public, HideBySig, SpecialName
+    get_SkipFramesIfBusy(): PrivateScope, Public, HideBySig, SpecialName
+    set_SkipFramesIfBusy(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Source(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_FramesProcessed(): PrivateScope, Public, HideBySig, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class AForge.Video.ScreenCaptureStream: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.Drawing.Rectangle): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.Drawing.Rectangle, Int32): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    System.String Source 'get ' : 
+    System.Drawing.Rectangle Region 'get set' : 
+    Int32 FrameInterval 'get set' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Boolean IsRunning 'get ' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Source(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Region(): PrivateScope, Public, HideBySig, SpecialName
+    set_Region(Rectangle): PrivateScope, Public, HideBySig, SpecialName
+    get_FrameInterval(): PrivateScope, Public, HideBySig, SpecialName
+    set_FrameInterval(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class AForge.Video.MJPEGStream: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    Boolean SeparateConnectionGroup 'get set' : 
+    System.String Source 'get set' : 
+    System.String Login 'get set' : 
+    System.String Password 'get set' : 
+    System.Net.IWebProxy Proxy 'get set' : 
+    System.String HttpUserAgent 'get set' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Int32 RequestTimeout 'get set' : 
+    Boolean IsRunning 'get ' : 
+    Boolean ForceBasicAuthentication 'get set' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_SeparateConnectionGroup(): PrivateScope, Public, HideBySig, SpecialName
+    set_SeparateConnectionGroup(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_Source(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_Source(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Login(): PrivateScope, Public, HideBySig, SpecialName
+    set_Login(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Password(): PrivateScope, Public, HideBySig, SpecialName
+    set_Password(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Proxy(): PrivateScope, Public, HideBySig, SpecialName
+    set_Proxy(IWebProxy): PrivateScope, Public, HideBySig, SpecialName
+    get_HttpUserAgent(): PrivateScope, Public, HideBySig, SpecialName
+    set_HttpUserAgent(String): PrivateScope, Public, HideBySig, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_RequestTimeout(): PrivateScope, Public, HideBySig, SpecialName
+    set_RequestTimeout(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_ForceBasicAuthentication(): PrivateScope, Public, HideBySig, SpecialName
+    set_ForceBasicAuthentication(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+Class AForge.Video.VideoException: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Exception
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class AForge.Video.NewFrameEventHandler: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Object, NewFrameEventArgs): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Object, NewFrameEventArgs, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class AForge.Video.VideoSourceErrorEventHandler: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Object, VideoSourceErrorEventArgs): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Object, VideoSourceErrorEventArgs, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class AForge.Video.PlayingFinishedEventHandler: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Object, ReasonToFinishPlaying): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Object, ReasonToFinishPlaying, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Struct AForge.Video.ReasonToFinishPlaying: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    AForge.Video.ReasonToFinishPlaying EndOfStreamReached = 0 : Public, Static, Literal, HasDefault
+    AForge.Video.ReasonToFinishPlaying StoppedByUser = 1 : Public, Static, Literal, HasDefault
+    AForge.Video.ReasonToFinishPlaying DeviceLost = 2 : Public, Static, Literal, HasDefault
+    AForge.Video.ReasonToFinishPlaying VideoSourceError = 3 : Public, Static, Literal, HasDefault
+Class AForge.Video.NewFrameEventArgs: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.EventArgs
+    Void .ctor(System.Drawing.Bitmap): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.Drawing.Bitmap Frame 'get ' : 
+  Methods:
+    get_Frame(): PrivateScope, Public, HideBySig, SpecialName
+Class AForge.Video.VideoSourceErrorEventArgs: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.EventArgs
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    System.String Description 'get ' : 
+  Methods:
+    get_Description(): PrivateScope, Public, HideBySig, SpecialName
+Class AForge.Video.JPEGStream: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    Boolean SeparateConnectionGroup 'get set' : 
+    Boolean PreventCaching 'get set' : 
+    Int32 FrameInterval 'get set' : 
+    System.String Source 'get set' : 
+    System.String Login 'get set' : 
+    System.String Password 'get set' : 
+    System.Net.IWebProxy Proxy 'get set' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Int32 RequestTimeout 'get set' : 
+    Boolean IsRunning 'get ' : 
+    Boolean ForceBasicAuthentication 'get set' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_SeparateConnectionGroup(): PrivateScope, Public, HideBySig, SpecialName
+    set_SeparateConnectionGroup(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_PreventCaching(): PrivateScope, Public, HideBySig, SpecialName
+    set_PreventCaching(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_FrameInterval(): PrivateScope, Public, HideBySig, SpecialName
+    set_FrameInterval(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_Source(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_Source(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Login(): PrivateScope, Public, HideBySig, SpecialName
+    set_Login(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Password(): PrivateScope, Public, HideBySig, SpecialName
+    set_Password(String): PrivateScope, Public, HideBySig, SpecialName
+    get_Proxy(): PrivateScope, Public, HideBySig, SpecialName
+    set_Proxy(IWebProxy): PrivateScope, Public, HideBySig, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_RequestTimeout(): PrivateScope, Public, HideBySig, SpecialName
+    set_RequestTimeout(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_ForceBasicAuthentication(): PrivateScope, Public, HideBySig, SpecialName
+    set_ForceBasicAuthentication(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask

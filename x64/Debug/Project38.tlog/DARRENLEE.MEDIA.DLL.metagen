@@ -1,0 +1,36 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly DarrenLee.Media, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401: 
+	hash=None, flags=None
+Class DarrenLee.Media.FrameArrivedEventHandler: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Object, FrameArrivedEventArgs): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    BeginInvoke(Object, FrameArrivedEventArgs, AsyncCallback, Object): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+Class DarrenLee.Media.Camera: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Events:
+    DarrenLee.Media.FrameArrivedEventHandler OnFrameArrived: 
+  Methods:
+    add_OnFrameArrived(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_OnFrameArrived(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    ChangeCamera(Int32): PrivateScope, Public, HideBySig
+    GetCameraSources(): PrivateScope, Public, HideBySig
+    GetSupportedResolutions(): PrivateScope, Public, HideBySig
+    Start(Int32(Optional, HasDefault)): PrivateScope, Public, HideBySig
+    Stop(): PrivateScope, Public, HideBySig
+    Capture(String): PrivateScope, Public, HideBySig
+Class DarrenLee.Media.FrameArrivedEventArgs: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.EventArgs
+    Void .ctor(System.Drawing.Image): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetFrame(): PrivateScope, Public, HideBySig

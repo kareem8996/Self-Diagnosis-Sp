@@ -1,0 +1,62 @@
+  Project38.MyForm.resources - Embedded, ContainedInManifestFile, 
+  Project38.MyForm2.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v4.0.30319
+Assembly Project38, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb: 
+	hash=None, flags=None
+Assembly AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7: 
+	hash=None, flags=None
+Assembly AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401: 
+	hash=None, flags=None
+Assembly DarrenLee.Media, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly Interop.WMPLib.1.0, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
+Assembly AxInterop.WMPLib.1.0, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
+Class Project38.MyForm2: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    GetPass(): PrivateScope, Public, HideBySig
+Class Project38.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    DarrenLee.Media.Camera MyCamera : Public
+    Boolean button2_cliccked : Public
+    System.String Code : Public, Static
+  Events:
+    DarrenLee.Media.FrameArrivedEventHandler wow: SpecialName
+  Methods:
+    MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
+    add_wow(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_wow(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    MyCamera_OnFrameArrived(Object, FrameArrivedEventArgs): PrivateScope, Public, HideBySig
+    printPatientMenu(): PrivateScope, Public, HideBySig
+    view_all_Symptoms(): PrivateScope, Public, HideBySig
+    viewhist(): PrivateScope, Public, HideBySig
+    selfdiagnosis(): PrivateScope, Public, HideBySig
+    display_Symptoms_for_Disease(): PrivateScope, Public, HideBySig
+    extract_New_Symptoms_to_alldiseases(Diseases*): PrivateScope, Public, HideBySig
+    check_disease_name(basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig
+    PrintDoctorMenu(): PrivateScope, Public, HideBySig
+    display_All_diseases(): PrivateScope, Public, HideBySig
+    view_Patients(): PrivateScope, Public, HideBySig
+    add_Symptom(): PrivateScope, Public, HideBySig
+    remove_disease(): PrivateScope, Public, HideBySig
+    remove_Symptom(): PrivateScope, Public, HideBySig

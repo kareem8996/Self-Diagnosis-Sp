@@ -1,0 +1,238 @@
+  AForge.Video.DirectShow.Properties.Resources.resources - Embedded, ContainedInManifestFile, 
+  AForge.Video.DirectShow.VideoCaptureDeviceForm.resources - Embedded, ContainedInManifestFile, 
+ImageRuntimeVersion: v2.0.50727
+Assembly AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7: 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class AForge.Video.DirectShow.FilterCategory: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Fields:
+    System.Guid AudioInputDevice : Public, Static, InitOnly
+    System.Guid VideoInputDevice : Public, Static, InitOnly
+    System.Guid VideoCompressorCategory : Public, Static, InitOnly
+    System.Guid AudioCompressorCategory : Public, Static, InitOnly
+Class AForge.Video.DirectShow.VideoCapabilities: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Fields:
+    System.Drawing.Size FrameSize : Public, InitOnly
+    Int32 AverageFrameRate : Public, InitOnly
+    Int32 MaximumFrameRate : Public, InitOnly
+    Int32 BitCount : Public, InitOnly
+  Properties:
+    Int32 FrameRate 'get ' :  (Obsolete)
+  Methods:
+    get_FrameRate(): PrivateScope, Public, HideBySig, SpecialName
+    Equals(Object): PrivateScope, Public, Virtual, HideBySig
+    Equals(VideoCapabilities): PrivateScope, Public, HideBySig
+    GetHashCode(): PrivateScope, Public, Virtual, HideBySig
+    op_Equality(VideoCapabilities, VideoCapabilities): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(VideoCapabilities, VideoCapabilities): PrivateScope, Public, Static, HideBySig, SpecialName
+Struct AForge.Video.DirectShow.PhysicalConnectorType: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    AForge.Video.DirectShow.PhysicalConnectorType Default = 0 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoTuner = 1 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoComposite = 2 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoSVideo = 3 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoRGB = 4 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoYRYBY = 5 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoSerialDigital = 6 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoParallelDigital = 7 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoSCSI = 8 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoAUX = 9 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType Video1394 = 10 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoUSB = 11 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoDecoder = 12 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoEncoder = 13 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoSCART = 14 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType VideoBlack = 15 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioTuner = 4096 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioLine = 4097 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioMic = 4098 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioAESDigital = 4099 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioSPDIFDigital = 4100 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioSCSI = 4101 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioAUX = 4102 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType Audio1394 = 4103 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioUSB = 4104 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.PhysicalConnectorType AudioDecoder = 4105 : Public, Static, Literal, HasDefault
+Class AForge.Video.DirectShow.VideoCaptureDeviceForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    Boolean ConfigureSnapshots 'get set' : 
+    AForge.Video.DirectShow.VideoCaptureDevice VideoDevice 'get ' : 
+    System.String VideoDeviceMoniker 'get set' : 
+    System.Drawing.Size CaptureSize 'get set' : 
+    System.Drawing.Size SnapshotSize 'get set' : 
+    AForge.Video.DirectShow.VideoInput VideoInput 'get set' : 
+  Methods:
+    get_ConfigureSnapshots(): PrivateScope, Public, HideBySig, SpecialName
+    set_ConfigureSnapshots(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoDevice(): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoDeviceMoniker(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoDeviceMoniker(String): PrivateScope, Public, HideBySig, SpecialName
+    get_CaptureSize(): PrivateScope, Public, HideBySig, SpecialName
+    set_CaptureSize(Size): PrivateScope, Public, HideBySig, SpecialName
+    get_SnapshotSize(): PrivateScope, Public, HideBySig, SpecialName
+    set_SnapshotSize(Size): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoInput(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoInput(VideoInput): PrivateScope, Public, HideBySig, SpecialName
+Class AForge.Video.DirectShow.FilterInfoCollection: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Collections.CollectionBase
+    Void .ctor(System.Guid): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    AForge.Video.DirectShow.FilterInfo Item [Int32] 'get ' : 
+  Methods:
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+Class AForge.Video.DirectShow.VideoCaptureDevice: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    AForge.Video.DirectShow.VideoInput CrossbarVideoInput 'get set' : 
+    AForge.Video.DirectShow.VideoInput[] AvailableCrossbarVideoInputs 'get ' : 
+    Boolean ProvideSnapshots 'get set' : 
+    System.String Source 'get set' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Boolean IsRunning 'get ' : 
+    System.Drawing.Size DesiredFrameSize 'get set' :  (Obsolete)
+    System.Drawing.Size DesiredSnapshotSize 'get set' :  (Obsolete)
+    Int32 DesiredFrameRate 'get set' :  (Obsolete)
+    AForge.Video.DirectShow.VideoCapabilities VideoResolution 'get set' : 
+    AForge.Video.DirectShow.VideoCapabilities SnapshotResolution 'get set' : 
+    AForge.Video.DirectShow.VideoCapabilities[] VideoCapabilities 'get ' : 
+    AForge.Video.DirectShow.VideoCapabilities[] SnapshotCapabilities 'get ' : 
+    System.Object SourceObject 'get ' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.NewFrameEventHandler SnapshotFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    get_CrossbarVideoInput(): PrivateScope, Public, HideBySig, SpecialName
+    set_CrossbarVideoInput(VideoInput): PrivateScope, Public, HideBySig, SpecialName
+    get_AvailableCrossbarVideoInputs(): PrivateScope, Public, HideBySig, SpecialName
+    get_ProvideSnapshots(): PrivateScope, Public, HideBySig, SpecialName
+    set_ProvideSnapshots(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_SnapshotFrame(NewFrameEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_SnapshotFrame(NewFrameEventHandler): PrivateScope, Public, HideBySig, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Source(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_Source(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_DesiredFrameSize(): PrivateScope, Public, HideBySig, SpecialName
+    set_DesiredFrameSize(Size): PrivateScope, Public, HideBySig, SpecialName
+    get_DesiredSnapshotSize(): PrivateScope, Public, HideBySig, SpecialName
+    set_DesiredSnapshotSize(Size): PrivateScope, Public, HideBySig, SpecialName
+    get_DesiredFrameRate(): PrivateScope, Public, HideBySig, SpecialName
+    set_DesiredFrameRate(Int32): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoResolution(): PrivateScope, Public, HideBySig, SpecialName
+    set_VideoResolution(VideoCapabilities): PrivateScope, Public, HideBySig, SpecialName
+    get_SnapshotResolution(): PrivateScope, Public, HideBySig, SpecialName
+    set_SnapshotResolution(VideoCapabilities): PrivateScope, Public, HideBySig, SpecialName
+    get_VideoCapabilities(): PrivateScope, Public, HideBySig, SpecialName
+    get_SnapshotCapabilities(): PrivateScope, Public, HideBySig, SpecialName
+    get_SourceObject(): PrivateScope, Public, HideBySig, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    DisplayPropertyPage(IntPtr): PrivateScope, Public, HideBySig
+    DisplayCrossbarPropertyPage(IntPtr): PrivateScope, Public, HideBySig
+    CheckIfCrossbarAvailable(): PrivateScope, Public, HideBySig
+    SimulateTrigger(): PrivateScope, Public, HideBySig
+    SetCameraProperty(CameraControlProperty, Int32, CameraControlFlags): PrivateScope, Public, HideBySig
+    GetCameraProperty(CameraControlProperty, Int32&(Out), CameraControlFlags&(Out)): PrivateScope, Public, HideBySig
+    GetCameraPropertyRange(CameraControlProperty, Int32&(Out), Int32&(Out), Int32&(Out), Int32&(Out), CameraControlFlags&(Out)): PrivateScope, Public, HideBySig
+Struct AForge.Video.DirectShow.CameraControlProperty: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    AForge.Video.DirectShow.CameraControlProperty Pan = 0 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Tilt = 1 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Roll = 2 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Zoom = 3 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Exposure = 4 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Iris = 5 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlProperty Focus = 6 : Public, Static, Literal, HasDefault
+Struct AForge.Video.DirectShow.CameraControlFlags: AutoLayout, AnsiClass, Class, Public, Sealed
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    AForge.Video.DirectShow.CameraControlFlags None = 0 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlFlags Auto = 1 : Public, Static, Literal, HasDefault
+    AForge.Video.DirectShow.CameraControlFlags Manual = 2 : Public, Static, Literal, HasDefault
+Class AForge.Video.DirectShow.VideoInput: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Fields:
+    Int32 Index : Public, InitOnly
+    AForge.Video.DirectShow.PhysicalConnectorType Type : Public, InitOnly
+  Properties:
+    AForge.Video.DirectShow.VideoInput Default 'get ' : 
+  Methods:
+    get_Default(): PrivateScope, Public, Static, HideBySig, SpecialName
+Class AForge.Video.DirectShow.FilterInfo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    System.IComparable
+  Properties:
+    System.String Name 'get set' : 
+    System.String MonikerString 'get set' : 
+  Methods:
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
+    get_MonikerString(): PrivateScope, Public, HideBySig, SpecialName
+    CompareTo(Object): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    CreateFilter(String): PrivateScope, Public, Static, HideBySig
+Class AForge.Video.DirectShow.FileVideoSource: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Interfaces:
+    AForge.Video.IVideoSource
+  Properties:
+    System.String Source 'get set' : 
+    Int32 FramesReceived 'get ' : 
+    Int64 BytesReceived 'get ' : 
+    Boolean IsRunning 'get ' : 
+    Boolean PreventFreezing 'get set' : 
+    Boolean ReferenceClockEnabled 'get set' : 
+  Events:
+    AForge.Video.NewFrameEventHandler NewFrame: 
+    AForge.Video.VideoSourceErrorEventHandler VideoSourceError: 
+    AForge.Video.PlayingFinishedEventHandler PlayingFinished: 
+  Methods:
+    add_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_NewFrame(NewFrameEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_VideoSourceError(VideoSourceErrorEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    add_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    remove_PlayingFinished(PlayingFinishedEventHandler): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_Source(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    set_Source(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_FramesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_BytesReceived(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_IsRunning(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask, SpecialName
+    get_PreventFreezing(): PrivateScope, Public, HideBySig, SpecialName
+    set_PreventFreezing(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    get_ReferenceClockEnabled(): PrivateScope, Public, HideBySig, SpecialName
+    set_ReferenceClockEnabled(Boolean): PrivateScope, Public, HideBySig, SpecialName
+    Start(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    SignalToStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    WaitForStop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask
+    Stop(): PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask

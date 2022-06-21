@@ -1,0 +1,54 @@
+C:\VS code\projects\.vscode\Project38\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\VS code\projects\.vscode\Project38\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\VS code\projects\.vscode\Project38\x64\Debug\Project38.exe
+C:\VS code\projects\.vscode\Project38\x64\Debug\Project38.MyForm.resources
+C:\VS code\projects\.vscode\Project38\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\gui\Project38\x64\Debug\Interop.WMPLib.1.0.dll
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\Project38\x64\Debug\Interop.WMPLib.1.0.dll
+C:\Users\karee\Desktop\Project38\x64\Debug\Project38.MyForm1.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Interop.WMPLib.1.0.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.MyForm2.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.MyForm2.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy\x64\Debug\Interop.WMPLib.1.0.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.vcxproj.CopyComplete
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\AForge.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\AForge.Video.DirectShow.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\AForge.Video.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\DarrenLee.Media.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.MyForm2.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.vcxproj.CopyComplete
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\AForge.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\AForge.Video.DirectShow.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\AForge.Video.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\DarrenLee.Media.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Interop.WMPLib.1.0.dll
