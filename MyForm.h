@@ -549,10 +549,12 @@ namespace Project38 {
     //---------------------------Structures to work on--------------------------
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
-
+          
 
 
 	public:
+            
+
         Camera^ MyCamera = gcnew Camera();
         
         void MarshalString(String^ s, string& os) {
@@ -1277,10 +1279,10 @@ private: System::Windows::Forms::Button^ button5;
             this->Register->BackColor = System::Drawing::Color::Transparent;
             this->Register->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
-            this->Register->Location = System::Drawing::Point(2195, 313);
+            this->Register->Location = System::Drawing::Point(1921, 313);
             this->Register->Margin = System::Windows::Forms::Padding(2);
             this->Register->Name = L"Register";
-            this->Register->Size = System::Drawing::Size(127, 42);
+            this->Register->Size = System::Drawing::Size(111, 42);
             this->Register->TabIndex = 7;
             this->Register->Text = L"Register";
             this->Register->UseVisualStyleBackColor = false;
@@ -1303,7 +1305,7 @@ private: System::Windows::Forms::Button^ button5;
             this->Username->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->Username->ForeColor = System::Drawing::Color::White;
-            this->Username->Location = System::Drawing::Point(1423, 349);
+            this->Username->Location = System::Drawing::Point(1245, 349);
             this->Username->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->Username->Name = L"Username";
             this->Username->Size = System::Drawing::Size(91, 23);
@@ -1317,7 +1319,7 @@ private: System::Windows::Forms::Button^ button5;
             this->Password->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->Password->ForeColor = System::Drawing::Color::White;
-            this->Password->Location = System::Drawing::Point(1419, 438);
+            this->Password->Location = System::Drawing::Point(1242, 438);
             this->Password->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->Password->Name = L"Password";
             this->Password->Size = System::Drawing::Size(86, 23);
@@ -1327,9 +1329,9 @@ private: System::Windows::Forms::Button^ button5;
             // button1
             // 
             this->button1->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button1->Location = System::Drawing::Point(1485, 590);
+            this->button1->Location = System::Drawing::Point(1299, 590);
             this->button1->Name = L"button1";
-            this->button1->Size = System::Drawing::Size(138, 39);
+            this->button1->Size = System::Drawing::Size(121, 39);
             this->button1->TabIndex = 14;
             this->button1->Text = L"Sign in";
             this->button1->UseVisualStyleBackColor = true;
@@ -1338,9 +1340,9 @@ private: System::Windows::Forms::Button^ button5;
             // Next
             // 
             this->Next->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->Next->Location = System::Drawing::Point(1410, 590);
+            this->Next->Location = System::Drawing::Point(1234, 590);
             this->Next->Name = L"Next";
-            this->Next->Size = System::Drawing::Size(138, 39);
+            this->Next->Size = System::Drawing::Size(121, 39);
             this->Next->TabIndex = 15;
             this->Next->Text = L"NEXT";
             this->Next->UseVisualStyleBackColor = true;
@@ -1348,52 +1350,52 @@ private: System::Windows::Forms::Button^ button5;
             // 
             // textBox2
             // 
-            this->textBox2->Location = System::Drawing::Point(1427, 477);
+            this->textBox2->Location = System::Drawing::Point(1249, 477);
             this->textBox2->Name = L"textBox2";
-            this->textBox2->Size = System::Drawing::Size(271, 22);
+            this->textBox2->Size = System::Drawing::Size(238, 24);
             this->textBox2->TabIndex = 20;
             this->textBox2->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox2_KeyDown);
             // 
             // panel2
             // 
             this->panel2->BackColor = System::Drawing::SystemColors::Desktop;
-            this->panel2->Location = System::Drawing::Point(1427, 496);
+            this->panel2->Location = System::Drawing::Point(1249, 496);
             this->panel2->Name = L"panel2";
-            this->panel2->Size = System::Drawing::Size(272, 5);
+            this->panel2->Size = System::Drawing::Size(238, 5);
             this->panel2->TabIndex = 21;
             // 
             // textBox3
             // 
-            this->textBox3->Location = System::Drawing::Point(1424, 392);
+            this->textBox3->Location = System::Drawing::Point(1246, 392);
             this->textBox3->Name = L"textBox3";
-            this->textBox3->Size = System::Drawing::Size(271, 22);
+            this->textBox3->Size = System::Drawing::Size(238, 24);
             this->textBox3->TabIndex = 22;
             this->textBox3->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox3_KeyDown);
             this->textBox3->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox3_KeyPress);
             // 
             // textBox1
             // 
-            this->textBox1->Location = System::Drawing::Point(1424, 392);
+            this->textBox1->Location = System::Drawing::Point(1246, 392);
             this->textBox1->Name = L"textBox1";
-            this->textBox1->Size = System::Drawing::Size(271, 22);
+            this->textBox1->Size = System::Drawing::Size(238, 24);
             this->textBox1->TabIndex = 24;
             this->textBox1->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox1_KeyDown);
             // 
             // panel1
             // 
             this->panel1->BackColor = System::Drawing::SystemColors::Desktop;
-            this->panel1->Location = System::Drawing::Point(1424, 415);
+            this->panel1->Location = System::Drawing::Point(1246, 415);
             this->panel1->Name = L"panel1";
-            this->panel1->Size = System::Drawing::Size(272, 4);
+            this->panel1->Size = System::Drawing::Size(238, 4);
             this->panel1->TabIndex = 25;
             // 
             // pictureBox3
             // 
             this->pictureBox3->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-            this->pictureBox3->Location = System::Drawing::Point(599, 103);
+            this->pictureBox3->Location = System::Drawing::Point(524, 103);
             this->pictureBox3->Name = L"pictureBox3";
-            this->pictureBox3->Size = System::Drawing::Size(233, 203);
+            this->pictureBox3->Size = System::Drawing::Size(204, 203);
             this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox3->TabIndex = 27;
             this->pictureBox3->TabStop = false;
@@ -1407,10 +1409,10 @@ private: System::Windows::Forms::Button^ button5;
             this->Sign_in->BackColor = System::Drawing::Color::Transparent;
             this->Sign_in->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
-            this->Sign_in->Location = System::Drawing::Point(2210, 313);
+            this->Sign_in->Location = System::Drawing::Point(1934, 313);
             this->Sign_in->Margin = System::Windows::Forms::Padding(2);
             this->Sign_in->Name = L"Sign_in";
-            this->Sign_in->Size = System::Drawing::Size(127, 41);
+            this->Sign_in->Size = System::Drawing::Size(111, 41);
             this->Sign_in->TabIndex = 6;
             this->Sign_in->Text = L"Sign-in";
             this->Sign_in->UseVisualStyleBackColor = false;
@@ -1420,9 +1422,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox4->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
-            this->pictureBox4->Location = System::Drawing::Point(599, 312);
+            this->pictureBox4->Location = System::Drawing::Point(524, 312);
             this->pictureBox4->Name = L"pictureBox4";
-            this->pictureBox4->Size = System::Drawing::Size(233, 274);
+            this->pictureBox4->Size = System::Drawing::Size(204, 274);
             this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox4->TabIndex = 28;
             this->pictureBox4->TabStop = false;
@@ -1434,9 +1436,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox5->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox5.Image")));
-            this->pictureBox5->Location = System::Drawing::Point(599, 592);
+            this->pictureBox5->Location = System::Drawing::Point(524, 592);
             this->pictureBox5->Name = L"pictureBox5";
-            this->pictureBox5->Size = System::Drawing::Size(233, 226);
+            this->pictureBox5->Size = System::Drawing::Size(204, 226);
             this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox5->TabIndex = 29;
             this->pictureBox5->TabStop = false;
@@ -1448,9 +1450,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox6->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.Image")));
-            this->pictureBox6->Location = System::Drawing::Point(1343, 392);
+            this->pictureBox6->Location = System::Drawing::Point(1175, 392);
             this->pictureBox6->Name = L"pictureBox6";
-            this->pictureBox6->Size = System::Drawing::Size(176, 192);
+            this->pictureBox6->Size = System::Drawing::Size(154, 192);
             this->pictureBox6->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox6->TabIndex = 30;
             this->pictureBox6->TabStop = false;
@@ -1462,9 +1464,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox7->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox7->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.Image")));
-            this->pictureBox7->Location = System::Drawing::Point(1549, 378);
+            this->pictureBox7->Location = System::Drawing::Point(1355, 378);
             this->pictureBox7->Name = L"pictureBox7";
-            this->pictureBox7->Size = System::Drawing::Size(183, 208);
+            this->pictureBox7->Size = System::Drawing::Size(160, 208);
             this->pictureBox7->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox7->TabIndex = 31;
             this->pictureBox7->TabStop = false;
@@ -1475,9 +1477,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox2
             // 
             this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-            this->pictureBox2->Location = System::Drawing::Point(1271, 191);
+            this->pictureBox2->Location = System::Drawing::Point(1112, 191);
             this->pictureBox2->Name = L"pictureBox2";
-            this->pictureBox2->Size = System::Drawing::Size(655, 488);
+            this->pictureBox2->Size = System::Drawing::Size(573, 488);
             this->pictureBox2->TabIndex = 32;
             this->pictureBox2->TabStop = false;
             this->pictureBox2->Click += gcnew System::EventHandler(this, &MyForm::pictureBox2_Click_1);
@@ -1487,7 +1489,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label4->AutoSize = true;
             this->label4->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 16, System::Drawing::FontStyle::Bold));
             this->label4->ForeColor = System::Drawing::Color::Snow;
-            this->label4->Location = System::Drawing::Point(1583, 295);
+            this->label4->Location = System::Drawing::Point(1385, 295);
             this->label4->Name = L"label4";
             this->label4->Size = System::Drawing::Size(120, 37);
             this->label4->TabIndex = 34;
@@ -1499,7 +1501,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label5->AutoSize = true;
             this->label5->Font = (gcnew System::Drawing::Font(L"Tahoma", 30));
             this->label5->ForeColor = System::Drawing::SystemColors::Info;
-            this->label5->Location = System::Drawing::Point(272, 180);
+            this->label5->Location = System::Drawing::Point(238, 180);
             this->label5->Name = L"label5";
             this->label5->Size = System::Drawing::Size(208, 60);
             this->label5->TabIndex = 35;
@@ -1510,7 +1512,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label6->AutoSize = true;
             this->label6->Font = (gcnew System::Drawing::Font(L"Tahoma", 30));
             this->label6->ForeColor = System::Drawing::SystemColors::Info;
-            this->label6->Location = System::Drawing::Point(272, 402);
+            this->label6->Location = System::Drawing::Point(238, 402);
             this->label6->Name = L"label6";
             this->label6->Size = System::Drawing::Size(252, 60);
             this->label6->TabIndex = 36;
@@ -1521,9 +1523,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox8->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox8->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox8.Image")));
-            this->pictureBox8->Location = System::Drawing::Point(1549, 378);
+            this->pictureBox8->Location = System::Drawing::Point(1355, 378);
             this->pictureBox8->Name = L"pictureBox8";
-            this->pictureBox8->Size = System::Drawing::Size(207, 210);
+            this->pictureBox8->Size = System::Drawing::Size(181, 210);
             this->pictureBox8->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox8->TabIndex = 40;
             this->pictureBox8->TabStop = false;
@@ -1533,9 +1535,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox9->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox9->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox9.Image")));
-            this->pictureBox9->Location = System::Drawing::Point(1335, 376);
+            this->pictureBox9->Location = System::Drawing::Point(1168, 376);
             this->pictureBox9->Name = L"pictureBox9";
-            this->pictureBox9->Size = System::Drawing::Size(207, 210);
+            this->pictureBox9->Size = System::Drawing::Size(181, 210);
             this->pictureBox9->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox9->TabIndex = 41;
             this->pictureBox9->TabStop = false;
@@ -1546,7 +1548,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label10->AutoSize = true;
             this->label10->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 16, System::Drawing::FontStyle::Bold));
             this->label10->ForeColor = System::Drawing::Color::Snow;
-            this->label10->Location = System::Drawing::Point(1461, 258);
+            this->label10->Location = System::Drawing::Point(1278, 258);
             this->label10->Name = L"label10";
             this->label10->Size = System::Drawing::Size(121, 37);
             this->label10->TabIndex = 42;
@@ -1555,9 +1557,9 @@ private: System::Windows::Forms::Button^ button5;
             // label11
             // 
             this->label11->AutoSize = true;
-            this->label11->Location = System::Drawing::Point(2207, 373);
+            this->label11->Location = System::Drawing::Point(1931, 373);
             this->label11->Name = L"label11";
-            this->label11->Size = System::Drawing::Size(51, 16);
+            this->label11->Size = System::Drawing::Size(50, 17);
             this->label11->TabIndex = 43;
             this->label11->Text = L"label11";
             // 
@@ -1566,7 +1568,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label3->AutoSize = true;
             this->label3->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 16, System::Drawing::FontStyle::Bold));
             this->label3->ForeColor = System::Drawing::Color::Snow;
-            this->label3->Location = System::Drawing::Point(1363, 295);
+            this->label3->Location = System::Drawing::Point(1193, 295);
             this->label3->Name = L"label3";
             this->label3->Size = System::Drawing::Size(124, 37);
             this->label3->TabIndex = 33;
@@ -1581,7 +1583,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label7->AutoSize = true;
             this->label7->Font = (gcnew System::Drawing::Font(L"Tahoma", 30));
             this->label7->ForeColor = System::Drawing::SystemColors::Info;
-            this->label7->Location = System::Drawing::Point(301, 657);
+            this->label7->Location = System::Drawing::Point(263, 657);
             this->label7->Name = L"label7";
             this->label7->Size = System::Drawing::Size(141, 60);
             this->label7->TabIndex = 37;
@@ -1590,9 +1592,9 @@ private: System::Windows::Forms::Button^ button5;
             // label2
             // 
             this->label2->AutoSize = true;
-            this->label2->Location = System::Drawing::Point(1343, 312);
+            this->label2->Location = System::Drawing::Point(1175, 312);
             this->label2->Name = L"label2";
-            this->label2->Size = System::Drawing::Size(44, 16);
+            this->label2->Size = System::Drawing::Size(42, 17);
             this->label2->TabIndex = 13;
             this->label2->Text = L"label2";
             this->label2->Click += gcnew System::EventHandler(this, &MyForm::label2_Click);
@@ -1633,16 +1635,16 @@ private: System::Windows::Forms::Button^ button5;
             this->panel3->Controls->Add(this->pictureBox7);
             this->panel3->Location = System::Drawing::Point(1, 0);
             this->panel3->Name = L"panel3";
-            this->panel3->Size = System::Drawing::Size(2167, 835);
+            this->panel3->Size = System::Drawing::Size(1896, 835);
             this->panel3->TabIndex = 44;
             this->panel3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel3_Paint);
             // 
             // button9
             // 
             this->button9->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button9->Location = System::Drawing::Point(1322, 507);
+            this->button9->Location = System::Drawing::Point(1157, 507);
             this->button9->Name = L"button9";
-            this->button9->Size = System::Drawing::Size(91, 44);
+            this->button9->Size = System::Drawing::Size(80, 44);
             this->button9->TabIndex = 56;
             this->button9->Text = L"BROWSE";
             this->button9->UseVisualStyleBackColor = true;
@@ -1651,9 +1653,9 @@ private: System::Windows::Forms::Button^ button5;
             // button8
             // 
             this->button8->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button8->Location = System::Drawing::Point(1664, 507);
+            this->button8->Location = System::Drawing::Point(1456, 507);
             this->button8->Name = L"button8";
-            this->button8->Size = System::Drawing::Size(91, 44);
+            this->button8->Size = System::Drawing::Size(80, 44);
             this->button8->TabIndex = 55;
             this->button8->Text = L"No Profile Picture";
             this->button8->UseVisualStyleBackColor = true;
@@ -1664,7 +1666,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label34->AutoSize = true;
             this->label34->Font = (gcnew System::Drawing::Font(L"Tahoma", 15, System::Drawing::FontStyle::Bold));
             this->label34->ForeColor = System::Drawing::SystemColors::ControlLightLight;
-            this->label34->Location = System::Drawing::Point(1329, 225);
+            this->label34->Location = System::Drawing::Point(1163, 225);
             this->label34->Name = L"label34";
             this->label34->Size = System::Drawing::Size(201, 30);
             this->label34->TabIndex = 54;
@@ -1673,9 +1675,9 @@ private: System::Windows::Forms::Button^ button5;
             // button5
             // 
             this->button5->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button5->Location = System::Drawing::Point(1561, 590);
+            this->button5->Location = System::Drawing::Point(1366, 590);
             this->button5->Name = L"button5";
-            this->button5->Size = System::Drawing::Size(138, 39);
+            this->button5->Size = System::Drawing::Size(121, 39);
             this->button5->TabIndex = 52;
             this->button5->Text = L"BACK";
             this->button5->UseVisualStyleBackColor = true;
@@ -1686,7 +1688,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label33->AutoSize = true;
             this->label33->Cursor = System::Windows::Forms::Cursors::Hand;
             this->label33->Font = (gcnew System::Drawing::Font(L"Tahoma", 8, System::Drawing::FontStyle::Underline));
-            this->label33->Location = System::Drawing::Point(1426, 516);
+            this->label33->Location = System::Drawing::Point(1248, 516);
             this->label33->Name = L"label33";
             this->label33->Size = System::Drawing::Size(151, 17);
             this->label33->TabIndex = 51;
@@ -1725,14 +1727,14 @@ private: System::Windows::Forms::Button^ button5;
             this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
             this->panel4->Location = System::Drawing::Point(0, 0);
             this->panel4->Name = L"panel4";
-            this->panel4->Size = System::Drawing::Size(2167, 835);
+            this->panel4->Size = System::Drawing::Size(1896, 835);
             this->panel4->TabIndex = 50;
             // 
             // button7
             // 
-            this->button7->Location = System::Drawing::Point(248, 154);
+            this->button7->Location = System::Drawing::Point(217, 154);
             this->button7->Name = L"button7";
-            this->button7->Size = System::Drawing::Size(86, 23);
+            this->button7->Size = System::Drawing::Size(75, 23);
             this->button7->TabIndex = 51;
             this->button7->Text = L"button5";
             this->button7->UseVisualStyleBackColor = true;
@@ -1741,9 +1743,9 @@ private: System::Windows::Forms::Button^ button5;
             // Back_P
             // 
             this->Back_P->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->Back_P->Location = System::Drawing::Point(263, 504);
+            this->Back_P->Location = System::Drawing::Point(230, 504);
             this->Back_P->Name = L"Back_P";
-            this->Back_P->Size = System::Drawing::Size(123, 35);
+            this->Back_P->Size = System::Drawing::Size(108, 35);
             this->Back_P->TabIndex = 50;
             this->Back_P->Text = L"Back";
             this->Back_P->UseVisualStyleBackColor = true;
@@ -1753,9 +1755,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox12->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox12->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.Image")));
-            this->pictureBox12->Location = System::Drawing::Point(994, 94);
+            this->pictureBox12->Location = System::Drawing::Point(870, 94);
             this->pictureBox12->Name = L"pictureBox12";
-            this->pictureBox12->Size = System::Drawing::Size(81, 75);
+            this->pictureBox12->Size = System::Drawing::Size(71, 75);
             this->pictureBox12->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox12->TabIndex = 49;
             this->pictureBox12->TabStop = false;
@@ -1798,15 +1800,15 @@ private: System::Windows::Forms::Button^ button5;
             this->panel5->Controls->Add(this->pictureBox27);
             this->panel5->Location = System::Drawing::Point(0, 0);
             this->panel5->Name = L"panel5";
-            this->panel5->Size = System::Drawing::Size(2167, 735);
+            this->panel5->Size = System::Drawing::Size(1896, 735);
             this->panel5->TabIndex = 48;
             this->panel5->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel5_Paint);
             // 
             // Account_settings
             // 
-            this->Account_settings->Location = System::Drawing::Point(1030, 13);
+            this->Account_settings->Location = System::Drawing::Point(901, 13);
             this->Account_settings->Name = L"Account_settings";
-            this->Account_settings->Size = System::Drawing::Size(110, 51);
+            this->Account_settings->Size = System::Drawing::Size(96, 51);
             this->Account_settings->TabIndex = 56;
             this->Account_settings->Text = L"Account settings";
             this->Account_settings->UseVisualStyleBackColor = true;
@@ -1816,10 +1818,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox33->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox33->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox33.Image")));
-            this->pictureBox33->Location = System::Drawing::Point(1267, 275);
+            this->pictureBox33->Location = System::Drawing::Point(1109, 275);
             this->pictureBox33->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox33->Name = L"pictureBox33";
-            this->pictureBox33->Size = System::Drawing::Size(289, 345);
+            this->pictureBox33->Size = System::Drawing::Size(253, 345);
             this->pictureBox33->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox33->TabIndex = 55;
             this->pictureBox33->TabStop = false;
@@ -1829,10 +1831,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox32->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox32->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox32.Image")));
-            this->pictureBox32->Location = System::Drawing::Point(1355, 7);
+            this->pictureBox32->Location = System::Drawing::Point(1186, 7);
             this->pictureBox32->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox32->Name = L"pictureBox32";
-            this->pictureBox32->Size = System::Drawing::Size(81, 66);
+            this->pictureBox32->Size = System::Drawing::Size(71, 66);
             this->pictureBox32->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox32->TabIndex = 54;
             this->pictureBox32->TabStop = false;
@@ -1841,9 +1843,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox30
             // 
             this->pictureBox30->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox30.Image")));
-            this->pictureBox30->Location = System::Drawing::Point(669, 271);
+            this->pictureBox30->Location = System::Drawing::Point(585, 271);
             this->pictureBox30->Name = L"pictureBox30";
-            this->pictureBox30->Size = System::Drawing::Size(205, 142);
+            this->pictureBox30->Size = System::Drawing::Size(179, 142);
             this->pictureBox30->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox30->TabIndex = 53;
             this->pictureBox30->TabStop = false;
@@ -1851,9 +1853,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             // pictureBox31
             // 
-            this->pictureBox31->Location = System::Drawing::Point(1322, 225);
+            this->pictureBox31->Location = System::Drawing::Point(1157, 225);
             this->pictureBox31->Name = L"pictureBox31";
-            this->pictureBox31->Size = System::Drawing::Size(433, 326);
+            this->pictureBox31->Size = System::Drawing::Size(379, 326);
             this->pictureBox31->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox31->TabIndex = 53;
             this->pictureBox31->TabStop = false;
@@ -1866,7 +1868,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label26->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label26->ForeColor = System::Drawing::Color::White;
-            this->label26->Location = System::Drawing::Point(1064, 217);
+            this->label26->Location = System::Drawing::Point(931, 217);
             this->label26->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label26->Name = L"label26";
             this->label26->Size = System::Drawing::Size(133, 23);
@@ -1877,10 +1879,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox25->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox25->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox25.Image")));
-            this->pictureBox25->Location = System::Drawing::Point(933, 232);
+            this->pictureBox25->Location = System::Drawing::Point(816, 232);
             this->pictureBox25->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox25->Name = L"pictureBox25";
-            this->pictureBox25->Size = System::Drawing::Size(98, 78);
+            this->pictureBox25->Size = System::Drawing::Size(86, 78);
             this->pictureBox25->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox25->TabIndex = 33;
             this->pictureBox25->TabStop = false;
@@ -1890,10 +1892,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox23->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox23->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox23.Image")));
-            this->pictureBox23->Location = System::Drawing::Point(515, 378);
+            this->pictureBox23->Location = System::Drawing::Point(451, 378);
             this->pictureBox23->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox23->Name = L"pictureBox23";
-            this->pictureBox23->Size = System::Drawing::Size(85, 89);
+            this->pictureBox23->Size = System::Drawing::Size(74, 89);
             this->pictureBox23->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox23->TabIndex = 35;
             this->pictureBox23->TabStop = false;
@@ -1906,7 +1908,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label24->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label24->ForeColor = System::Drawing::Color::White;
-            this->label24->Location = System::Drawing::Point(161, 475);
+            this->label24->Location = System::Drawing::Point(141, 475);
             this->label24->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label24->Name = L"label24";
             this->label24->Size = System::Drawing::Size(266, 23);
@@ -1920,7 +1922,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label22->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label22->ForeColor = System::Drawing::Color::White;
-            this->label22->Location = System::Drawing::Point(1064, 465);
+            this->label22->Location = System::Drawing::Point(931, 465);
             this->label22->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label22->Name = L"label22";
             this->label22->Size = System::Drawing::Size(282, 23);
@@ -1931,10 +1933,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox22->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox22->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox22.Image")));
-            this->pictureBox22->Location = System::Drawing::Point(933, 373);
+            this->pictureBox22->Location = System::Drawing::Point(816, 373);
             this->pictureBox22->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox22->Name = L"pictureBox22";
-            this->pictureBox22->Size = System::Drawing::Size(79, 75);
+            this->pictureBox22->Size = System::Drawing::Size(69, 75);
             this->pictureBox22->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox22->TabIndex = 36;
             this->pictureBox22->TabStop = false;
@@ -1947,7 +1949,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label23->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label23->ForeColor = System::Drawing::Color::White;
-            this->label23->Location = System::Drawing::Point(683, 596);
+            this->label23->Location = System::Drawing::Point(598, 596);
             this->label23->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label23->Name = L"label23";
             this->label23->Size = System::Drawing::Size(154, 23);
@@ -1958,10 +1960,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox19->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox19->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox19.Image")));
-            this->pictureBox19->Location = System::Drawing::Point(733, 454);
+            this->pictureBox19->Location = System::Drawing::Point(641, 454);
             this->pictureBox19->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox19->Name = L"pictureBox19";
-            this->pictureBox19->Size = System::Drawing::Size(74, 74);
+            this->pictureBox19->Size = System::Drawing::Size(65, 74);
             this->pictureBox19->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox19->TabIndex = 39;
             this->pictureBox19->TabStop = false;
@@ -1974,7 +1976,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label25->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label25->ForeColor = System::Drawing::Color::White;
-            this->label25->Location = System::Drawing::Point(222, 217);
+            this->label25->Location = System::Drawing::Point(194, 217);
             this->label25->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label25->Name = L"label25";
             this->label25->Size = System::Drawing::Size(213, 23);
@@ -1985,10 +1987,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox24->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox24->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox24.Image")));
-            this->pictureBox24->Location = System::Drawing::Point(515, 220);
+            this->pictureBox24->Location = System::Drawing::Point(451, 220);
             this->pictureBox24->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox24->Name = L"pictureBox24";
-            this->pictureBox24->Size = System::Drawing::Size(94, 77);
+            this->pictureBox24->Size = System::Drawing::Size(82, 77);
             this->pictureBox24->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox24->TabIndex = 34;
             this->pictureBox24->TabStop = false;
@@ -2001,7 +2003,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label27->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label27->ForeColor = System::Drawing::Color::White;
-            this->label27->Location = System::Drawing::Point(715, 111);
+            this->label27->Location = System::Drawing::Point(626, 111);
             this->label27->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label27->Name = L"label27";
             this->label27->Size = System::Drawing::Size(101, 23);
@@ -2012,10 +2014,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox26->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox26->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox26.Image")));
-            this->pictureBox26->Location = System::Drawing::Point(720, 152);
+            this->pictureBox26->Location = System::Drawing::Point(630, 152);
             this->pictureBox26->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox26->Name = L"pictureBox26";
-            this->pictureBox26->Size = System::Drawing::Size(97, 80);
+            this->pictureBox26->Size = System::Drawing::Size(85, 80);
             this->pictureBox26->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox26->TabIndex = 28;
             this->pictureBox26->TabStop = false;
@@ -2026,7 +2028,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label31->AutoSize = true;
             this->label31->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 22));
             this->label31->ForeColor = System::Drawing::SystemColors::ControlLightLight;
-            this->label31->Location = System::Drawing::Point(106, 330);
+            this->label31->Location = System::Drawing::Point(93, 330);
             this->label31->Name = L"label31";
             this->label31->Size = System::Drawing::Size(207, 50);
             this->label31->TabIndex = 52;
@@ -2035,26 +2037,26 @@ private: System::Windows::Forms::Button^ button5;
             // textBox6
             // 
             this->textBox6->Cursor = System::Windows::Forms::Cursors::IBeam;
-            this->textBox6->Location = System::Drawing::Point(102, 552);
+            this->textBox6->Location = System::Drawing::Point(89, 552);
             this->textBox6->Name = L"textBox6";
-            this->textBox6->Size = System::Drawing::Size(236, 22);
+            this->textBox6->Size = System::Drawing::Size(207, 24);
             this->textBox6->TabIndex = 51;
             // 
             // label32
             // 
             this->label32->AutoSize = true;
-            this->label32->Location = System::Drawing::Point(106, 522);
+            this->label32->Location = System::Drawing::Point(93, 522);
             this->label32->Name = L"label32";
-            this->label32->Size = System::Drawing::Size(51, 16);
+            this->label32->Size = System::Drawing::Size(50, 17);
             this->label32->TabIndex = 50;
             this->label32->Text = L"label32";
             // 
             // button6
             // 
             this->button6->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button6->Location = System::Drawing::Point(226, 582);
+            this->button6->Location = System::Drawing::Point(198, 582);
             this->button6->Name = L"button6";
-            this->button6->Size = System::Drawing::Size(99, 39);
+            this->button6->Size = System::Drawing::Size(87, 39);
             this->button6->TabIndex = 49;
             this->button6->Text = L"Back";
             this->button6->UseVisualStyleBackColor = true;
@@ -2063,9 +2065,9 @@ private: System::Windows::Forms::Button^ button5;
             // button4
             // 
             this->button4->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button4->Location = System::Drawing::Point(121, 582);
+            this->button4->Location = System::Drawing::Point(106, 582);
             this->button4->Name = L"button4";
-            this->button4->Size = System::Drawing::Size(98, 38);
+            this->button4->Size = System::Drawing::Size(86, 38);
             this->button4->TabIndex = 47;
             this->button4->Text = L"Next";
             this->button4->UseVisualStyleBackColor = true;
@@ -2075,7 +2077,7 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox21->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox21->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox21.Image")));
-            this->pictureBox21->Location = System::Drawing::Point(1371, 172);
+            this->pictureBox21->Location = System::Drawing::Point(1200, 172);
             this->pictureBox21->Name = L"pictureBox21";
             this->pictureBox21->Size = System::Drawing::Size(50, 50);
             this->pictureBox21->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
@@ -2085,9 +2087,9 @@ private: System::Windows::Forms::Button^ button5;
             // 
             // textBox5
             // 
-            this->textBox5->Location = System::Drawing::Point(102, 552);
+            this->textBox5->Location = System::Drawing::Point(89, 552);
             this->textBox5->Name = L"textBox5";
-            this->textBox5->Size = System::Drawing::Size(236, 22);
+            this->textBox5->Size = System::Drawing::Size(207, 24);
             this->textBox5->TabIndex = 45;
             this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox5_KeyPress);
             // 
@@ -2096,7 +2098,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label29->AutoSize = true;
             this->label29->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 28));
             this->label29->ForeColor = System::Drawing::SystemColors::ControlLightLight;
-            this->label29->Location = System::Drawing::Point(89, 93);
+            this->label29->Location = System::Drawing::Point(78, 93);
             this->label29->Name = L"label29";
             this->label29->Size = System::Drawing::Size(135, 62);
             this->label29->TabIndex = 43;
@@ -2107,7 +2109,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label28->AutoSize = true;
             this->label28->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
             this->label28->ForeColor = System::Drawing::SystemColors::ControlLightLight;
-            this->label28->Location = System::Drawing::Point(94, 232);
+            this->label28->Location = System::Drawing::Point(82, 232);
             this->label28->Name = L"label28";
             this->label28->Size = System::Drawing::Size(89, 41);
             this->label28->TabIndex = 42;
@@ -2117,9 +2119,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox29
             // 
             this->pictureBox29->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox29.Image")));
-            this->pictureBox29->Location = System::Drawing::Point(429, 134);
+            this->pictureBox29->Location = System::Drawing::Point(375, 134);
             this->pictureBox29->Name = L"pictureBox29";
-            this->pictureBox29->Size = System::Drawing::Size(679, 422);
+            this->pictureBox29->Size = System::Drawing::Size(594, 422);
             this->pictureBox29->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox29->TabIndex = 41;
             this->pictureBox29->TabStop = false;
@@ -2127,9 +2129,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox28
             // 
             this->pictureBox28->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox28.Image")));
-            this->pictureBox28->Location = System::Drawing::Point(333, 77);
+            this->pictureBox28->Location = System::Drawing::Point(291, 77);
             this->pictureBox28->Name = L"pictureBox28";
-            this->pictureBox28->Size = System::Drawing::Size(861, 523);
+            this->pictureBox28->Size = System::Drawing::Size(753, 523);
             this->pictureBox28->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox28->TabIndex = 40;
             this->pictureBox28->TabStop = false;
@@ -2139,7 +2141,7 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox20->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox20->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox20.Image")));
-            this->pictureBox20->Location = System::Drawing::Point(1379, 97);
+            this->pictureBox20->Location = System::Drawing::Point(1207, 97);
             this->pictureBox20->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox20->Name = L"pictureBox20";
             this->pictureBox20->Size = System::Drawing::Size(50, 50);
@@ -2155,7 +2157,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label20->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label20->ForeColor = System::Drawing::Color::White;
-            this->label20->Location = System::Drawing::Point(1445, 111);
+            this->label20->Location = System::Drawing::Point(1264, 111);
             this->label20->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label20->Name = L"label20";
             this->label20->Size = System::Drawing::Size(64, 23);
@@ -2169,7 +2171,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label21->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label21->ForeColor = System::Drawing::Color::White;
-            this->label21->Location = System::Drawing::Point(1434, 180);
+            this->label21->Location = System::Drawing::Point(1255, 180);
             this->label21->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label21->Name = L"label21";
             this->label21->Size = System::Drawing::Size(43, 23);
@@ -2183,7 +2185,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label30->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 32, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label30->ForeColor = System::Drawing::Color::White;
-            this->label30->Location = System::Drawing::Point(5, 9);
+            this->label30->Location = System::Drawing::Point(4, 9);
             this->label30->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label30->Name = L"label30";
             this->label30->Size = System::Drawing::Size(498, 72);
@@ -2196,7 +2198,7 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox27->Location = System::Drawing::Point(-3, 0);
             this->pictureBox27->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox27->Name = L"pictureBox27";
-            this->pictureBox27->Size = System::Drawing::Size(1545, 690);
+            this->pictureBox27->Size = System::Drawing::Size(1352, 690);
             this->pictureBox27->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox27->TabIndex = 20;
             this->pictureBox27->TabStop = false;
@@ -2205,9 +2207,9 @@ private: System::Windows::Forms::Button^ button5;
             // button3
             // 
             this->button3->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button3->Location = System::Drawing::Point(121, 504);
+            this->button3->Location = System::Drawing::Point(106, 504);
             this->button3->Name = L"button3";
-            this->button3->Size = System::Drawing::Size(123, 35);
+            this->button3->Size = System::Drawing::Size(108, 35);
             this->button3->TabIndex = 47;
             this->button3->Text = L"End";
             this->button3->UseVisualStyleBackColor = true;
@@ -2218,16 +2220,16 @@ private: System::Windows::Forms::Button^ button5;
             this->label19->AutoSize = true;
             this->label19->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 14));
             this->label19->ForeColor = System::Drawing::Color::White;
-            this->label19->Location = System::Drawing::Point(138, 200);
+            this->label19->Location = System::Drawing::Point(121, 200);
             this->label19->Name = L"label19";
             this->label19->Size = System::Drawing::Size(0, 32);
             this->label19->TabIndex = 46;
             // 
             // button2
             // 
-            this->button2->Location = System::Drawing::Point(121, 504);
+            this->button2->Location = System::Drawing::Point(106, 504);
             this->button2->Name = L"button2";
-            this->button2->Size = System::Drawing::Size(123, 35);
+            this->button2->Size = System::Drawing::Size(108, 35);
             this->button2->TabIndex = 45;
             this->button2->Text = L"Next";
             this->button2->UseVisualStyleBackColor = true;
@@ -2236,16 +2238,16 @@ private: System::Windows::Forms::Button^ button5;
             // label18
             // 
             this->label18->AutoSize = true;
-            this->label18->Location = System::Drawing::Point(147, 418);
+            this->label18->Location = System::Drawing::Point(129, 418);
             this->label18->Name = L"label18";
-            this->label18->Size = System::Drawing::Size(0, 16);
+            this->label18->Size = System::Drawing::Size(0, 17);
             this->label18->TabIndex = 44;
             // 
             // textBox4
             // 
-            this->textBox4->Location = System::Drawing::Point(145, 465);
+            this->textBox4->Location = System::Drawing::Point(127, 465);
             this->textBox4->Name = L"textBox4";
-            this->textBox4->Size = System::Drawing::Size(223, 22);
+            this->textBox4->Size = System::Drawing::Size(196, 24);
             this->textBox4->TabIndex = 43;
             this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox4_KeyPress_1);
             // 
@@ -2254,7 +2256,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label17->AutoSize = true;
             this->label17->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 20));
             this->label17->ForeColor = System::Drawing::Color::Snow;
-            this->label17->Location = System::Drawing::Point(101, 93);
+            this->label17->Location = System::Drawing::Point(88, 93);
             this->label17->Name = L"label17";
             this->label17->Size = System::Drawing::Size(0, 46);
             this->label17->TabIndex = 42;
@@ -2266,7 +2268,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label16->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label16->ForeColor = System::Drawing::Color::White;
-            this->label16->Location = System::Drawing::Point(1088, 592);
+            this->label16->Location = System::Drawing::Point(952, 592);
             this->label16->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label16->Name = L"label16";
             this->label16->Size = System::Drawing::Size(126, 28);
@@ -2276,9 +2278,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox10
             // 
             this->pictureBox10->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.Image")));
-            this->pictureBox10->Location = System::Drawing::Point(706, 271);
+            this->pictureBox10->Location = System::Drawing::Point(618, 271);
             this->pictureBox10->Name = L"pictureBox10";
-            this->pictureBox10->Size = System::Drawing::Size(167, 142);
+            this->pictureBox10->Size = System::Drawing::Size(146, 142);
             this->pictureBox10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox10->TabIndex = 40;
             this->pictureBox10->TabStop = false;
@@ -2287,10 +2289,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox11->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox11->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.Image")));
-            this->pictureBox11->Location = System::Drawing::Point(1000, 504);
+            this->pictureBox11->Location = System::Drawing::Point(875, 504);
             this->pictureBox11->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox11->Name = L"pictureBox11";
-            this->pictureBox11->Size = System::Drawing::Size(79, 78);
+            this->pictureBox11->Size = System::Drawing::Size(69, 78);
             this->pictureBox11->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox11->TabIndex = 39;
             this->pictureBox11->TabStop = false;
@@ -2300,10 +2302,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox13->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox13->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.Image")));
-            this->pictureBox13->Location = System::Drawing::Point(504, 516);
+            this->pictureBox13->Location = System::Drawing::Point(441, 516);
             this->pictureBox13->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox13->Name = L"pictureBox13";
-            this->pictureBox13->Size = System::Drawing::Size(93, 78);
+            this->pictureBox13->Size = System::Drawing::Size(81, 78);
             this->pictureBox13->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox13->TabIndex = 37;
             this->pictureBox13->TabStop = false;
@@ -2313,10 +2315,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox14->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox14->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.Image")));
-            this->pictureBox14->Location = System::Drawing::Point(504, 95);
+            this->pictureBox14->Location = System::Drawing::Point(441, 95);
             this->pictureBox14->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox14->Name = L"pictureBox14";
-            this->pictureBox14->Size = System::Drawing::Size(80, 73);
+            this->pictureBox14->Size = System::Drawing::Size(70, 73);
             this->pictureBox14->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox14->TabIndex = 36;
             this->pictureBox14->TabStop = false;
@@ -2329,7 +2331,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label8->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label8->ForeColor = System::Drawing::Color::White;
-            this->label8->Location = System::Drawing::Point(1081, 83);
+            this->label8->Location = System::Drawing::Point(946, 83);
             this->label8->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label8->Name = L"label8";
             this->label8->Size = System::Drawing::Size(125, 28);
@@ -2343,7 +2345,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label9->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label9->ForeColor = System::Drawing::Color::White;
-            this->label9->Location = System::Drawing::Point(197, 592);
+            this->label9->Location = System::Drawing::Point(172, 592);
             this->label9->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label9->Name = L"label9";
             this->label9->Size = System::Drawing::Size(339, 28);
@@ -2357,7 +2359,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label12->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label12->ForeColor = System::Drawing::Color::White;
-            this->label12->Location = System::Drawing::Point(338, 94);
+            this->label12->Location = System::Drawing::Point(296, 94);
             this->label12->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label12->Name = L"label12";
             this->label12->Size = System::Drawing::Size(141, 28);
@@ -2367,9 +2369,9 @@ private: System::Windows::Forms::Button^ button5;
             // pictureBox15
             // 
             this->pictureBox15->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox15.Image")));
-            this->pictureBox15->Location = System::Drawing::Point(504, 94);
+            this->pictureBox15->Location = System::Drawing::Point(441, 94);
             this->pictureBox15->Name = L"pictureBox15";
-            this->pictureBox15->Size = System::Drawing::Size(575, 500);
+            this->pictureBox15->Size = System::Drawing::Size(503, 500);
             this->pictureBox15->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox15->TabIndex = 32;
             this->pictureBox15->TabStop = false;
@@ -2378,7 +2380,7 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox16->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox16->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox16.Image")));
-            this->pictureBox16->Location = System::Drawing::Point(1379, 77);
+            this->pictureBox16->Location = System::Drawing::Point(1207, 77);
             this->pictureBox16->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox16->Name = L"pictureBox16";
             this->pictureBox16->Size = System::Drawing::Size(50, 50);
@@ -2391,7 +2393,7 @@ private: System::Windows::Forms::Button^ button5;
             // 
             this->pictureBox17->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox17->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox17.Image")));
-            this->pictureBox17->Location = System::Drawing::Point(1379, 15);
+            this->pictureBox17->Location = System::Drawing::Point(1207, 15);
             this->pictureBox17->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox17->Name = L"pictureBox17";
             this->pictureBox17->Size = System::Drawing::Size(50, 50);
@@ -2407,7 +2409,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label13->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label13->ForeColor = System::Drawing::Color::White;
-            this->label13->Location = System::Drawing::Point(1317, 88);
+            this->label13->Location = System::Drawing::Point(1152, 88);
             this->label13->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label13->Name = L"label13";
             this->label13->Size = System::Drawing::Size(51, 28);
@@ -2421,7 +2423,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label14->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label14->ForeColor = System::Drawing::Color::White;
-            this->label14->Location = System::Drawing::Point(1287, 25);
+            this->label14->Location = System::Drawing::Point(1126, 25);
             this->label14->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label14->Name = L"label14";
             this->label14->Size = System::Drawing::Size(77, 28);
@@ -2435,7 +2437,7 @@ private: System::Windows::Forms::Button^ button5;
             this->label15->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 32, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label15->ForeColor = System::Drawing::Color::White;
-            this->label15->Location = System::Drawing::Point(57, 13);
+            this->label15->Location = System::Drawing::Point(50, 13);
             this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
             this->label15->Name = L"label15";
             this->label15->Size = System::Drawing::Size(501, 72);
@@ -2448,7 +2450,7 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox18->Location = System::Drawing::Point(0, 0);
             this->pictureBox18->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox18->Name = L"pictureBox18";
-            this->pictureBox18->Size = System::Drawing::Size(1545, 690);
+            this->pictureBox18->Size = System::Drawing::Size(1352, 690);
             this->pictureBox18->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox18->TabIndex = 26;
             this->pictureBox18->TabStop = false;
@@ -2461,7 +2463,7 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox1->Location = System::Drawing::Point(0, 0);
             this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox1->Name = L"pictureBox1";
-            this->pictureBox1->Size = System::Drawing::Size(2198, 938);
+            this->pictureBox1->Size = System::Drawing::Size(1923, 938);
             this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox1->TabIndex = 46;
             this->pictureBox1->TabStop = false;
@@ -2469,10 +2471,10 @@ private: System::Windows::Forms::Button^ button5;
             // 
             // MyForm
             // 
-            this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+            this->AutoScaleDimensions = System::Drawing::SizeF(7, 16);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->ClientSize = System::Drawing::Size(2219, 831);
+            this->ClientSize = System::Drawing::Size(1699, 831);
             this->ControlBox = false;
             this->Controls->Add(this->panel3);
             this->Controls->Add(this->label11);
@@ -5044,23 +5046,34 @@ private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e
  
 }
 private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-    if (e->KeyCode == Keys::Enter)
+    if (e->KeyCode == Keys::Enter&&!panel4->Visible)
     {
+        if (button1->Visible) {
+            textBox2->Select();
+        }
+        else {
+            Next->PerformClick();
+        }
         e->Handled = true;
         e->SuppressKeyPress = true;
-        Next->PerformClick();
     }
 }
 private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-    if (e->KeyCode == Keys::Enter)
+    if (e->KeyCode == Keys::Enter&&!panel4->Visible)
     {
-        Next->PerformClick();
+        if (button1->Visible) {
+            button1->PerformClick();
+        }
+        else {
+            Next->PerformClick();
+        }
         e->Handled = true;
         e->SuppressKeyPress = true;
     }
 }
 private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-    if (e->KeyCode == Keys::Enter)
+
+    if (e->KeyCode == Keys::Enter && !panel4->Visible)
     {
         Next->PerformClick();
         e->Handled = true;
@@ -5074,7 +5087,7 @@ private: System::Void pictureBox33_Click(System::Object^ sender, System::EventAr
 }
 private: System::Void Account_settings_Click(System::Object^ sender, System::EventArgs^ e) {
 
-    Account_Settings^ sc = gcnew Account_Settings((*CurrentDoctor).doc_name, (*CurrentDoctor).account.username, (*CurrentDoctor).account.password, (*CurrentDoctor).account.email, (*CurrentDoctor).phone,(*CurrentDoctor).send_email);
+    Account_Settings^ sc = gcnew Account_Settings((*CurrentDoctor).doc_name, (*CurrentDoctor).account.username, (*CurrentDoctor).account.password, (*CurrentDoctor).account.email, (*CurrentDoctor).phone,(*CurrentDoctor).send_email, check_database, check_database_email, check_phone);
     this->Hide();
     sc->ShowDialog();
     this->Show();

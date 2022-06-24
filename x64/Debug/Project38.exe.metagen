@@ -46,9 +46,13 @@ Class Project38.Account_Settings: AutoLayout, AnsiClass, Class, Public, BeforeFi
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     SByte who IsSignUnspecifiedByte : Public
+    Boolean changed : Public
+    SByte s_key IsSignUnspecifiedByte : Public
     SByte Logoutkey IsSignUnspecifiedByte : Public
     System.String Code : Public, Static
   Methods:
+    Blue(PictureBox, Label): PrivateScope, Public, HideBySig
+    Blacken(PictureBox, Label): PrivateScope, Public, HideBySig
     MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
     save(): PrivateScope, Public, HideBySig
     GetPass(): PrivateScope, Public, HideBySig

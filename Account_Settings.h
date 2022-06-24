@@ -11,7 +11,6 @@
 #include "Camera_winform.h"
 using namespace std;
 
-
 namespace Project38 {
 
 	using namespace std;
@@ -37,16 +36,26 @@ namespace Project38 {
 	/// </summary>
 	public ref class Account_Settings : public System::Windows::Forms::Form
 	{
+		// your secondary/popup form's class
+		
+	public: delegate void WipeMouthEventHandler(bool LeftOrRightHand);
+
+	 WipeMouthEventHandler^ ev = gcnew WipeMouthEventHandler(funcC);
+
 
 	private: System::Windows::Forms::TextBox^ Fullname_Textbox;
 	private: System::Windows::Forms::TextBox^ Username_Textbox;
 
 	private: System::Windows::Forms::GroupBox^ AccountGbox;
+	private: System::Windows::Forms::Label^ Name_label;
 
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::Label^ Phone;
 
-	private: System::Windows::Forms::Label^ label2;
+
+
+	private: System::Windows::Forms::Label^ Username;
+
+
 	private: System::Windows::Forms::Button^ No_pic_button;
 	private: System::Windows::Forms::Button^ Browse_button;
 
@@ -120,6 +129,40 @@ namespace Project38 {
 		static String^ Code;
 		
 		char who = 's';
+	private: System::Windows::Forms::PictureBox^ Name_picturebox;
+	private: System::Windows::Forms::PictureBox^ Name_pictureBox2;
+	private: System::Windows::Forms::PictureBox^ Username_picturebox2;
+	private: System::Windows::Forms::PictureBox^ Username_picturebox;
+	private: System::Windows::Forms::PictureBox^ Phone_picturebox2;
+	private: System::Windows::Forms::PictureBox^ Phone_picturebox;
+
+
+
+
+
+	public:
+
+	public:
+		
+		bool ufunC(function<bool(string)>func,string username) {
+			return func(username);
+		}
+		bool changed = false;
+		char s_key = '0';
+
+		void Blue(PictureBox^p,Label^l) {
+			l ->ForeColor = Color::FromArgb(0, 102, 204);
+			p->BackColor = Color::FromArgb(0, 102, 204);
+		}
+		void Red(PictureBox^p,Label^l) {
+			l ->ForeColor = Color::FromArgb(255,0,0);
+			p->BackColor = Color::FromArgb(255,0,0);
+		}
+		void Blacken(PictureBox^p,Label^l) {
+			l ->ForeColor = Color::FromArgb(0,0,0);
+			p->BackColor = Color::FromArgb(0,0,0);
+		}
+
 		char Logoutkey = '0';
 		//Camera^ MyCamera = gcnew Camera();
 		void MarshalString(String^ s, string& os) {
@@ -145,7 +188,6 @@ namespace Project38 {
 				}
 				else {
 					System::IO::File::Delete(str3);
-
 				}
 			}
 			else if (who == 'p') {
@@ -202,13 +244,15 @@ namespace Project38 {
 		Account_Settings(void)
 		{
 			InitializeComponent();
+			
 			//
 			//TODO: Add the constructor code here
 			//
 		}
-		Account_Settings(string Fullname, string username, string pass, string email, string phone,char send_email)
+		Account_Settings(string Fullname, string username, string pass, string email, string phone,char send_email, function<bool(string)> ufunc, function<bool(string)> efunc, function<bool(string)> pfunc)
 		{
 			InitializeComponent();
+			
 			who = 'd';
 			String^ name = gcnew String(Fullname.c_str());
 			String^ uname = gcnew String(username.c_str());
@@ -227,7 +271,6 @@ namespace Project38 {
 			}
 			else {
 				Email_checkBox->Checked = false;
-
 			}
 			
 			string wow = "PICs\\Doctors\\" + username + ".jpg";
@@ -257,7 +300,7 @@ namespace Project38 {
 			//TODO: Add the constructor code here
 			//
 		}
-		Account_Settings(string Fullname, string username, string pass, string email,char gender)
+		Account_Settings(string Fullname, string username, string pass, string email,char gender, function<void(string)> ufunc, function<void(string)> efunc, function<void(string)> pfunc)
 		{
 			InitializeComponent();
 			who = 'p';
@@ -332,14 +375,20 @@ namespace Project38 {
 			this->Username_Textbox = (gcnew System::Windows::Forms::TextBox());
 			this->Phone_Textbox = (gcnew System::Windows::Forms::TextBox());
 			this->AccountGbox = (gcnew System::Windows::Forms::GroupBox());
+			this->Phone = (gcnew System::Windows::Forms::Label());
+			this->Phone_picturebox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->Phone_picturebox = (gcnew System::Windows::Forms::PictureBox());
+			this->Username = (gcnew System::Windows::Forms::Label());
+			this->Username_picturebox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->Username_picturebox = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->Browse_button = (gcnew System::Windows::Forms::Button());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->Name_label = (gcnew System::Windows::Forms::Label());
 			this->New_pic_button = (gcnew System::Windows::Forms::Button());
 			this->No_pic_button = (gcnew System::Windows::Forms::Button());
+			this->Name_pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->Name_picturebox = (gcnew System::Windows::Forms::PictureBox());
 			this->NotificationGbox = (gcnew System::Windows::Forms::GroupBox());
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->Email_Textbox = (gcnew System::Windows::Forms::TextBox());
@@ -367,7 +416,13 @@ namespace Project38 {
 			this->Hello_label = (gcnew System::Windows::Forms::Label());
 			this->Current_Tab_label = (gcnew System::Windows::Forms::Label());
 			this->AccountGbox->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Phone_picturebox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Phone_picturebox))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Username_picturebox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Username_picturebox))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Name_pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Name_picturebox))->BeginInit();
 			this->NotificationGbox->SuspendLayout();
 			this->SecurityGbox->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -378,64 +433,141 @@ namespace Project38 {
 			// 
 			// Fullname_Textbox
 			// 
-			this->Fullname_Textbox->Location = System::Drawing::Point(245, 182);
+			this->Fullname_Textbox->BackColor = System::Drawing::Color::White;
+			this->Fullname_Textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Fullname_Textbox->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Fullname_Textbox->Location = System::Drawing::Point(32, 177);
 			this->Fullname_Textbox->Name = L"Fullname_Textbox";
-			this->Fullname_Textbox->Size = System::Drawing::Size(348, 25);
+			this->Fullname_Textbox->Size = System::Drawing::Size(325, 27);
 			this->Fullname_Textbox->TabIndex = 0;
+			this->Fullname_Textbox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Account_Settings::Fullname_Textbox_MouseClick);
+			this->Fullname_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Fullname_Textbox_TextChanged);
 			// 
 			// Username_Textbox
 			// 
-			this->Username_Textbox->Location = System::Drawing::Point(245, 269);
+			this->Username_Textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Username_Textbox->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Username_Textbox->Location = System::Drawing::Point(33, 265);
 			this->Username_Textbox->Name = L"Username_Textbox";
-			this->Username_Textbox->Size = System::Drawing::Size(348, 25);
+			this->Username_Textbox->Size = System::Drawing::Size(325, 27);
 			this->Username_Textbox->TabIndex = 1;
+			this->Username_Textbox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Account_Settings::Username_Textbox_MouseClick);
+			this->Username_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Username_Textbox_TextChanged);
 			// 
 			// Phone_Textbox
 			// 
-			this->Phone_Textbox->Location = System::Drawing::Point(245, 349);
+			this->Phone_Textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Phone_Textbox->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Phone_Textbox->Location = System::Drawing::Point(32, 357);
 			this->Phone_Textbox->Name = L"Phone_Textbox";
-			this->Phone_Textbox->Size = System::Drawing::Size(348, 25);
+			this->Phone_Textbox->Size = System::Drawing::Size(324, 27);
 			this->Phone_Textbox->TabIndex = 3;
+			this->Phone_Textbox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Account_Settings::Phone_Textbox_MouseClick);
+			this->Phone_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Phone_Textbox_TextChanged);
 			this->Phone_Textbox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Account_Settings::Phone_Textbox_KeyPress);
 			// 
 			// AccountGbox
 			// 
 			this->AccountGbox->BackColor = System::Drawing::Color::White;
+			this->AccountGbox->Controls->Add(this->Phone);
+			this->AccountGbox->Controls->Add(this->Phone_Textbox);
+			this->AccountGbox->Controls->Add(this->Phone_picturebox2);
+			this->AccountGbox->Controls->Add(this->Phone_picturebox);
+			this->AccountGbox->Controls->Add(this->Username_Textbox);
+			this->AccountGbox->Controls->Add(this->Username);
+			this->AccountGbox->Controls->Add(this->Username_picturebox2);
+			this->AccountGbox->Controls->Add(this->Username_picturebox);
 			this->AccountGbox->Controls->Add(this->pictureBox1);
 			this->AccountGbox->Controls->Add(this->Browse_button);
 			this->AccountGbox->Controls->Add(this->label5);
-			this->AccountGbox->Controls->Add(this->label4);
-			this->AccountGbox->Controls->Add(this->label2);
-			this->AccountGbox->Controls->Add(this->label1);
-			this->AccountGbox->Controls->Add(this->Phone_Textbox);
-			this->AccountGbox->Controls->Add(this->Username_Textbox);
+			this->AccountGbox->Controls->Add(this->Name_label);
 			this->AccountGbox->Controls->Add(this->Fullname_Textbox);
 			this->AccountGbox->Controls->Add(this->New_pic_button);
 			this->AccountGbox->Controls->Add(this->No_pic_button);
+			this->AccountGbox->Controls->Add(this->Name_pictureBox2);
+			this->AccountGbox->Controls->Add(this->Name_picturebox);
 			this->AccountGbox->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->AccountGbox->Font = (gcnew System::Drawing::Font(L"Segoe UI", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->AccountGbox->Location = System::Drawing::Point(327, 0);
+			this->AccountGbox->Location = System::Drawing::Point(286, 0);
 			this->AccountGbox->Name = L"AccountGbox";
-			this->AccountGbox->Size = System::Drawing::Size(943, 745);
+			this->AccountGbox->Size = System::Drawing::Size(825, 745);
 			this->AccountGbox->TabIndex = 4;
 			this->AccountGbox->TabStop = false;
+			// 
+			// Phone
+			// 
+			this->Phone->AutoSize = true;
+			this->Phone->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 13));
+			this->Phone->Location = System::Drawing::Point(58, 327);
+			this->Phone->Name = L"Phone";
+			this->Phone->Size = System::Drawing::Size(82, 30);
+			this->Phone->TabIndex = 7;
+			this->Phone->Text = L"Phone:";
+			this->Phone->Click += gcnew System::EventHandler(this, &Account_Settings::label4_Click);
+			// 
+			// Phone_picturebox2
+			// 
+			this->Phone_picturebox2->Location = System::Drawing::Point(30, 350);
+			this->Phone_picturebox2->Name = L"Phone_picturebox2";
+			this->Phone_picturebox2->Size = System::Drawing::Size(328, 45);
+			this->Phone_picturebox2->TabIndex = 18;
+			this->Phone_picturebox2->TabStop = false;
+			// 
+			// Phone_picturebox
+			// 
+			this->Phone_picturebox->BackColor = System::Drawing::Color::Black;
+			this->Phone_picturebox->Location = System::Drawing::Point(27, 346);
+			this->Phone_picturebox->Name = L"Phone_picturebox";
+			this->Phone_picturebox->Size = System::Drawing::Size(333, 53);
+			this->Phone_picturebox->TabIndex = 17;
+			this->Phone_picturebox->TabStop = false;
+			// 
+			// Username
+			// 
+			this->Username->AutoSize = true;
+			this->Username->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 13, System::Drawing::FontStyle::Bold));
+			this->Username->Location = System::Drawing::Point(58, 232);
+			this->Username->Name = L"Username";
+			this->Username->Size = System::Drawing::Size(117, 30);
+			this->Username->TabIndex = 5;
+			this->Username->Text = L"Username:";
+			// 
+			// Username_picturebox2
+			// 
+			this->Username_picturebox2->Location = System::Drawing::Point(33, 259);
+			this->Username_picturebox2->Name = L"Username_picturebox2";
+			this->Username_picturebox2->Size = System::Drawing::Size(328, 45);
+			this->Username_picturebox2->TabIndex = 16;
+			this->Username_picturebox2->TabStop = false;
+			// 
+			// Username_picturebox
+			// 
+			this->Username_picturebox->BackColor = System::Drawing::Color::Black;
+			this->Username_picturebox->Location = System::Drawing::Point(30, 255);
+			this->Username_picturebox->Name = L"Username_picturebox";
+			this->Username_picturebox->Size = System::Drawing::Size(333, 53);
+			this->Username_picturebox->TabIndex = 15;
+			this->Username_picturebox->TabStop = false;
 			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(312, 420);
+			this->pictureBox1->Location = System::Drawing::Point(273, 420);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(159, 155);
+			this->pictureBox1->Size = System::Drawing::Size(139, 155);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 9;
 			this->pictureBox1->TabStop = false;
 			// 
 			// Browse_button
 			// 
-			this->Browse_button->Location = System::Drawing::Point(528, 442);
+			this->Browse_button->Location = System::Drawing::Point(462, 442);
 			this->Browse_button->Name = L"Browse_button";
-			this->Browse_button->Size = System::Drawing::Size(104, 39);
+			this->Browse_button->Size = System::Drawing::Size(91, 39);
 			this->Browse_button->TabIndex = 10;
 			this->Browse_button->Text = L" Browse";
 			this->Browse_button->UseVisualStyleBackColor = true;
@@ -445,47 +577,27 @@ namespace Project38 {
 			// 
 			this->label5->AutoSize = true;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label5->Location = System::Drawing::Point(50, 484);
+			this->label5->Location = System::Drawing::Point(44, 484);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(219, 41);
 			this->label5->TabIndex = 8;
 			this->label5->Text = L" Profile picture";
 			// 
-			// label4
+			// Name_label
 			// 
-			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label4->Location = System::Drawing::Point(50, 333);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(113, 41);
-			this->label4->TabIndex = 7;
-			this->label4->Text = L" Phone";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label2->Location = System::Drawing::Point(50, 253);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(164, 41);
-			this->label2->TabIndex = 5;
-			this->label2->Text = L" Username";
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label1->Location = System::Drawing::Point(50, 166);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(108, 41);
-			this->label1->TabIndex = 4;
-			this->label1->Text = L" Name";
+			this->Name_label->AutoSize = true;
+			this->Name_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 13));
+			this->Name_label->Location = System::Drawing::Point(58, 143);
+			this->Name_label->Name = L"Name_label";
+			this->Name_label->Size = System::Drawing::Size(77, 30);
+			this->Name_label->TabIndex = 4;
+			this->Name_label->Text = L"Name:";
 			// 
 			// New_pic_button
 			// 
-			this->New_pic_button->Location = System::Drawing::Point(661, 471);
+			this->New_pic_button->Location = System::Drawing::Point(578, 471);
 			this->New_pic_button->Name = L"New_pic_button";
-			this->New_pic_button->Size = System::Drawing::Size(104, 54);
+			this->New_pic_button->Size = System::Drawing::Size(91, 54);
 			this->New_pic_button->TabIndex = 12;
 			this->New_pic_button->Text = L" Take a New Picture";
 			this->New_pic_button->UseVisualStyleBackColor = true;
@@ -493,13 +605,31 @@ namespace Project38 {
 			// 
 			// No_pic_button
 			// 
-			this->No_pic_button->Location = System::Drawing::Point(528, 502);
+			this->No_pic_button->Location = System::Drawing::Point(462, 502);
 			this->No_pic_button->Name = L"No_pic_button";
-			this->No_pic_button->Size = System::Drawing::Size(104, 48);
+			this->No_pic_button->Size = System::Drawing::Size(91, 48);
 			this->No_pic_button->TabIndex = 11;
 			this->No_pic_button->Text = L" No Profile picture";
 			this->No_pic_button->UseVisualStyleBackColor = true;
 			this->No_pic_button->Click += gcnew System::EventHandler(this, &Account_Settings::No_pic_button_Click);
+			// 
+			// Name_pictureBox2
+			// 
+			this->Name_pictureBox2->Location = System::Drawing::Point(30, 168);
+			this->Name_pictureBox2->Name = L"Name_pictureBox2";
+			this->Name_pictureBox2->Size = System::Drawing::Size(328, 45);
+			this->Name_pictureBox2->TabIndex = 14;
+			this->Name_pictureBox2->TabStop = false;
+			// 
+			// Name_picturebox
+			// 
+			this->Name_picturebox->BackColor = System::Drawing::Color::Black;
+			this->Name_picturebox->Location = System::Drawing::Point(28, 164);
+			this->Name_picturebox->Name = L"Name_picturebox";
+			this->Name_picturebox->Size = System::Drawing::Size(333, 53);
+			this->Name_picturebox->TabIndex = 13;
+			this->Name_picturebox->TabStop = false;
+			this->Name_picturebox->Click += gcnew System::EventHandler(this, &Account_Settings::pictureBox3_Click);
 			// 
 			// NotificationGbox
 			// 
@@ -509,9 +639,9 @@ namespace Project38 {
 			this->NotificationGbox->Controls->Add(this->label10);
 			this->NotificationGbox->Controls->Add(this->Email_checkBox);
 			this->NotificationGbox->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->NotificationGbox->Location = System::Drawing::Point(327, 0);
+			this->NotificationGbox->Location = System::Drawing::Point(286, 0);
 			this->NotificationGbox->Name = L"NotificationGbox";
-			this->NotificationGbox->Size = System::Drawing::Size(893, 739);
+			this->NotificationGbox->Size = System::Drawing::Size(781, 739);
 			this->NotificationGbox->TabIndex = 7;
 			this->NotificationGbox->TabStop = false;
 			// 
@@ -520,7 +650,7 @@ namespace Project38 {
 			this->label11->AutoSize = true;
 			this->label11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label11->Location = System::Drawing::Point(52, 336);
+			this->label11->Location = System::Drawing::Point(46, 336);
 			this->label11->Name = L"label11";
 			this->label11->Size = System::Drawing::Size(399, 25);
 			this->label11->TabIndex = 8;
@@ -528,17 +658,18 @@ namespace Project38 {
 			// 
 			// Email_Textbox
 			// 
-			this->Email_Textbox->Location = System::Drawing::Point(329, 273);
+			this->Email_Textbox->Location = System::Drawing::Point(288, 273);
 			this->Email_Textbox->Name = L"Email_Textbox";
-			this->Email_Textbox->Size = System::Drawing::Size(348, 22);
+			this->Email_Textbox->Size = System::Drawing::Size(305, 24);
 			this->Email_Textbox->TabIndex = 7;
+			this->Email_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Email_Textbox_TextChanged);
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
 			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label10->Location = System::Drawing::Point(52, 259);
+			this->label10->Location = System::Drawing::Point(46, 259);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(88, 36);
 			this->label10->TabIndex = 6;
@@ -547,11 +678,12 @@ namespace Project38 {
 			// Email_checkBox
 			// 
 			this->Email_checkBox->AutoSize = true;
-			this->Email_checkBox->Location = System::Drawing::Point(575, 344);
+			this->Email_checkBox->Location = System::Drawing::Point(503, 344);
 			this->Email_checkBox->Name = L"Email_checkBox";
 			this->Email_checkBox->Size = System::Drawing::Size(18, 17);
 			this->Email_checkBox->TabIndex = 9;
 			this->Email_checkBox->UseVisualStyleBackColor = true;
+			this->Email_checkBox->CheckedChanged += gcnew System::EventHandler(this, &Account_Settings::Email_checkBox_CheckedChanged);
 			// 
 			// SecurityGbox
 			// 
@@ -566,17 +698,17 @@ namespace Project38 {
 			this->SecurityGbox->Controls->Add(this->label8);
 			this->SecurityGbox->Controls->Add(this->label9);
 			this->SecurityGbox->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->SecurityGbox->Location = System::Drawing::Point(327, 0);
+			this->SecurityGbox->Location = System::Drawing::Point(286, 0);
 			this->SecurityGbox->Name = L"SecurityGbox";
-			this->SecurityGbox->Size = System::Drawing::Size(880, 822);
+			this->SecurityGbox->Size = System::Drawing::Size(770, 822);
 			this->SecurityGbox->TabIndex = 8;
 			this->SecurityGbox->TabStop = false;
 			// 
 			// Send_code_button
 			// 
-			this->Send_code_button->Location = System::Drawing::Point(751, 370);
+			this->Send_code_button->Location = System::Drawing::Point(657, 370);
 			this->Send_code_button->Name = L"Send_code_button";
-			this->Send_code_button->Size = System::Drawing::Size(75, 23);
+			this->Send_code_button->Size = System::Drawing::Size(66, 23);
 			this->Send_code_button->TabIndex = 16;
 			this->Send_code_button->Text = L"Send";
 			this->Send_code_button->UseVisualStyleBackColor = true;
@@ -584,16 +716,17 @@ namespace Project38 {
 			// 
 			// step2_code_Textbox
 			// 
-			this->step2_code_Textbox->Location = System::Drawing::Point(329, 444);
+			this->step2_code_Textbox->Location = System::Drawing::Point(288, 444);
 			this->step2_code_Textbox->Name = L"step2_code_Textbox";
-			this->step2_code_Textbox->Size = System::Drawing::Size(348, 22);
+			this->step2_code_Textbox->Size = System::Drawing::Size(305, 24);
 			this->step2_code_Textbox->TabIndex = 15;
+			this->step2_code_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::step2_code_Textbox_TextChanged);
 			// 
 			// step2_code_label
 			// 
 			this->step2_code_label->AutoSize = true;
 			this->step2_code_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->step2_code_label->Location = System::Drawing::Point(38, 427);
+			this->step2_code_label->Location = System::Drawing::Point(33, 427);
 			this->step2_code_label->Name = L"step2_code_label";
 			this->step2_code_label->Size = System::Drawing::Size(247, 41);
 			this->step2_code_label->TabIndex = 14;
@@ -601,17 +734,18 @@ namespace Project38 {
 			// 
 			// step2_phone_Textbox
 			// 
-			this->step2_phone_Textbox->Location = System::Drawing::Point(329, 369);
+			this->step2_phone_Textbox->Location = System::Drawing::Point(288, 369);
 			this->step2_phone_Textbox->Name = L"step2_phone_Textbox";
-			this->step2_phone_Textbox->Size = System::Drawing::Size(348, 22);
+			this->step2_phone_Textbox->Size = System::Drawing::Size(305, 24);
 			this->step2_phone_Textbox->TabIndex = 13;
+			this->step2_phone_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::step2_phone_Textbox_TextChanged);
 			this->step2_phone_Textbox->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Account_Settings::step2_phone_Textbox_KeyPress);
 			// 
 			// step2_phone_label
 			// 
 			this->step2_phone_label->AutoSize = true;
 			this->step2_phone_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->step2_phone_label->Location = System::Drawing::Point(29, 352);
+			this->step2_phone_label->Location = System::Drawing::Point(25, 352);
 			this->step2_phone_label->Name = L"step2_phone_label";
 			this->step2_phone_label->Size = System::Drawing::Size(113, 41);
 			this->step2_phone_label->TabIndex = 12;
@@ -620,7 +754,7 @@ namespace Project38 {
 			// step2_CheckBox
 			// 
 			this->step2_CheckBox->AutoSize = true;
-			this->step2_CheckBox->Location = System::Drawing::Point(483, 302);
+			this->step2_CheckBox->Location = System::Drawing::Point(423, 302);
 			this->step2_CheckBox->Name = L"step2_CheckBox";
 			this->step2_CheckBox->Size = System::Drawing::Size(18, 17);
 			this->step2_CheckBox->TabIndex = 10;
@@ -631,16 +765,17 @@ namespace Project38 {
 			// 
 			this->Password_Textbox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Password_Textbox->Location = System::Drawing::Point(329, 236);
+			this->Password_Textbox->Location = System::Drawing::Point(288, 236);
 			this->Password_Textbox->Name = L"Password_Textbox";
-			this->Password_Textbox->Size = System::Drawing::Size(348, 26);
+			this->Password_Textbox->Size = System::Drawing::Size(305, 26);
 			this->Password_Textbox->TabIndex = 8;
+			this->Password_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Password_Textbox_TextChanged);
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
 			this->label8->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label8->Location = System::Drawing::Point(29, 278);
+			this->label8->Location = System::Drawing::Point(25, 278);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(322, 41);
 			this->label8->TabIndex = 6;
@@ -650,7 +785,7 @@ namespace Project38 {
 			// 
 			this->label9->AutoSize = true;
 			this->label9->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 18));
-			this->label9->Location = System::Drawing::Point(29, 218);
+			this->label9->Location = System::Drawing::Point(25, 218);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(155, 41);
 			this->label9->TabIndex = 4;
@@ -666,9 +801,9 @@ namespace Project38 {
 				static_cast<System::Byte>(0)));
 			this->Save_button->ForeColor = System::Drawing::Color::White;
 			this->Save_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Save_button.Image")));
-			this->Save_button->Location = System::Drawing::Point(166, 3);
+			this->Save_button->Location = System::Drawing::Point(145, 3);
 			this->Save_button->Name = L"Save_button";
-			this->Save_button->Size = System::Drawing::Size(157, 179);
+			this->Save_button->Size = System::Drawing::Size(137, 179);
 			this->Save_button->TabIndex = 10;
 			this->Save_button->Text = L" Save";
 			this->Save_button->TextAlign = System::Drawing::ContentAlignment::TopCenter;
@@ -680,9 +815,9 @@ namespace Project38 {
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(79, 12);
+			this->pictureBox2->Location = System::Drawing::Point(69, 12);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(116, 119);
+			this->pictureBox2->Size = System::Drawing::Size(102, 119);
 			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox2->TabIndex = 12;
 			this->pictureBox2->TabStop = false;
@@ -697,7 +832,7 @@ namespace Project38 {
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Left;
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(329, 715);
+			this->panel1->Size = System::Drawing::Size(288, 715);
 			this->panel1->TabIndex = 13;
 			// 
 			// tableLayoutPanel1
@@ -715,7 +850,7 @@ namespace Project38 {
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(326, 185);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(285, 185);
 			this->tableLayoutPanel1->TabIndex = 14;
 			// 
 			// Logout_button
@@ -730,7 +865,7 @@ namespace Project38 {
 			this->Logout_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Logout_button.Image")));
 			this->Logout_button->Location = System::Drawing::Point(3, 3);
 			this->Logout_button->Name = L"Logout_button";
-			this->Logout_button->Size = System::Drawing::Size(157, 179);
+			this->Logout_button->Size = System::Drawing::Size(136, 179);
 			this->Logout_button->TabIndex = 11;
 			this->Logout_button->Text = L" Logout";
 			this->Logout_button->TextAlign = System::Drawing::ContentAlignment::TopCenter;
@@ -751,7 +886,7 @@ namespace Project38 {
 			this->Notification_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			this->Notification_button->Location = System::Drawing::Point(0, 415);
 			this->Notification_button->Name = L"Notification_button";
-			this->Notification_button->Size = System::Drawing::Size(329, 119);
+			this->Notification_button->Size = System::Drawing::Size(288, 119);
 			this->Notification_button->TabIndex = 16;
 			this->Notification_button->Text = L"       Notification";
 			this->Notification_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -772,7 +907,7 @@ namespace Project38 {
 			this->Security_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			this->Security_button->Location = System::Drawing::Point(0, 296);
 			this->Security_button->Name = L"Security_button";
-			this->Security_button->Size = System::Drawing::Size(329, 119);
+			this->Security_button->Size = System::Drawing::Size(288, 119);
 			this->Security_button->TabIndex = 15;
 			this->Security_button->Text = L"    Security";
 			this->Security_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -794,7 +929,7 @@ namespace Project38 {
 			this->Account_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			this->Account_button->Location = System::Drawing::Point(0, 177);
 			this->Account_button->Name = L"Account_button";
-			this->Account_button->Size = System::Drawing::Size(329, 119);
+			this->Account_button->Size = System::Drawing::Size(288, 119);
 			this->Account_button->TabIndex = 14;
 			this->Account_button->Text = L"     Account";
 			this->Account_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -810,7 +945,7 @@ namespace Project38 {
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Top;
 			this->panel2->Location = System::Drawing::Point(0, 0);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(329, 177);
+			this->panel2->Size = System::Drawing::Size(288, 177);
 			this->panel2->TabIndex = 0;
 			// 
 			// Hello_label
@@ -818,7 +953,7 @@ namespace Project38 {
 			this->Hello_label->AutoSize = true;
 			this->Hello_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Hello_label->Location = System::Drawing::Point(44, 145);
+			this->Hello_label->Location = System::Drawing::Point(38, 145);
 			this->Hello_label->Name = L"Hello_label";
 			this->Hello_label->Size = System::Drawing::Size(59, 20);
 			this->Hello_label->TabIndex = 14;
@@ -831,7 +966,7 @@ namespace Project38 {
 			this->Current_Tab_label->BackColor = System::Drawing::Color::White;
 			this->Current_Tab_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 22.2F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->Current_Tab_label->Location = System::Drawing::Point(692, 12);
+			this->Current_Tab_label->Location = System::Drawing::Point(606, 12);
 			this->Current_Tab_label->Name = L"Current_Tab_label";
 			this->Current_Tab_label->Size = System::Drawing::Size(154, 42);
 			this->Current_Tab_label->TabIndex = 0;
@@ -839,10 +974,10 @@ namespace Project38 {
 			// 
 			// Account_Settings
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(7, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::HotTrack;
-			this->ClientSize = System::Drawing::Size(1204, 715);
+			this->ClientSize = System::Drawing::Size(1054, 715);
 			this->Controls->Add(this->Current_Tab_label);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->AccountGbox);
@@ -855,7 +990,13 @@ namespace Project38 {
 			this->Load += gcnew System::EventHandler(this, &Account_Settings::Account_Settings_Load);
 			this->AccountGbox->ResumeLayout(false);
 			this->AccountGbox->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Phone_picturebox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Phone_picturebox))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Username_picturebox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Username_picturebox))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Name_pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Name_picturebox))->EndInit();
 			this->NotificationGbox->ResumeLayout(false);
 			this->NotificationGbox->PerformLayout();
 			this->SecurityGbox->ResumeLayout(false);
@@ -872,7 +1013,7 @@ namespace Project38 {
 #pragma endregion
 private: System::Void Account_Settings_Load(System::Object^ sender, System::EventArgs^ e) {
 		Show_Account();
-
+		changed = false;
 }
 private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -894,7 +1035,7 @@ private: System::Void Browse_button_Click(System::Object^ sender, System::EventA
 		//MyCamera->Stop();
 		pictureBox1->ImageLocation = dialog->FileName;
 		pictureBox2->ImageLocation = dialog->FileName;
-		
+		changed = true;
 	}
 
 }
@@ -923,9 +1064,13 @@ private: System::Void Notification_button_Click(System::Object^ sender, System::
 private: System::Void No_pic_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	pictureBox1->ImageLocation = "PICs\\guest.jpg";
 	pictureBox2->ImageLocation = "PICs\\guest.jpg";
+	changed = true;
+
 }
 private: System::Void Save_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	save();
+	Logoutkey = 'o';
+	s_key ='1';
 }
 private: System::Void New_pic_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	string username;
@@ -939,6 +1084,7 @@ private: System::Void New_pic_button_Click(System::Object^ sender, System::Event
 		string org = "PICs\\Doctors\\" + username + ".jpg";
 		String^ org_loc = gcnew String(temp.c_str());
 		if (System::IO::File::Exists(temp_loc)) {
+			changed = true;
 			pictureBox1->ImageLocation = temp_loc;
 			pictureBox2->ImageLocation = temp_loc;
 		}
@@ -952,6 +1098,7 @@ private: System::Void New_pic_button_Click(System::Object^ sender, System::Event
 		string org = "PICs\\Patients\\" + username + ".jpg";
 		String^ org_loc = gcnew String(temp.c_str());
 		if (System::IO::File::Exists(temp_loc)) {
+			changed = true;
 			pictureBox1->ImageLocation = temp_loc;
 			pictureBox2->ImageLocation = temp_loc;
 		}
@@ -969,7 +1116,7 @@ private: System::Void Account_Settings_FormClosing(System::Object^ sender, Syste
 	String^ temp_loc = gcnew String(temp.c_str());
 	if (System::IO::File::Exists(temp_loc))
 		System::IO::File::Delete(temp_loc);
-	if(Logoutkey=='0'){
+	if(Logoutkey=='0'&&s_key=='0'&&changed) {
 		System::Windows::Forms::DialogResult Quit_result = MessageBox::Show("Do you want to save Current changes?", "Quit?", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Question);
 		if (Quit_result== System::Windows::Forms::DialogResult::Yes) {
 			//Save_button->PerformClick();
@@ -980,18 +1127,29 @@ private: System::Void Account_Settings_FormClosing(System::Object^ sender, Syste
 			e->Cancel = true;
 		}
 	}
+
 }
 private: System::Void Logout_button_Click(System::Object^ sender, System::EventArgs^ e) {
-	System::Windows::Forms::DialogResult Logout_result = MessageBox::Show("Are you sure you want to Logout & save Current changes?", "Logout?", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Question);
-	if (Logout_result == System::Windows::Forms::DialogResult::Yes) {
-		//Save_button->PerformClick();
-		save();
-		Logoutkey = 'b';
-		this->Close();
+	if (s_key != '1'&&changed) {
+		System::Windows::Forms::DialogResult Logout_result = MessageBox::Show("Are you sure you want to Logout & save Current changes?", "Logout?", MessageBoxButtons::YesNoCancel, MessageBoxIcon::Question);
+		if (Logout_result == System::Windows::Forms::DialogResult::Yes) {
+			//Save_button->PerformClick();
+			save();
+			Logoutkey = 'b';
+			this->Close();
+		}
+		else if (Logout_result == System::Windows::Forms::DialogResult::No) {
+			Logoutkey = 'n';
+			this->Close();
+		}
 	}
-	else if(Logout_result == System::Windows::Forms::DialogResult::No) {
-		Logoutkey = 'n';
-		this->Close();
+	else {
+		System::Windows::Forms::DialogResult Logout_result = MessageBox::Show("Are you sure you want to Logout ?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+		if (Logout_result == System::Windows::Forms::DialogResult::Yes) {
+			//Save_button->PerformClick();
+			Logoutkey = 'b';
+			this->Close();
+		}
 	}
 
 }
@@ -1004,6 +1162,8 @@ private: System::Void step2_CheckBox_CheckedChanged(System::Object^ sender, Syst
 		srand(time(0));
 		randCode = to_string((rand() % 10000000) + 1000000);
 		Code = gcnew String(randCode.c_str());
+		changed = true;
+
 		
 	}
 	else { 
@@ -1061,9 +1221,62 @@ private: System::Void Logout_button_MouseLeave(System::Object^ sender, System::E
 	Logout_button->ForeColor = Color::FromArgb(255, 255, 255);
 }
 private: System::Void Send_code_button_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	System::Windows::Forms::DialogResult Logout_result = MessageBox::Show("A message has been sent to this phone number", "Send code!", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	step2_code_label->Show();
 	step2_code_Textbox->Show();
+}
+private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void Fullname_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	Blue(Name_picturebox, Name_label);
+	Blacken(Phone_picturebox, Phone);
+	Blacken(Username_picturebox, Username);
+}
+private: System::Void Username_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	Blacken(Name_picturebox, Name_label);
+	Blacken(Phone_picturebox, Phone);
+	Blue(Username_picturebox, Username);
+}
+private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
+
+}
+private: System::Void Username_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+	string username;
+	MarshalString(Fullname_Textbox->Text, username);
+
+}
+private: System::Void Phone_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	Blacken(Name_picturebox, Name_label);
+	Blue(Phone_picturebox, Phone);
+	Blacken(Username_picturebox, Username);
+}
+private: System::Void Fullname_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+}
+private: System::Void Phone_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+
+}
+private: System::Void Password_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+
+}
+private: System::Void step2_phone_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+
+}
+private: System::Void step2_code_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+
+}
+private: System::Void Email_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
+
+}
+private: System::Void Email_checkBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	changed = true;
 }
 };
 }
