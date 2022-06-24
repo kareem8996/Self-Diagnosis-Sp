@@ -134,6 +134,9 @@
     <Reference Include="DarrenLee.Media">
       <HintPath>..\..\..\Webcam References\DarrenLee.Media.dll</HintPath>
     </Reference>
+    <Reference Include="MessageBoxManager">
+      <HintPath>C:\Users\Fouad Soliman\Downloads\messageboxmanager.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -141,10 +144,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Account_Settings.cpp" />
+    <ClCompile Include="Camera_winform.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="MyForm2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Account_Settings.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Camera_winform.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -153,6 +164,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Account_Settings.resx">
+      <DependentUpon>Account_Settings.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Camera_winform.resx">
+      <DependentUpon>Camera_winform.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>

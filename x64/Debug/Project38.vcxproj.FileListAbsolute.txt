@@ -52,3 +52,15 @@ C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\AForge.Vid
 C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\AForge.Video.dll
 C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\DarrenLee.Media.dll
 C:\Users\karee\Desktop\Uni Projects\SP\Project38 - Copy (2)\x64\Debug\Interop.WMPLib.1.0.dll
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.Account_Settings.resources
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.MyForm.resources
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.MyForm2.resources
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.vcxproj.GenerateResource.cache
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.vcxproj.CopyComplete
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.exe
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Interop.WMPLib.1.0.dll
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.Camera_winform.resources
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\messageboxmanager.dll

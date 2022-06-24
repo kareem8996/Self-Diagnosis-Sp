@@ -1,3 +1,5 @@
+  Project38.Account_Settings.resources - Embedded, ContainedInManifestFile, 
+  Project38.Camera_winform.resources - Embedded, ContainedInManifestFile, 
   Project38.MyForm.resources - Embedded, ContainedInManifestFile, 
   Project38.MyForm2.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
@@ -13,6 +15,8 @@ Assembly AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07
 	hash=None, flags=None
 Assembly DarrenLee.Media, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=None, flags=None
+Assembly MessageBoxManager, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=None, flags=None
 Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
 Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
@@ -27,6 +31,35 @@ Assembly Interop.WMPLib.1.0, Version=1.0.*, Culture=Invariant Language (Invarian
 	hash=None, flags=None
 Assembly AxInterop.WMPLib.1.0, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=None, flags=None
+Class Project38.Camera_winform: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    DarrenLee.Media.Camera MyCamera : Public
+  Methods:
+    MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
+    MyCamera_OnFrameArrived(Object, FrameArrivedEventArgs): PrivateScope, Public, HideBySig
+Class Project38.Account_Settings: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    SByte who IsSignUnspecifiedByte : Public
+    SByte Logoutkey IsSignUnspecifiedByte : Public
+    System.String Code : Public, Static
+  Methods:
+    MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
+    save(): PrivateScope, Public, HideBySig
+    GetPass(): PrivateScope, Public, HideBySig
+    GetFullname(): PrivateScope, Public, HideBySig
+    GetUsername(): PrivateScope, Public, HideBySig
+    GetEmail(): PrivateScope, Public, HideBySig
+    GetPhone(): PrivateScope, Public, HideBySig
+    Getsend_email(): PrivateScope, Public, HideBySig
+    logout(): PrivateScope, Public, HideBySig
+    save_key(): PrivateScope, Public, HideBySig
+    Show_Account(): PrivateScope, Public, HideBySig
 Class Project38.MyForm2: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -60,3 +93,4 @@ Class Project38.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     add_Symptom(): PrivateScope, Public, HideBySig
     remove_disease(): PrivateScope, Public, HideBySig
     remove_Symptom(): PrivateScope, Public, HideBySig
+    logout_back(): PrivateScope, Public, HideBySig

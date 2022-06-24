@@ -1,0 +1,26 @@
+ImageRuntimeVersion: v2.0.50727
+Assembly MessageBoxManager, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class System.Windows.Forms.MessageBoxManager: AutoLayout, AnsiClass, Class, Public
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    System.String OK : Public, Static
+    System.String Cancel : Public, Static
+    System.String Abort : Public, Static
+    System.String Retry : Public, Static
+    System.String Ignore : Public, Static
+    System.String Yes : Public, Static
+    System.String No : Public, Static
+  Methods:
+    Register(): PrivateScope, Public, Static, HideBySig
+    Unregister(): PrivateScope, Public, Static, HideBySig
+Struct System.Windows.Forms.MessageBoxManager+CWPRETSTRUCT: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    IntPtr lResult : Public
+    IntPtr lParam : Public
+    IntPtr wParam : Public
+    UInt32 message : Public
+    IntPtr hwnd : Public
