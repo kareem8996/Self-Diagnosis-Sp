@@ -1,15 +1,23 @@
 ﻿  COM Reference 'WMPLib.1.0' is the interop assembly for ActiveX control 'AxWMPLib.1.0' but was marked to be linked by the compiler with the /link flag. This COM reference will be treated as a reference and will not be linked.
+  Account_Settings.cpp
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(876,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(1000,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(1013,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
   MyForm.cpp
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm2.h(274,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(691,10): warning C4101: 'check_input': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(772,10): warning C4101: 'check': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(2767,27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(2959,30): warning C4101: 'check_username': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(3137,30): warning C4101: 'check_username': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(3310,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(3616,13): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(3973,13): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.h(4226,36): warning C4101: 'symptomChoice': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Project38\MyForm.cpp(6,38): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
-  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Project38.vcxproj -> C:\Users\karee\Desktop\Uni Projects\SP\Project38\x64\Debug\Project38.exe
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm2.h(274,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(876,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(1000,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\Account_Settings.h(1013,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(715,10): warning C4101: 'check_input': unreferenced local variable
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(796,10): warning C4101: 'check': unreferenced local variable
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(2815,27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(3007,30): warning C4101: 'check_username': unreferenced local variable
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(3193,30): warning C4101: 'check_username': unreferenced local variable
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(3377,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(3678,13): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(4029,13): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.h(4282,36): warning C4101: 'symptomChoice': unreferenced local variable
+F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\MyForm.cpp(6,38): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  Generating Code...
+  Account_Settings.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  Project38.vcxproj -> F:\ASU\2nd term\Projects\Self-Diagnosis-Sp\x64\Debug\Project38.exe
