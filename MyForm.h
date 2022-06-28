@@ -30,7 +30,7 @@ struct Accounts {
     string password;
     string email;
 };
-struct Diseases{
+struct Diseases {
     string name;
     string info;
     vector<string> symps;
@@ -39,7 +39,7 @@ struct Diseases{
 
 }CurrentDisease;
 
-string sympnum="0";
+string sympnum = "0";
 string disease_name;
 
 string disease_info;
@@ -113,7 +113,22 @@ Doctors allDoctors[1000] = {};
 Patient allPatients[1000] = {};
 vector<Diseases> allDiseases = {};
 vector<string> allSymptoms = {};
+vector<string> allUsernames = {};
+vector<string> allPhones = {};
+vector<string> allEmails = {};
+void ValidatoryData() {
+    for (int i = 0; i<index_allPatients; i++) {
+        allUsernames.push_back(allPatients[i].account.username);
+        //allPhones.push_back(allPatients[i].account.phone);
+        allEmails.push_back(allPatients[i].account.email);
+    }
+    for (int i = 0; i<index_allDoctors; i++) {
+        allUsernames.push_back(allDoctors[i].account.username);
+        allEmails.push_back(allDoctors[i].account.email);
+        allPhones.push_back(allDoctors[i].phone);
+    }
 
+}
 //----------------------------Text Handling Functions---------------------
 void writeAllDoctors(Doctors allDoctors[]);//when quit
 void writeAllDiseases(vector<Diseases> allDiseases);//when quit
@@ -126,7 +141,11 @@ void getAllDiseases(vector<Diseases>* allDiseases);
 bool check_database(string username) {
     string org2 = "";
     for (int j = 0; j < username.size(); j++) {
-        org2 += char(tolower(username[j]));
+         if (isalpha(username[j]))
+                org2 += char(tolower(username[j]));
+            else {
+                org2 += username[j];
+            }
     }
     for (int i = 0; i < index_allDoctors; i++) {
         string org = "";
@@ -352,9 +371,9 @@ void extract_New_Symptoms_to_alldiseases(Diseases NewDisease) {
 
 //---------------------------------------Doctor's Functions---------------------------------------------------------
 
-int index_symp=1;
+int index_symp = 1;
 
-       
+
 
 void extract_disease_to_doctor() {
     for (int i = 0; i < allDiseases.size(); i++) {
@@ -433,8 +452,8 @@ void writeAllDiseases(vector<Diseases> allDiseases) {
 
 void writeAllPatients(Patient allPatients[]) {
     fstream file;
-        file.open("patients.txt", ios::out);
-        if (file.is_open()) {
+    file.open("patients.txt", ios::out);
+    if (file.is_open()) {
         for (int i = 0; i < index_allPatients; i++) {
             file << allPatients[i].age << endl;
             file << space2underscore(allPatients[i].patient_name) << endl;
@@ -527,13 +546,13 @@ void getAllDiseases(vector<Diseases>* allDiseases) {
 
 namespace Project38 {
     static string to;
-	using namespace std;
-	using namespace System;
-	using namespace System::ComponentModel;
-	using namespace System::Collections;
-	using namespace System::Windows::Forms;
-	using namespace System::Data;
-	using namespace System::Drawing;
+    using namespace std;
+    using namespace System;
+    using namespace System::ComponentModel;
+    using namespace System::Collections;
+    using namespace System::Windows::Forms;
+    using namespace System::Data;
+    using namespace System::Drawing;
     using namespace System::Web;
     using namespace System::Net;
     using namespace System::Net::Mail;
@@ -547,31 +566,58 @@ namespace Project38 {
     using namespace System::Drawing::Drawing2D;
 
     //---------------------------Structures to work on--------------------------
-	public ref class MyForm : public System::Windows::Forms::Form
-	{
-          
+    public ref class MyForm : public System::Windows::Forms::Form
+    {
 
 
-	public:
-            
 
+    public:
+
+        bool open = false;
+        bool open1 = false;
+    private: System::Windows::Forms::PictureBox^ pictureBox20;
+    public:
+    private: System::Windows::Forms::PictureBox^ pictureBox33;
+    private: System::Windows::Forms::PictureBox^ pictureBox34;
+    private: System::Windows::Forms::Label^ label35;
+    private: System::Windows::Forms::PictureBox^ pictureBox35;
+    private: System::Windows::Forms::PictureBox^ pictureBox36;
+    private: System::Windows::Forms::PictureBox^ pictureBox37;
+    private: System::Windows::Forms::Label^ label36;
+    private: System::Windows::Forms::PictureBox^ pictureBox38;
+    private: System::Windows::Forms::PictureBox^ pictureBox39;
+    private: System::Windows::Forms::PictureBox^ pictureBox40;
+    private: System::Windows::Forms::PictureBox^ pictureBox41;
+    private: System::Windows::Forms::Label^ label37;
+    private: System::Windows::Forms::Label^ label38;
+    private: System::Windows::Forms::PictureBox^ pictureBox42;
+    private: System::Windows::Forms::PictureBox^ pictureBox43;
+    private: System::Windows::Forms::Timer^ timer4;
+    private: System::Windows::Forms::Timer^ timer5;
+
+    public:
+
+
+    public:
         Camera^ MyCamera = gcnew Camera();
-        
+
         void MarshalString(String^ s, string& os) {
             using namespace Runtime::InteropServices;
             const char* chars =
                 (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
             os = chars;
             Marshal::FreeHGlobal(IntPtr((void*)chars));
-    }
+        }
         static String^ Code;
-    private: System::Windows::Forms::PictureBox^ pictureBox31;
+
     private: System::Windows::Forms::Button^ button8;
     private: System::Windows::Forms::Label^ label34;
     private: System::Windows::Forms::Button^ button9;
     private: System::Windows::Forms::PictureBox^ pictureBox32;
-    private: System::Windows::Forms::PictureBox^ pictureBox33;
-    private: System::Windows::Forms::Button^ Account_settings;
+
+
+    private: System::Windows::Forms::PictureBox^ pictureBox31;
+
     public: event DarrenLee::Media::FrameArrivedEventHandler^ wow;
     public:
         bool button2_cliccked;
@@ -586,33 +632,33 @@ namespace Project38 {
         MyForm(void)
         {
             InitializeComponent();
-            
-            
-            
+
+
+
             MyCamera->OnFrameArrived += gcnew FrameArrivedEventHandler(this, &MyForm::MyCamera_OnFrameArrived);
 
-            
+
             //
             //TODO: Add the constructor code here
             //
-            
+
         }
         void MyCamera_OnFrameArrived(Object^ source, FrameArrivedEventArgs^ e) {
             Image^ img = e->GetFrame();
             pictureBox31->Image = img;
         }
-//Patient--------------------------------------
-void printPatientMenu() {
+        //Patient--------------------------------------
+        void printPatientMenu() {
             String^ str2 = gcnew String((*CurrentPatient).patient_name.c_str());
             if ((*CurrentPatient).gender == 'f' || (*CurrentPatient).gender == 'F') {
-                label15->Text = String::Format( "Hello Ms/Mrs.{0}", str2);
-            }   
+                label15->Text = String::Format("Hello Ms/Mrs.{0}", str2);
+            }
             else label15->Text = String::Format("Hello Mr.{0}", str2);
         }
-void view_all_Symptoms() {
+        void view_all_Symptoms() {
             label17->Text = "Please enter the symptoms you are currently feeling.\nWhen you are done, enter 0\n";
-            label17->Show(); 
-            label19->Text="";
+            label17->Show();
+            label19->Text = "";
             label19->Show();
             vector<string> symptoms_patient_feeling = {};
             for (int i = 1; i <= allSymptoms.size(); i++) {
@@ -626,379 +672,405 @@ void view_all_Symptoms() {
 
             }
         }
-void viewhist() {
-    label19->Text = "";
-    if ((*CurrentPatient).Disease_History.size() == 0)
-       label19->Text+="You do not have a Diagnosis History";
-    else {
-        label19->Text+="The diseases you were diagnosed with are:\n";
-        for (int i = 1; i <= (*CurrentPatient).Disease_History.size(); i++) {
-            String^ index = gcnew String(to_string(i).c_str());
-            String^ str2 = gcnew String((*CurrentPatient).Disease_History[i - 1].c_str());
-            label19->Text+=String::Format("{0}-{1}\n",index,str2);
+        void viewhist() {
+            label19->Text = "";
+            if ((*CurrentPatient).Disease_History.size() == 0)
+                label19->Text += "You do not have a Diagnosis History";
+            else {
+                label19->Text += "The diseases you were diagnosed with are:\n";
+                for (int i = 1; i <= (*CurrentPatient).Disease_History.size(); i++) {
+                    String^ index = gcnew String(to_string(i).c_str());
+                    String^ str2 = gcnew String((*CurrentPatient).Disease_History[i - 1].c_str());
+                    label19->Text += String::Format("{0}-{1}\n", index, str2);
+                }
+            }
         }
-    }
-}
-void selfdiagnosis() {
+        void selfdiagnosis() {
 
-    
-   
-    bool check_duplicate = true;
-    Disease_Diagnosed.clear();
-    Related_Diseases.clear();
 
-        percentage_of_diagnosed_Disease.clear();
-        percentage_of_related_Disease.clear();
+
+            bool check_duplicate = true;
+            Disease_Diagnosed.clear();
+            Related_Diseases.clear();
+
+            percentage_of_diagnosed_Disease.clear();
+            percentage_of_related_Disease.clear();
 
 
 
 
-        for (int i = 0; i < allDiseases.size(); i++) {//iterate on diseases
-            float percentage = 0;
-            for (int j = 0; j < allDiseases[i].symps.size(); j++) {//iterate on symptoms of each disease
-                for (int k = 0; k < symptoms_patient_feeling.size(); k++) {//iterates on the symptoms the patient is feeling
-                    if (allSymptoms[stoi(symptoms_patient_feeling[k]) - 1] == allDiseases[i].symps[j]) {
-                        percentage++;
-                        break;
+            for (int i = 0; i < allDiseases.size(); i++) {//iterate on diseases
+                float percentage = 0;
+                for (int j = 0; j < allDiseases[i].symps.size(); j++) {//iterate on symptoms of each disease
+                    for (int k = 0; k < symptoms_patient_feeling.size(); k++) {//iterates on the symptoms the patient is feeling
+                        if (allSymptoms[stoi(symptoms_patient_feeling[k]) - 1] == allDiseases[i].symps[j]) {
+                            percentage++;
+                            break;
+                        }
+                    }
+
+                }
+
+                if (percentage / allDiseases[i].symps.size() >= 0.6) {
+                    percentage /= allDiseases[i].symps.size();
+                    Disease_Diagnosed.push_back(allDiseases[i]);
+                    percentage_of_diagnosed_Disease.push_back(percentage);
+                }
+                else if (percentage / allDiseases[i].symps.size() > 0) {
+                    percentage /= allDiseases[i].symps.size();
+                    Related_Diseases.push_back(allDiseases[i]);
+                    percentage_of_related_Disease.push_back(percentage);
+                }
+            }
+
+            if (Disease_Diagnosed.size() > 0) {
+                for (int i = 0; i < Disease_Diagnosed.size(); i++) {
+                    for (int j = 0; j < (*CurrentPatient).Disease_History.size(); j++) {
+                        if (Disease_Diagnosed[i].name == (*CurrentPatient).Disease_History[j]) {
+                            check_duplicate = false;
+                        }
+                    }
+                    if (check_duplicate) {
+
+                        (*CurrentPatient).Disease_History.push_back(Disease_Diagnosed[i].name);
+                    }
+                }
+            }
+            else if (Related_Diseases.size() > 0) {
+                float max_value = -1;
+                int max_index;
+                vector<int> index_max;
+                label17->Text = "You are not diagnosed with any Diseases, but here is the closest disease related to your symptoms:\n";
+                for (int i = 0; i < percentage_of_related_Disease.size(); i++) {
+                    if (percentage_of_related_Disease[i] > max_value) {
+                        max_value = percentage_of_related_Disease[i];
+                        max_index = i;
+                    }
+                }
+                index_max.push_back(max_index);
+                max_index++;
+                for (max_index; max_index < percentage_of_related_Disease.size(); max_index++) {
+                    if (percentage_of_related_Disease[max_index] == max_value) {
+                        index_max.push_back(max_index);
                     }
                 }
 
-            }
 
-            if (percentage / allDiseases[i].symps.size() >= 0.6) {
-                percentage /= allDiseases[i].symps.size();
-                Disease_Diagnosed.push_back(allDiseases[i]);
-                percentage_of_diagnosed_Disease.push_back(percentage);
-            }
-            else if (percentage / allDiseases[i].symps.size() > 0) {
-                percentage /= allDiseases[i].symps.size();
-                Related_Diseases.push_back(allDiseases[i]);
-                percentage_of_related_Disease.push_back(percentage);
+
             }
         }
-
-        if (Disease_Diagnosed.size() > 0) {
-            for (int i = 0; i < Disease_Diagnosed.size(); i++) {
-                for (int j = 0; j < (*CurrentPatient).Disease_History.size(); j++) {
-                    if (Disease_Diagnosed[i].name == (*CurrentPatient).Disease_History[j]) {
-                        check_duplicate = false;
-                    }
-                }
-                if (check_duplicate) {
-
-                    (*CurrentPatient).Disease_History.push_back(Disease_Diagnosed[i].name);
-                }
+        void display_Symptoms_for_Disease() {
+            bool check_input;
+            string x;
+            label19->Text = "";
+            label19->Show();
+            for (int i = 1; i <= allDiseases.size(); i++) {
+                String^ index = gcnew String(to_string(i).c_str());
+                String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
+                if (i % 10 == 0)
+                    label19->Text += String::Format("{0}-{1}\n", index, str2);
+                else    label19->Text += String::Format("{0}-{1}      ", index, str2);
             }
+            label17->Text = "please enter the number for the particular Disease.";
+            label17->Show();
+            textBox4->Text = "";
+            textBox4->Show();
+            button3->Text = "Next";
+            button3->Show();
+
+
+
+
+
         }
-         else if (Related_Diseases.size() > 0) {
-            float max_value = -1;
-            int max_index;
-            vector<int> index_max;
-            label17->Text="You are not diagnosed with any Diseases, but here is the closest disease related to your symptoms:\n";
-            for (int i = 0; i < percentage_of_related_Disease.size(); i++) {
-                if (percentage_of_related_Disease[i] > max_value) {
-                    max_value = percentage_of_related_Disease[i];
-                    max_index = i;
-                }
-            }
-            index_max.push_back(max_index);
-            max_index++;
-            for (max_index; max_index < percentage_of_related_Disease.size(); max_index++) {
-                if (percentage_of_related_Disease[max_index] == max_value) {
-                    index_max.push_back(max_index);
-                }
-            }
-            
-
-      
-        }
-}
-void display_Symptoms_for_Disease() {
-    bool check_input;
-    string x;
-    label19->Text = "";
-    label19->Show();
-    for (int i = 1; i <= allDiseases.size(); i++) {
-        String^ index = gcnew String(to_string(i).c_str());
-        String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
-        if (i % 10 == 0)
-            label19->Text += String::Format("{0}-{1}\n", index, str2);
-        else    label19->Text += String::Format("{0}-{1}      ", index, str2);
-    }
-    label17->Text = "please enter the number for the particular Disease.";
-    label17->Show();
-    textBox4->Text = "";
-    textBox4->Show();
-    button3->Text = "Next";
-    button3->Show();
-    
-
-
-
-
-}
-void extract_New_Symptoms_to_alldiseases(Diseases NewDisease) {
-    int f = 0;
-    for (; f < allDiseases.size(); f++) {
-        if (allDiseases[f].name == NewDisease.name) {
-            break;
-        }
-    }
-        allDiseases[f].symps.push_back(NewDisease.symps[NewDisease.symps.size() - 1]);
-}
-//--------------------------------------------
-//Doctor--------------------------------------
-bool check_disease_name(string disease_name) {
-    bool check = false;
-
-    for (int i = 0; i < allDiseases.size(); i++) {
-        int c = 0;
-        if (allDiseases[i].name.size() == disease_name.size()) {
-            for (int j = 0; j < allDiseases[i].name.size(); j++) {
-                if (tolower(allDiseases[i].name[j]) == tolower(disease_name[j])) {
-                    c++;
-                }
-                if (c == allDiseases[i].name.size()) {
+        void extract_New_Symptoms_to_alldiseases(Diseases NewDisease) {
+            int f = 0;
+            for (; f < allDiseases.size(); f++) {
+                if (allDiseases[f].name == NewDisease.name) {
                     break;
                 }
             }
+            allDiseases[f].symps.push_back(NewDisease.symps[NewDisease.symps.size() - 1]);
         }
-        if (c == allDiseases[i].name.size()) {
-            if ((*CurrentDoctor).phone == allDiseases[i].doc_phone) {
-                label32->Text = "You have entered this disease before\n";
-                label32->Show();
-                return true;
+        //--------------------------------------------
+        //Doctor--------------------------------------
+        bool check_disease_name(string disease_name) {
+            bool check = false;
+
+            for (int i = 0; i < allDiseases.size(); i++) {
+                int c = 0;
+                if (allDiseases[i].name.size() == disease_name.size()) {
+                    for (int j = 0; j < allDiseases[i].name.size(); j++) {
+                        if (tolower(allDiseases[i].name[j]) == tolower(disease_name[j])) {
+                            c++;
+                        }
+                        if (c == allDiseases[i].name.size()) {
+                            break;
+                        }
+                    }
+                }
+                if (c == allDiseases[i].name.size()) {
+                    if ((*CurrentDoctor).phone == allDiseases[i].doc_phone) {
+                        label32->Text = "You have entered this disease before\n";
+                        label32->Show();
+                        return true;
+                    }
+                    else {
+                        String^ str2 = gcnew String(allDiseases[i].doc_name.c_str());
+                        String^ str3 = gcnew String(allDiseases[i].doc_phone.c_str());
+                        label32->Text = String::Format("Unfortunately this disease was added by Dr.{0}\nfor further info you can contact him on:", str2, str3);
+                        label32->Show();
+                        return true;
+
+                    }
+                }
+            }
+            return false;
+        }
+        void PrintDoctorMenu() {
+            String^ str2 = gcnew String((*CurrentDoctor).doc_name.c_str());
+            label30->Text = String::Format("Hello Dr.{0}", str2);
+            string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
+            String^ str3 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str3)) {
+                pictureBox32->ImageLocation = str3;
+                pictureBox36->ImageLocation = str3;
             }
             else {
-                String^ str2 = gcnew String(allDiseases[i].doc_name.c_str());
-                String^ str3 = gcnew String(allDiseases[i].doc_phone.c_str());
-                label32->Text = String::Format("Unfortunately this disease was added by Dr.{0}\nfor further info you can contact him on:",str2,str3 );
-                label32->Show();
-                return true;
-
+                pictureBox32->ImageLocation = "PICs\\guest.jpg";
+                pictureBox36->ImageLocation = "PICs\\guest.jpg";
             }
         }
-    }
-    return false;
-}
-void PrintDoctorMenu() {
-    String^ str2 = gcnew String((*CurrentDoctor).doc_name.c_str());
-    label30->Text= String::Format("Hello Dr.{0}", str2);
-    string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
-    String^ str3 = gcnew String(wow.c_str());
-    if (System::IO::File::Exists(str3)) {
-        pictureBox32->ImageLocation = str3;
-    }
-    else {
-        pictureBox32->ImageLocation = "PICs\\guest.jpg";
-    } 
-}
-void display_All_diseases() {
-    string choice;
-    bool check;        int viewChoice = -1;
-   label29->Text= "Choose the disease you want to view.";
-   label29->Show();
-   label28->Text = "";
-   label28->Show();
-   textBox4->Show();
-    for (int i = 1; i <= allDiseases.size(); i++) {
-        String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
-        String^ index = gcnew String(to_string(i).c_str());
-        if (i % 5 == 0 || i == allDiseases.size())
-            label28->Text+=String::Format("{0}-{1}\n",index,str2);
-        else
-            label28->Text += String::Format("{0}-{1}     ", index, str2);
-    }
-}
-void view_Patients() {
-    bool check = true;
-    string choice;
-    int viewChoice = -1;
-        label29->Text = "Which Disease you want to display its Patients?";
-        label29->Show();
-        label28->Text = "";
-        textBox4->Show();
-        for (int i = 1; i <= allDiseases.size(); i++) {
-            String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
-            String^ index = gcnew String(to_string(i).c_str());
-            if (i % 5 == 0 || i == allDiseases.size())
-                label28->Text += String::Format("{0}-{1}\n", index, str2);
-            else
-                label28->Text += String::Format("{0}-{1}     ", index, str2);
+        void display_All_diseases() {
+            string choice;
+            bool check;        int viewChoice = -1;
+            label29->Text = "Choose the disease you want to view.";
+            label29->Show();
+            label28->Text = "";
+            label28->Show();
+            textBox4->Show();
+            for (int i = 1; i <= allDiseases.size(); i++) {
+                String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
+                String^ index = gcnew String(to_string(i).c_str());
+                if (i % 5 == 0 || i == allDiseases.size())
+                    label28->Text += String::Format("{0}-{1}\n", index, str2);
+                else
+                    label28->Text += String::Format("{0}-{1}     ", index, str2);
+            }
         }
-        label28->Show();
+        void view_Patients() {
+            bool check = true;
+            string choice;
+            int viewChoice = -1;
+            label29->Text = "Which Disease you want to display its Patients?";
+            label29->Show();
+            label28->Text = "";
+            textBox4->Show();
+            for (int i = 1; i <= allDiseases.size(); i++) {
+                String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
+                String^ index = gcnew String(to_string(i).c_str());
+                if (i % 5 == 0 || i == allDiseases.size())
+                    label28->Text += String::Format("{0}-{1}\n", index, str2);
+                else
+                    label28->Text += String::Format("{0}-{1}     ", index, str2);
+            }
+            label28->Show();
 
-}
-void add_Symptom() {
-    string choice;
-    bool check = true;
-    char choice_symptom = 'n';
-    int iteration = 0;
-    string symptom_info;
-    //if the doctor doesn't have ant disease this if condition runs
-    if ((*CurrentDoctor).doc_diseases.size() == 0) {
-        label29->Text= "Unfortunately You haven't added any disease yet.";
-        label29->Show();
-        button4->Text = "End";
-        textBox5->Hide();
-        button6->Hide();
-    }
-    else {
-       label29->Text= "Please choose Which disease you want\nto add its symptoms....";
-       //This for loop is to display all diseases added by the doctor
-       label28->Text = "";
-       label29->Show();
-        for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
-            String^ index = gcnew String(to_string(i+1).c_str());
-            String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
-            if(i%5==0&&i!=0)  label28->Text += String::Format("{0}-{1}\n", index,str2);
-            else label28->Text += String::Format("{0}-{1}     ", index, str2);
         }
-        textBox5->Show();
-        button6->Show();
-        label28->Show();
-    } // end of else
-}
-void remove_disease() {
-    string choice;
-    bool check = true;
-    //if the doctor doesn't have ant disease this if condition runs
-    if ((*CurrentDoctor).doc_diseases.size() == 0) {
-        label29->Text="Unfortunately You haven't added any disease yet.\n";
-        label29->Show();
-        button4->Text = "End";
-        textBox5->Hide();
-        button6->Hide();
-    }
-    else {
-        //This for loop is to display all diseases added by the doctor
-        label28->Text = "";
-        for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
-            String^ index = gcnew String(to_string(i + 1).c_str());
-            String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
-            if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
-            else label28->Text += String::Format("{0}-{1}     ", index, str2);
+        void add_Symptom() {
+            string choice;
+            bool check = true;
+            char choice_symptom = 'n';
+            int iteration = 0;
+            string symptom_info;
+            //if the doctor doesn't have ant disease this if condition runs
+            if ((*CurrentDoctor).doc_diseases.size() == 0) {
+                label29->Text = "Unfortunately You haven't added any disease yet.";
+                label29->Show();
+                button4->Text = "End";
+                textBox5->Hide();
+                button6->Hide();
+            }
+            else {
+                label29->Text = "Please choose Which disease you want\nto add its symptoms....";
+                //This for loop is to display all diseases added by the doctor
+                label28->Text = "";
+                label29->Show();
+                for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
+                    String^ index = gcnew String(to_string(i + 1).c_str());
+                    String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
+                    if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
+                    else label28->Text += String::Format("{0}-{1}     ", index, str2);
+                }
+                textBox5->Show();
+                button6->Show();
+                label28->Show();
+            } // end of else
         }
-        button4->Text = "Next";
-        label28->Show();
-        label29->Text = "Please choose Which disease you want to delete..";
-        label29->Show();
-        textBox5->Show();
-        button6->Show();
-        label28->Show();
-    }
-}
-void remove_Symptom() {
-    string choice;
-    bool check = true;
-    //if the doctor doesn't have ant disease this if condition runs
-    if ((*CurrentDoctor).doc_diseases.size() == 0) {
-        label29->Text = "Unfortunately You haven't added any disease yet.\n";
-        label29->Show();
-        button4->Text = "End";
-        textBox5->Hide();
-        button6->Hide();
-    }
-    else {
-        //This for loop is to display all diseases added by the doctor
-        label28->Text = "";
-        for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
-            String^ index = gcnew String(to_string(i + 1).c_str());
-            String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
-            if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
-            else label28->Text += String::Format("{0}-{1}     ", index, str2);
+        void remove_disease() {
+            string choice;
+            bool check = true;
+            //if the doctor doesn't have ant disease this if condition runs
+            if ((*CurrentDoctor).doc_diseases.size() == 0) {
+                label29->Text = "Unfortunately You haven't added any disease yet.\n";
+                label29->Show();
+                button4->Text = "End";
+                textBox5->Hide();
+                button6->Hide();
+            }
+            else {
+                //This for loop is to display all diseases added by the doctor
+                label28->Text = "";
+                for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
+                    String^ index = gcnew String(to_string(i + 1).c_str());
+                    String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
+                    if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
+                    else label28->Text += String::Format("{0}-{1}     ", index, str2);
+                }
+                button4->Text = "Next";
+                label28->Show();
+                label29->Text = "Please choose Which disease you want to delete..";
+                label29->Show();
+                textBox5->Show();
+                button6->Show();
+                label28->Show();
+            }
         }
-        button4->Text = "Next";
-        label28->Show();
-        label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
-        label29->Show();
-        textBox5->Show();
-        button6->Show();
-        label28->Show();
-
-
-       
-    }//this is for the second else which runs when the symptoms are greater than 0
-}
-void logout_back() {
-    Form::Width += 200;
-    Form::Height += 150;
-    timer2->Start();
-    Sign_in->Text = "Sign-in";
-    Register->Text = "Register";
-    panel4->Hide();
-    panel5->Hide();
-    textBox1->Text = "";
-    textBox2->Text = "";
-}
-
-
-	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		~MyForm()
-		{
-			if (components)
-			{
-				delete components;
-			}
-		}
-
-	protected:
+        void remove_Symptom() {
+            string choice;
+            bool check = true;
+            //if the doctor doesn't have ant disease this if condition runs
+            if ((*CurrentDoctor).doc_diseases.size() == 0) {
+                label29->Text = "Unfortunately You haven't added any disease yet.\n";
+                label29->Show();
+                button4->Text = "End";
+                textBox5->Hide();
+                button6->Hide();
+            }
+            else {
+                //This for loop is to display all diseases added by the doctor
+                label28->Text = "";
+                for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
+                    String^ index = gcnew String(to_string(i + 1).c_str());
+                    String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
+                    if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
+                    else label28->Text += String::Format("{0}-{1}     ", index, str2);
+                }
+                button4->Text = "Next";
+                label28->Show();
+                label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
+                label29->Show();
+                textBox5->Show();
+                button6->Show();
+                label28->Show();
 
 
 
-   
-	private: System::Windows::Forms::Label^ label1;
-
-	private: System::Windows::Forms::Button^ Register;
-
-
-
-
-	private: System::Windows::Forms::Timer^ timer1;
-	private: System::Windows::Forms::Timer^ timer2;
-
-
-	private: System::Windows::Forms::Label^ Username;
-	private: System::Windows::Forms::Label^ Password;
-
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ Next;
-
-
-
-
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Panel^ panel2;
-	private: System::Windows::Forms::TextBox^ textBox3;
-
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Panel^ panel1;
-
-	private: System::Windows::Forms::PictureBox^ pictureBox3;
-	private: System::Windows::Forms::Button^ Sign_in;
-	private: System::Windows::Forms::PictureBox^ pictureBox4;
-	private: System::Windows::Forms::PictureBox^ pictureBox5;
-
-
-
-	private: System::Windows::Forms::PictureBox^ pictureBox6;
-	private: System::Windows::Forms::PictureBox^ pictureBox7;
-	private: System::Windows::Forms::PictureBox^ pictureBox2;
-
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::Label^ label6;
+            }//this is for the second else which runs when the symptoms are greater than 0
+        }
+        void logout_back() {
+            Form::Width += 200;
+            Form::Height += 150;
+            timer2->Start();
+            Sign_in->Text = "Sign-in";
+            Register->Text = "Register";
+            panel4->Hide();
+            panel5->Hide();
+            textBox1->Text = "";
+            textBox2->Text = "";
+            if (open) {
+                open = false;
+                pictureBox33->Hide();
+                label20->Hide();
+                label21->Hide();
+                label35->Hide();
+                pictureBox21->Hide();
+                pictureBox20->Hide();
+                pictureBox34->Hide();
+                pictureBox35->Hide();
+                pictureBox36->Hide();
+            }
+            if (open1) {
+                open1 = false;
+                label36->Hide();
+                label37->Hide();
+                label38->Hide();
+                pictureBox38->Hide();
+                pictureBox40->Hide();
+                pictureBox41->Hide();
+                pictureBox42->Hide();
+                pictureBox39->Hide();
+                pictureBox37->Hide();
+            }
+        }
 
 
+    protected:
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        ~MyForm()
+        {
+            if (components)
+            {
+                delete components;
+            }
+        }
 
-	private: System::Windows::Forms::PictureBox^ pictureBox8;
-	private: System::Windows::Forms::PictureBox^ pictureBox9;
-	internal: System::Windows::Forms::Label^ label10;
-	private: System::Windows::Forms::Label^ label11;
-	private: System::Windows::Forms::Label^ label3;
+    protected:
+
+
+
+
+    private: System::Windows::Forms::Label^ label1;
+
+    private: System::Windows::Forms::Button^ Register;
+
+
+
+
+    private: System::Windows::Forms::Timer^ timer1;
+    private: System::Windows::Forms::Timer^ timer2;
+
+
+    private: System::Windows::Forms::Label^ Username;
+    private: System::Windows::Forms::Label^ Password;
+
+    private: System::Windows::Forms::Button^ button1;
+    private: System::Windows::Forms::Button^ Next;
+
+
+
+
+    private: System::Windows::Forms::TextBox^ textBox2;
+    private: System::Windows::Forms::Panel^ panel2;
+    private: System::Windows::Forms::TextBox^ textBox3;
+
+    private: System::Windows::Forms::TextBox^ textBox1;
+    private: System::Windows::Forms::Panel^ panel1;
+
+    private: System::Windows::Forms::PictureBox^ pictureBox3;
+    private: System::Windows::Forms::Button^ Sign_in;
+    private: System::Windows::Forms::PictureBox^ pictureBox4;
+    private: System::Windows::Forms::PictureBox^ pictureBox5;
+
+
+
+    private: System::Windows::Forms::PictureBox^ pictureBox6;
+    private: System::Windows::Forms::PictureBox^ pictureBox7;
+    private: System::Windows::Forms::PictureBox^ pictureBox2;
+
+    private: System::Windows::Forms::Label^ label4;
+    private: System::Windows::Forms::Label^ label5;
+    private: System::Windows::Forms::Label^ label6;
+
+
+
+    private: System::Windows::Forms::PictureBox^ pictureBox8;
+    private: System::Windows::Forms::PictureBox^ pictureBox9;
+    internal: System::Windows::Forms::Label^ label10;
+    private: System::Windows::Forms::Label^ label11;
+    private: System::Windows::Forms::Label^ label3;
 
     private: System::Windows::Forms::Timer^ timer3;
     private: System::Windows::Forms::Label^ label7;
@@ -1015,57 +1087,57 @@ void logout_back() {
     private: System::Windows::Forms::Label^ label9;
     private: System::Windows::Forms::Label^ label12;
     private: System::Windows::Forms::PictureBox^ pictureBox15;
-    private: System::Windows::Forms::PictureBox^ pictureBox16;
-    private: System::Windows::Forms::PictureBox^ pictureBox17;
-    private: System::Windows::Forms::Label^ label13;
-    private: System::Windows::Forms::Label^ label14;
+
+
+
+
     private: System::Windows::Forms::Label^ label15;
     private: System::Windows::Forms::PictureBox^ pictureBox18;
     private: System::Windows::Forms::Label^ label16;
     private: System::Windows::Forms::Label^ label17;
-private: System::Windows::Forms::TextBox^ textBox4;
-private: System::Windows::Forms::Label^ label18;
-private: System::Windows::Forms::Button^ button2;
-private: System::Windows::Forms::Label^ label19;
-private: System::Windows::Forms::Button^ button3;
-private: System::Windows::Forms::Panel^ panel5;
-private: System::Windows::Forms::PictureBox^ pictureBox19;
-private: System::Windows::Forms::PictureBox^ pictureBox20;
+    private: System::Windows::Forms::TextBox^ textBox4;
+    private: System::Windows::Forms::Label^ label18;
+    private: System::Windows::Forms::Button^ button2;
+    private: System::Windows::Forms::Label^ label19;
+    private: System::Windows::Forms::Button^ button3;
+    private: System::Windows::Forms::Panel^ panel5;
+    private: System::Windows::Forms::PictureBox^ pictureBox19;
 
-private: System::Windows::Forms::PictureBox^ pictureBox22;
-private: System::Windows::Forms::PictureBox^ pictureBox23;
-private: System::Windows::Forms::PictureBox^ pictureBox24;
-private: System::Windows::Forms::PictureBox^ pictureBox25;
-private: System::Windows::Forms::Label^ label20;
-private: System::Windows::Forms::Label^ label21;
-private: System::Windows::Forms::Label^ label22;
-private: System::Windows::Forms::Label^ label23;
-private: System::Windows::Forms::PictureBox^ pictureBox26;
-private: System::Windows::Forms::Label^ label24;
-private: System::Windows::Forms::Label^ label25;
-private: System::Windows::Forms::Label^ label26;
-private: System::Windows::Forms::Label^ label27;
-private: System::Windows::Forms::Label^ label30;
-private: System::Windows::Forms::PictureBox^ pictureBox27;
-private: System::Windows::Forms::PictureBox^ pictureBox28;
-private: System::Windows::Forms::PictureBox^ pictureBox29;
-private: System::Windows::Forms::Label^ label28;
-private: System::Windows::Forms::Label^ label29;
-private: System::Windows::Forms::TextBox^ textBox5;
 
-private: System::Windows::Forms::PictureBox^ pictureBox21;
-private: System::Windows::Forms::Button^ button6;
+    private: System::Windows::Forms::PictureBox^ pictureBox22;
+    private: System::Windows::Forms::PictureBox^ pictureBox23;
+    private: System::Windows::Forms::PictureBox^ pictureBox24;
+    private: System::Windows::Forms::PictureBox^ pictureBox25;
+    private: System::Windows::Forms::Label^ label20;
+    private: System::Windows::Forms::Label^ label21;
+    private: System::Windows::Forms::Label^ label22;
+    private: System::Windows::Forms::Label^ label23;
+    private: System::Windows::Forms::PictureBox^ pictureBox26;
+    private: System::Windows::Forms::Label^ label24;
+    private: System::Windows::Forms::Label^ label25;
+    private: System::Windows::Forms::Label^ label26;
+    private: System::Windows::Forms::Label^ label27;
+    private: System::Windows::Forms::Label^ label30;
+    private: System::Windows::Forms::PictureBox^ pictureBox27;
+    private: System::Windows::Forms::PictureBox^ pictureBox28;
+    private: System::Windows::Forms::PictureBox^ pictureBox29;
+    private: System::Windows::Forms::Label^ label28;
+    private: System::Windows::Forms::Label^ label29;
+    private: System::Windows::Forms::TextBox^ textBox5;
 
-private: System::Windows::Forms::Button^ button4;
-private: System::Windows::Forms::Label^ label32;
-private: System::Windows::Forms::TextBox^ textBox6;
-private: System::Windows::Forms::Label^ label31;
-private: System::Windows::Forms::PictureBox^ pictureBox30;
-private: System::Windows::Forms::PictureBox^ pictureBox12;
-private: System::Windows::Forms::Button^ Back_P;
-private: System::Windows::Forms::Button^ button7;
-private: System::Windows::Forms::Label^ label33;
-private: System::Windows::Forms::Button^ button5;
+    private: System::Windows::Forms::PictureBox^ pictureBox21;
+    private: System::Windows::Forms::Button^ button6;
+
+    private: System::Windows::Forms::Button^ button4;
+    private: System::Windows::Forms::Label^ label32;
+    private: System::Windows::Forms::TextBox^ textBox6;
+    private: System::Windows::Forms::Label^ label31;
+    private: System::Windows::Forms::PictureBox^ pictureBox30;
+    private: System::Windows::Forms::PictureBox^ pictureBox12;
+    private: System::Windows::Forms::Button^ Back_P;
+    private: System::Windows::Forms::Button^ button7;
+    private: System::Windows::Forms::Label^ label33;
+    private: System::Windows::Forms::Button^ button5;
 
 
 
@@ -1086,7 +1158,7 @@ private: System::Windows::Forms::Button^ button5;
 
 
     internal:
-	private:
+    private:
 
 
 
@@ -1104,26 +1176,26 @@ private: System::Windows::Forms::Button^ button5;
 
 
 
-	private: System::ComponentModel::IContainer^ components;
+    private: System::ComponentModel::IContainer^ components;
 
 
 
 
 
 
-	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+    private:
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
 
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		void InitializeComponent(void)
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        void InitializeComponent(void)
+        {
             this->components = (gcnew System::ComponentModel::Container());
             System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
             this->label1 = (gcnew System::Windows::Forms::Label());
@@ -1158,21 +1230,56 @@ private: System::Windows::Forms::Button^ button5;
             this->label7 = (gcnew System::Windows::Forms::Label());
             this->label2 = (gcnew System::Windows::Forms::Label());
             this->panel3 = (gcnew System::Windows::Forms::Panel());
+            this->panel4 = (gcnew System::Windows::Forms::Panel());
+            this->pictureBox37 = (gcnew System::Windows::Forms::PictureBox());
+            this->label36 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox38 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox39 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox40 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox41 = (gcnew System::Windows::Forms::PictureBox());
+            this->label37 = (gcnew System::Windows::Forms::Label());
+            this->label38 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox42 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox43 = (gcnew System::Windows::Forms::PictureBox());
+            this->button7 = (gcnew System::Windows::Forms::Button());
+            this->Back_P = (gcnew System::Windows::Forms::Button());
+            this->pictureBox12 = (gcnew System::Windows::Forms::PictureBox());
+            this->button3 = (gcnew System::Windows::Forms::Button());
+            this->label19 = (gcnew System::Windows::Forms::Label());
+            this->button2 = (gcnew System::Windows::Forms::Button());
+            this->label18 = (gcnew System::Windows::Forms::Label());
+            this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+            this->label17 = (gcnew System::Windows::Forms::Label());
+            this->label16 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
+            this->label8 = (gcnew System::Windows::Forms::Label());
+            this->label9 = (gcnew System::Windows::Forms::Label());
+            this->label12 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox15 = (gcnew System::Windows::Forms::PictureBox());
+            this->label15 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox18 = (gcnew System::Windows::Forms::PictureBox());
             this->button9 = (gcnew System::Windows::Forms::Button());
             this->button8 = (gcnew System::Windows::Forms::Button());
             this->label34 = (gcnew System::Windows::Forms::Label());
             this->button5 = (gcnew System::Windows::Forms::Button());
+            this->pictureBox31 = (gcnew System::Windows::Forms::PictureBox());
             this->label33 = (gcnew System::Windows::Forms::Label());
-            this->panel4 = (gcnew System::Windows::Forms::Panel());
-            this->button7 = (gcnew System::Windows::Forms::Button());
-            this->Back_P = (gcnew System::Windows::Forms::Button());
-            this->pictureBox12 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
             this->panel5 = (gcnew System::Windows::Forms::Panel());
-            this->Account_settings = (gcnew System::Windows::Forms::Button());
+            this->pictureBox36 = (gcnew System::Windows::Forms::PictureBox());
+            this->label35 = (gcnew System::Windows::Forms::Label());
+            this->pictureBox35 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox34 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox21 = (gcnew System::Windows::Forms::PictureBox());
+            this->pictureBox20 = (gcnew System::Windows::Forms::PictureBox());
+            this->label21 = (gcnew System::Windows::Forms::Label());
+            this->label20 = (gcnew System::Windows::Forms::Label());
             this->pictureBox33 = (gcnew System::Windows::Forms::PictureBox());
             this->pictureBox32 = (gcnew System::Windows::Forms::PictureBox());
             this->pictureBox30 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox31 = (gcnew System::Windows::Forms::PictureBox());
             this->label26 = (gcnew System::Windows::Forms::Label());
             this->pictureBox25 = (gcnew System::Windows::Forms::PictureBox());
             this->pictureBox23 = (gcnew System::Windows::Forms::PictureBox());
@@ -1190,39 +1297,15 @@ private: System::Windows::Forms::Button^ button5;
             this->label32 = (gcnew System::Windows::Forms::Label());
             this->button6 = (gcnew System::Windows::Forms::Button());
             this->button4 = (gcnew System::Windows::Forms::Button());
-            this->pictureBox21 = (gcnew System::Windows::Forms::PictureBox());
             this->textBox5 = (gcnew System::Windows::Forms::TextBox());
             this->label29 = (gcnew System::Windows::Forms::Label());
             this->label28 = (gcnew System::Windows::Forms::Label());
             this->pictureBox29 = (gcnew System::Windows::Forms::PictureBox());
             this->pictureBox28 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox20 = (gcnew System::Windows::Forms::PictureBox());
-            this->label20 = (gcnew System::Windows::Forms::Label());
-            this->label21 = (gcnew System::Windows::Forms::Label());
             this->label30 = (gcnew System::Windows::Forms::Label());
             this->pictureBox27 = (gcnew System::Windows::Forms::PictureBox());
-            this->button3 = (gcnew System::Windows::Forms::Button());
-            this->label19 = (gcnew System::Windows::Forms::Label());
-            this->button2 = (gcnew System::Windows::Forms::Button());
-            this->label18 = (gcnew System::Windows::Forms::Label());
-            this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-            this->label17 = (gcnew System::Windows::Forms::Label());
-            this->label16 = (gcnew System::Windows::Forms::Label());
-            this->pictureBox10 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox11 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox13 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox14 = (gcnew System::Windows::Forms::PictureBox());
-            this->label8 = (gcnew System::Windows::Forms::Label());
-            this->label9 = (gcnew System::Windows::Forms::Label());
-            this->label12 = (gcnew System::Windows::Forms::Label());
-            this->pictureBox15 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox16 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox17 = (gcnew System::Windows::Forms::PictureBox());
-            this->label13 = (gcnew System::Windows::Forms::Label());
-            this->label14 = (gcnew System::Windows::Forms::Label());
-            this->label15 = (gcnew System::Windows::Forms::Label());
-            this->pictureBox18 = (gcnew System::Windows::Forms::PictureBox());
-            this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+            this->timer4 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer5 = (gcnew System::Windows::Forms::Timer(this->components));
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
@@ -1233,32 +1316,40 @@ private: System::Windows::Forms::Button^ button5;
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox9))->BeginInit();
             this->panel3->SuspendLayout();
             this->panel4->SuspendLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox37))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox38))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox39))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox40))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox41))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox42))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox43))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox31))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
             this->panel5->SuspendLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox36))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox35))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox34))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox21))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox33))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox32))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox30))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox31))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox25))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox23))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox22))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox19))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox24))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox26))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox21))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox29))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox28))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox27))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox16))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox17))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->BeginInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
             this->SuspendLayout();
             // 
             // label1
@@ -1601,12 +1692,13 @@ private: System::Windows::Forms::Button^ button5;
             // 
             // panel3
             // 
+            this->panel3->Controls->Add(this->panel4);
             this->panel3->Controls->Add(this->button9);
             this->panel3->Controls->Add(this->button8);
             this->panel3->Controls->Add(this->label34);
             this->panel3->Controls->Add(this->button5);
+            this->panel3->Controls->Add(this->pictureBox31);
             this->panel3->Controls->Add(this->label33);
-            this->panel3->Controls->Add(this->panel4);
             this->panel3->Controls->Add(this->textBox1);
             this->panel3->Controls->Add(this->label1);
             this->panel3->Controls->Add(this->label5);
@@ -1638,6 +1730,402 @@ private: System::Windows::Forms::Button^ button5;
             this->panel3->Size = System::Drawing::Size(1896, 835);
             this->panel3->TabIndex = 44;
             this->panel3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel3_Paint);
+            // 
+            // panel4
+            // 
+            this->panel4->Controls->Add(this->pictureBox37);
+            this->panel4->Controls->Add(this->label36);
+            this->panel4->Controls->Add(this->pictureBox38);
+            this->panel4->Controls->Add(this->pictureBox39);
+            this->panel4->Controls->Add(this->pictureBox40);
+            this->panel4->Controls->Add(this->pictureBox41);
+            this->panel4->Controls->Add(this->label37);
+            this->panel4->Controls->Add(this->label38);
+            this->panel4->Controls->Add(this->pictureBox42);
+            this->panel4->Controls->Add(this->pictureBox43);
+            this->panel4->Controls->Add(this->button7);
+            this->panel4->Controls->Add(this->Back_P);
+            this->panel4->Controls->Add(this->pictureBox12);
+            this->panel4->Controls->Add(this->button3);
+            this->panel4->Controls->Add(this->label19);
+            this->panel4->Controls->Add(this->button2);
+            this->panel4->Controls->Add(this->label18);
+            this->panel4->Controls->Add(this->textBox4);
+            this->panel4->Controls->Add(this->label17);
+            this->panel4->Controls->Add(this->label16);
+            this->panel4->Controls->Add(this->pictureBox10);
+            this->panel4->Controls->Add(this->pictureBox11);
+            this->panel4->Controls->Add(this->pictureBox13);
+            this->panel4->Controls->Add(this->pictureBox14);
+            this->panel4->Controls->Add(this->label8);
+            this->panel4->Controls->Add(this->label9);
+            this->panel4->Controls->Add(this->label12);
+            this->panel4->Controls->Add(this->pictureBox15);
+            this->panel4->Controls->Add(this->label15);
+            this->panel4->Controls->Add(this->pictureBox18);
+            this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
+            this->panel4->Location = System::Drawing::Point(0, 0);
+            this->panel4->Name = L"panel4";
+            this->panel4->Size = System::Drawing::Size(1896, 835);
+            this->panel4->TabIndex = 50;
+            // 
+            // pictureBox37
+            // 
+            this->pictureBox37->Cursor = System::Windows::Forms::Cursors::Arrow;
+            this->pictureBox37->Location = System::Drawing::Point(1184, 116);
+            this->pictureBox37->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox37->Name = L"pictureBox37";
+            this->pictureBox37->Size = System::Drawing::Size(99, 89);
+            this->pictureBox37->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox37->TabIndex = 70;
+            this->pictureBox37->TabStop = false;
+            // 
+            // label36
+            // 
+            this->label36->AutoSize = true;
+            this->label36->BackColor = System::Drawing::Color::White;
+            this->label36->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label36->ForeColor = System::Drawing::Color::Blue;
+            this->label36->Location = System::Drawing::Point(1229, 253);
+            this->label36->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label36->Name = L"label36";
+            this->label36->Size = System::Drawing::Size(71, 23);
+            this->label36->TabIndex = 69;
+            this->label36->Text = L"Settings";
+            // 
+            // pictureBox38
+            // 
+            this->pictureBox38->BackColor = System::Drawing::Color::White;
+            this->pictureBox38->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox38->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox38.Image")));
+            this->pictureBox38->Location = System::Drawing::Point(1175, 238);
+            this->pictureBox38->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox38->Name = L"pictureBox38";
+            this->pictureBox38->Size = System::Drawing::Size(50, 50);
+            this->pictureBox38->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox38->TabIndex = 68;
+            this->pictureBox38->TabStop = false;
+            this->pictureBox38->Click += gcnew System::EventHandler(this, &MyForm::pictureBox38_Click);
+            // 
+            // pictureBox39
+            // 
+            this->pictureBox39->BackColor = System::Drawing::Color::Blue;
+            this->pictureBox39->Location = System::Drawing::Point(1144, 215);
+            this->pictureBox39->Name = L"pictureBox39";
+            this->pictureBox39->Size = System::Drawing::Size(187, 3);
+            this->pictureBox39->TabIndex = 67;
+            this->pictureBox39->TabStop = false;
+            // 
+            // pictureBox40
+            // 
+            this->pictureBox40->BackColor = System::Drawing::Color::White;
+            this->pictureBox40->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox40->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox40.Image")));
+            this->pictureBox40->Location = System::Drawing::Point(1175, 347);
+            this->pictureBox40->Name = L"pictureBox40";
+            this->pictureBox40->Size = System::Drawing::Size(50, 50);
+            this->pictureBox40->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox40->TabIndex = 64;
+            this->pictureBox40->TabStop = false;
+            this->pictureBox40->Click += gcnew System::EventHandler(this, &MyForm::pictureBox40_Click);
+            // 
+            // pictureBox41
+            // 
+            this->pictureBox41->BackColor = System::Drawing::Color::White;
+            this->pictureBox41->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox41->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox41.Image")));
+            this->pictureBox41->Location = System::Drawing::Point(1170, 291);
+            this->pictureBox41->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox41->Name = L"pictureBox41";
+            this->pictureBox41->Size = System::Drawing::Size(60, 62);
+            this->pictureBox41->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox41->TabIndex = 63;
+            this->pictureBox41->TabStop = false;
+            this->pictureBox41->Click += gcnew System::EventHandler(this, &MyForm::pictureBox41_Click);
+            // 
+            // label37
+            // 
+            this->label37->AutoSize = true;
+            this->label37->BackColor = System::Drawing::Color::White;
+            this->label37->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label37->ForeColor = System::Drawing::Color::Blue;
+            this->label37->Location = System::Drawing::Point(1229, 355);
+            this->label37->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label37->Name = L"label37";
+            this->label37->Size = System::Drawing::Size(43, 23);
+            this->label37->TabIndex = 61;
+            this->label37->Text = L"Quit";
+            // 
+            // label38
+            // 
+            this->label38->AutoSize = true;
+            this->label38->BackColor = System::Drawing::Color::White;
+            this->label38->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label38->ForeColor = System::Drawing::Color::Blue;
+            this->label38->Location = System::Drawing::Point(1229, 307);
+            this->label38->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label38->Name = L"label38";
+            this->label38->Size = System::Drawing::Size(64, 23);
+            this->label38->TabIndex = 62;
+            this->label38->Text = L"Logout";
+            // 
+            // pictureBox42
+            // 
+            this->pictureBox42->BackColor = System::Drawing::Color::Transparent;
+            this->pictureBox42->Cursor = System::Windows::Forms::Cursors::Arrow;
+            this->pictureBox42->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox42.Image")));
+            this->pictureBox42->Location = System::Drawing::Point(1110, 69);
+            this->pictureBox42->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox42->Name = L"pictureBox42";
+            this->pictureBox42->Size = System::Drawing::Size(253, 342);
+            this->pictureBox42->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox42->TabIndex = 66;
+            this->pictureBox42->TabStop = false;
+            // 
+            // pictureBox43
+            // 
+            this->pictureBox43->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox43->Location = System::Drawing::Point(1197, 2);
+            this->pictureBox43->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox43->Name = L"pictureBox43";
+            this->pictureBox43->Size = System::Drawing::Size(71, 66);
+            this->pictureBox43->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox43->TabIndex = 65;
+            this->pictureBox43->TabStop = false;
+            this->pictureBox43->Click += gcnew System::EventHandler(this, &MyForm::pictureBox43_Click);
+            // 
+            // button7
+            // 
+            this->button7->Location = System::Drawing::Point(217, 154);
+            this->button7->Name = L"button7";
+            this->button7->Size = System::Drawing::Size(75, 23);
+            this->button7->TabIndex = 51;
+            this->button7->Text = L"button5";
+            this->button7->UseVisualStyleBackColor = true;
+            this->button7->Click += gcnew System::EventHandler(this, &MyForm::button5_Click_1);
+            // 
+            // Back_P
+            // 
+            this->Back_P->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->Back_P->Location = System::Drawing::Point(230, 504);
+            this->Back_P->Name = L"Back_P";
+            this->Back_P->Size = System::Drawing::Size(108, 35);
+            this->Back_P->TabIndex = 50;
+            this->Back_P->Text = L"Back";
+            this->Back_P->UseVisualStyleBackColor = true;
+            this->Back_P->Click += gcnew System::EventHandler(this, &MyForm::button5_Click);
+            // 
+            // pictureBox12
+            // 
+            this->pictureBox12->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox12->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.Image")));
+            this->pictureBox12->Location = System::Drawing::Point(870, 94);
+            this->pictureBox12->Name = L"pictureBox12";
+            this->pictureBox12->Size = System::Drawing::Size(71, 75);
+            this->pictureBox12->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox12->TabIndex = 49;
+            this->pictureBox12->TabStop = false;
+            this->pictureBox12->Click += gcnew System::EventHandler(this, &MyForm::pictureBox12_Click_1);
+            // 
+            // button3
+            // 
+            this->button3->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->button3->Location = System::Drawing::Point(106, 504);
+            this->button3->Name = L"button3";
+            this->button3->Size = System::Drawing::Size(108, 35);
+            this->button3->TabIndex = 47;
+            this->button3->Text = L"End";
+            this->button3->UseVisualStyleBackColor = true;
+            this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+            // 
+            // label19
+            // 
+            this->label19->AutoSize = true;
+            this->label19->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 14));
+            this->label19->ForeColor = System::Drawing::Color::White;
+            this->label19->Location = System::Drawing::Point(121, 200);
+            this->label19->Name = L"label19";
+            this->label19->Size = System::Drawing::Size(0, 32);
+            this->label19->TabIndex = 46;
+            // 
+            // button2
+            // 
+            this->button2->Location = System::Drawing::Point(106, 504);
+            this->button2->Name = L"button2";
+            this->button2->Size = System::Drawing::Size(108, 35);
+            this->button2->TabIndex = 45;
+            this->button2->Text = L"Next";
+            this->button2->UseVisualStyleBackColor = true;
+            this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click_1);
+            // 
+            // label18
+            // 
+            this->label18->AutoSize = true;
+            this->label18->Location = System::Drawing::Point(129, 418);
+            this->label18->Name = L"label18";
+            this->label18->Size = System::Drawing::Size(0, 17);
+            this->label18->TabIndex = 44;
+            // 
+            // textBox4
+            // 
+            this->textBox4->Location = System::Drawing::Point(127, 465);
+            this->textBox4->Name = L"textBox4";
+            this->textBox4->Size = System::Drawing::Size(196, 24);
+            this->textBox4->TabIndex = 43;
+            this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox4_KeyPress_1);
+            // 
+            // label17
+            // 
+            this->label17->AutoSize = true;
+            this->label17->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 20));
+            this->label17->ForeColor = System::Drawing::Color::Snow;
+            this->label17->Location = System::Drawing::Point(88, 93);
+            this->label17->Name = L"label17";
+            this->label17->Size = System::Drawing::Size(0, 46);
+            this->label17->TabIndex = 42;
+            // 
+            // label16
+            // 
+            this->label16->AutoSize = true;
+            this->label16->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->label16->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label16->ForeColor = System::Drawing::Color::White;
+            this->label16->Location = System::Drawing::Point(952, 592);
+            this->label16->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label16->Name = L"label16";
+            this->label16->Size = System::Drawing::Size(126, 28);
+            this->label16->TabIndex = 41;
+            this->label16->Text = L"Clear history";
+            // 
+            // pictureBox10
+            // 
+            this->pictureBox10->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.Image")));
+            this->pictureBox10->Location = System::Drawing::Point(618, 271);
+            this->pictureBox10->Name = L"pictureBox10";
+            this->pictureBox10->Size = System::Drawing::Size(146, 142);
+            this->pictureBox10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
+            this->pictureBox10->TabIndex = 40;
+            this->pictureBox10->TabStop = false;
+            // 
+            // pictureBox11
+            // 
+            this->pictureBox11->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox11->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.Image")));
+            this->pictureBox11->Location = System::Drawing::Point(875, 504);
+            this->pictureBox11->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox11->Name = L"pictureBox11";
+            this->pictureBox11->Size = System::Drawing::Size(69, 78);
+            this->pictureBox11->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox11->TabIndex = 39;
+            this->pictureBox11->TabStop = false;
+            this->pictureBox11->Click += gcnew System::EventHandler(this, &MyForm::pictureBox11_Click);
+            // 
+            // pictureBox13
+            // 
+            this->pictureBox13->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox13->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.Image")));
+            this->pictureBox13->Location = System::Drawing::Point(441, 516);
+            this->pictureBox13->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox13->Name = L"pictureBox13";
+            this->pictureBox13->Size = System::Drawing::Size(81, 78);
+            this->pictureBox13->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox13->TabIndex = 37;
+            this->pictureBox13->TabStop = false;
+            this->pictureBox13->Click += gcnew System::EventHandler(this, &MyForm::pictureBox13_Click);
+            // 
+            // pictureBox14
+            // 
+            this->pictureBox14->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox14->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.Image")));
+            this->pictureBox14->Location = System::Drawing::Point(441, 95);
+            this->pictureBox14->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox14->Name = L"pictureBox14";
+            this->pictureBox14->Size = System::Drawing::Size(70, 73);
+            this->pictureBox14->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox14->TabIndex = 36;
+            this->pictureBox14->TabStop = false;
+            this->pictureBox14->Click += gcnew System::EventHandler(this, &MyForm::pictureBox14_Click);
+            // 
+            // label8
+            // 
+            this->label8->AutoSize = true;
+            this->label8->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->label8->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label8->ForeColor = System::Drawing::Color::White;
+            this->label8->Location = System::Drawing::Point(946, 83);
+            this->label8->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label8->Name = L"label8";
+            this->label8->Size = System::Drawing::Size(125, 28);
+            this->label8->TabIndex = 35;
+            this->label8->Text = L"View history";
+            // 
+            // label9
+            // 
+            this->label9->AutoSize = true;
+            this->label9->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->label9->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label9->ForeColor = System::Drawing::Color::White;
+            this->label9->Location = System::Drawing::Point(172, 592);
+            this->label9->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label9->Name = L"label9";
+            this->label9->Size = System::Drawing::Size(339, 28);
+            this->label9->TabIndex = 34;
+            this->label9->Text = L"View symptoms of a certain disease";
+            // 
+            // label12
+            // 
+            this->label12->AutoSize = true;
+            this->label12->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->label12->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label12->ForeColor = System::Drawing::Color::White;
+            this->label12->Location = System::Drawing::Point(296, 94);
+            this->label12->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label12->Name = L"label12";
+            this->label12->Size = System::Drawing::Size(141, 28);
+            this->label12->TabIndex = 33;
+            this->label12->Text = L"Self-Diagnosis";
+            // 
+            // pictureBox15
+            // 
+            this->pictureBox15->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox15.Image")));
+            this->pictureBox15->Location = System::Drawing::Point(441, 94);
+            this->pictureBox15->Name = L"pictureBox15";
+            this->pictureBox15->Size = System::Drawing::Size(503, 500);
+            this->pictureBox15->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox15->TabIndex = 32;
+            this->pictureBox15->TabStop = false;
+            // 
+            // label15
+            // 
+            this->label15->AutoSize = true;
+            this->label15->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->label15->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 32, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label15->ForeColor = System::Drawing::Color::White;
+            this->label15->Location = System::Drawing::Point(50, 13);
+            this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label15->Name = L"label15";
+            this->label15->Size = System::Drawing::Size(501, 72);
+            this->label15->TabIndex = 27;
+            this->label15->Text = L"The Patient\'s Menu";
+            // 
+            // pictureBox18
+            // 
+            this->pictureBox18->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox18.Image")));
+            this->pictureBox18->Location = System::Drawing::Point(0, 0);
+            this->pictureBox18->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox18->Name = L"pictureBox18";
+            this->pictureBox18->Size = System::Drawing::Size(1352, 690);
+            this->pictureBox18->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox18->TabIndex = 26;
+            this->pictureBox18->TabStop = false;
             // 
             // button9
             // 
@@ -1683,6 +2171,16 @@ private: System::Windows::Forms::Button^ button5;
             this->button5->UseVisualStyleBackColor = true;
             this->button5->Click += gcnew System::EventHandler(this, &MyForm::button5_Click_2);
             // 
+            // pictureBox31
+            // 
+            this->pictureBox31->Location = System::Drawing::Point(1157, 225);
+            this->pictureBox31->Name = L"pictureBox31";
+            this->pictureBox31->Size = System::Drawing::Size(379, 326);
+            this->pictureBox31->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox31->TabIndex = 53;
+            this->pictureBox31->TabStop = false;
+            this->pictureBox31->Click += gcnew System::EventHandler(this, &MyForm::pictureBox31_Click);
+            // 
             // label33
             // 
             this->label33->AutoSize = true;
@@ -1697,79 +2195,33 @@ private: System::Windows::Forms::Button^ button5;
             this->label33->MouseLeave += gcnew System::EventHandler(this, &MyForm::label33_MouseLeave);
             this->label33->MouseHover += gcnew System::EventHandler(this, &MyForm::label33_MouseHover);
             // 
-            // panel4
+            // pictureBox1
             // 
-            this->panel4->Controls->Add(this->button7);
-            this->panel4->Controls->Add(this->Back_P);
-            this->panel4->Controls->Add(this->pictureBox12);
-            this->panel4->Controls->Add(this->panel5);
-            this->panel4->Controls->Add(this->button3);
-            this->panel4->Controls->Add(this->label19);
-            this->panel4->Controls->Add(this->button2);
-            this->panel4->Controls->Add(this->label18);
-            this->panel4->Controls->Add(this->textBox4);
-            this->panel4->Controls->Add(this->label17);
-            this->panel4->Controls->Add(this->label16);
-            this->panel4->Controls->Add(this->pictureBox10);
-            this->panel4->Controls->Add(this->pictureBox11);
-            this->panel4->Controls->Add(this->pictureBox13);
-            this->panel4->Controls->Add(this->pictureBox14);
-            this->panel4->Controls->Add(this->label8);
-            this->panel4->Controls->Add(this->label9);
-            this->panel4->Controls->Add(this->label12);
-            this->panel4->Controls->Add(this->pictureBox15);
-            this->panel4->Controls->Add(this->pictureBox16);
-            this->panel4->Controls->Add(this->pictureBox17);
-            this->panel4->Controls->Add(this->label13);
-            this->panel4->Controls->Add(this->label14);
-            this->panel4->Controls->Add(this->label15);
-            this->panel4->Controls->Add(this->pictureBox18);
-            this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
-            this->panel4->Location = System::Drawing::Point(0, 0);
-            this->panel4->Name = L"panel4";
-            this->panel4->Size = System::Drawing::Size(1896, 835);
-            this->panel4->TabIndex = 50;
-            // 
-            // button7
-            // 
-            this->button7->Location = System::Drawing::Point(217, 154);
-            this->button7->Name = L"button7";
-            this->button7->Size = System::Drawing::Size(75, 23);
-            this->button7->TabIndex = 51;
-            this->button7->Text = L"button5";
-            this->button7->UseVisualStyleBackColor = true;
-            this->button7->Click += gcnew System::EventHandler(this, &MyForm::button5_Click_1);
-            // 
-            // Back_P
-            // 
-            this->Back_P->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->Back_P->Location = System::Drawing::Point(230, 504);
-            this->Back_P->Name = L"Back_P";
-            this->Back_P->Size = System::Drawing::Size(108, 35);
-            this->Back_P->TabIndex = 50;
-            this->Back_P->Text = L"Back";
-            this->Back_P->UseVisualStyleBackColor = true;
-            this->Back_P->Click += gcnew System::EventHandler(this, &MyForm::button5_Click);
-            // 
-            // pictureBox12
-            // 
-            this->pictureBox12->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox12->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox12.Image")));
-            this->pictureBox12->Location = System::Drawing::Point(870, 94);
-            this->pictureBox12->Name = L"pictureBox12";
-            this->pictureBox12->Size = System::Drawing::Size(71, 75);
-            this->pictureBox12->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox12->TabIndex = 49;
-            this->pictureBox12->TabStop = false;
-            this->pictureBox12->Click += gcnew System::EventHandler(this, &MyForm::pictureBox12_Click_1);
+            this->pictureBox1->BackColor = System::Drawing::SystemColors::ActiveCaption;
+            this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+            this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+            this->pictureBox1->Location = System::Drawing::Point(0, 0);
+            this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox1->Name = L"pictureBox1";
+            this->pictureBox1->Size = System::Drawing::Size(1923, 938);
+            this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox1->TabIndex = 46;
+            this->pictureBox1->TabStop = false;
+            this->pictureBox1->Click += gcnew System::EventHandler(this, &MyForm::pictureBox1_Click_1);
             // 
             // panel5
             // 
-            this->panel5->Controls->Add(this->Account_settings);
+            this->panel5->Controls->Add(this->pictureBox36);
+            this->panel5->Controls->Add(this->label35);
+            this->panel5->Controls->Add(this->pictureBox35);
+            this->panel5->Controls->Add(this->pictureBox34);
+            this->panel5->Controls->Add(this->pictureBox21);
+            this->panel5->Controls->Add(this->pictureBox20);
+            this->panel5->Controls->Add(this->label21);
+            this->panel5->Controls->Add(this->label20);
             this->panel5->Controls->Add(this->pictureBox33);
             this->panel5->Controls->Add(this->pictureBox32);
             this->panel5->Controls->Add(this->pictureBox30);
-            this->panel5->Controls->Add(this->pictureBox31);
             this->panel5->Controls->Add(this->label26);
             this->panel5->Controls->Add(this->pictureBox25);
             this->panel5->Controls->Add(this->pictureBox23);
@@ -1787,41 +2239,131 @@ private: System::Windows::Forms::Button^ button5;
             this->panel5->Controls->Add(this->label32);
             this->panel5->Controls->Add(this->button6);
             this->panel5->Controls->Add(this->button4);
-            this->panel5->Controls->Add(this->pictureBox21);
             this->panel5->Controls->Add(this->textBox5);
             this->panel5->Controls->Add(this->label29);
             this->panel5->Controls->Add(this->label28);
             this->panel5->Controls->Add(this->pictureBox29);
             this->panel5->Controls->Add(this->pictureBox28);
-            this->panel5->Controls->Add(this->pictureBox20);
-            this->panel5->Controls->Add(this->label20);
-            this->panel5->Controls->Add(this->label21);
             this->panel5->Controls->Add(this->label30);
             this->panel5->Controls->Add(this->pictureBox27);
-            this->panel5->Location = System::Drawing::Point(0, 0);
+            this->panel5->Location = System::Drawing::Point(1, -2);
             this->panel5->Name = L"panel5";
             this->panel5->Size = System::Drawing::Size(1896, 735);
             this->panel5->TabIndex = 48;
             this->panel5->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel5_Paint);
             // 
-            // Account_settings
+            // pictureBox36
             // 
-            this->Account_settings->Location = System::Drawing::Point(901, 13);
-            this->Account_settings->Name = L"Account_settings";
-            this->Account_settings->Size = System::Drawing::Size(96, 51);
-            this->Account_settings->TabIndex = 56;
-            this->Account_settings->Text = L"Account settings";
-            this->Account_settings->UseVisualStyleBackColor = true;
-            this->Account_settings->Click += gcnew System::EventHandler(this, &MyForm::Account_settings_Click);
+            this->pictureBox36->Cursor = System::Windows::Forms::Cursors::Arrow;
+            this->pictureBox36->Location = System::Drawing::Point(1169, 118);
+            this->pictureBox36->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox36->Name = L"pictureBox36";
+            this->pictureBox36->Size = System::Drawing::Size(99, 89);
+            this->pictureBox36->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox36->TabIndex = 60;
+            this->pictureBox36->TabStop = false;
+            // 
+            // label35
+            // 
+            this->label35->AutoSize = true;
+            this->label35->BackColor = System::Drawing::Color::White;
+            this->label35->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label35->ForeColor = System::Drawing::Color::Blue;
+            this->label35->Location = System::Drawing::Point(1212, 255);
+            this->label35->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label35->Name = L"label35";
+            this->label35->Size = System::Drawing::Size(71, 23);
+            this->label35->TabIndex = 59;
+            this->label35->Text = L"Settings";
+            // 
+            // pictureBox35
+            // 
+            this->pictureBox35->BackColor = System::Drawing::Color::White;
+            this->pictureBox35->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox35->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox35.Image")));
+            this->pictureBox35->Location = System::Drawing::Point(1158, 240);
+            this->pictureBox35->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox35->Name = L"pictureBox35";
+            this->pictureBox35->Size = System::Drawing::Size(50, 50);
+            this->pictureBox35->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox35->TabIndex = 58;
+            this->pictureBox35->TabStop = false;
+            this->pictureBox35->Click += gcnew System::EventHandler(this, &MyForm::pictureBox35_Click);
+            // 
+            // pictureBox34
+            // 
+            this->pictureBox34->BackColor = System::Drawing::Color::Blue;
+            this->pictureBox34->Location = System::Drawing::Point(1129, 217);
+            this->pictureBox34->Name = L"pictureBox34";
+            this->pictureBox34->Size = System::Drawing::Size(187, 3);
+            this->pictureBox34->TabIndex = 57;
+            this->pictureBox34->TabStop = false;
+            // 
+            // pictureBox21
+            // 
+            this->pictureBox21->BackColor = System::Drawing::Color::White;
+            this->pictureBox21->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox21->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox21.Image")));
+            this->pictureBox21->Location = System::Drawing::Point(1158, 349);
+            this->pictureBox21->Name = L"pictureBox21";
+            this->pictureBox21->Size = System::Drawing::Size(50, 50);
+            this->pictureBox21->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox21->TabIndex = 46;
+            this->pictureBox21->TabStop = false;
+            this->pictureBox21->Click += gcnew System::EventHandler(this, &MyForm::pictureBox21_Click_1);
+            // 
+            // pictureBox20
+            // 
+            this->pictureBox20->BackColor = System::Drawing::Color::White;
+            this->pictureBox20->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox20->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox20.Image")));
+            this->pictureBox20->Location = System::Drawing::Point(1153, 293);
+            this->pictureBox20->Margin = System::Windows::Forms::Padding(2);
+            this->pictureBox20->Name = L"pictureBox20";
+            this->pictureBox20->Size = System::Drawing::Size(60, 62);
+            this->pictureBox20->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->pictureBox20->TabIndex = 38;
+            this->pictureBox20->TabStop = false;
+            this->pictureBox20->Click += gcnew System::EventHandler(this, &MyForm::pictureBox20_Click);
+            // 
+            // label21
+            // 
+            this->label21->AutoSize = true;
+            this->label21->BackColor = System::Drawing::Color::White;
+            this->label21->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label21->ForeColor = System::Drawing::Color::Blue;
+            this->label21->Location = System::Drawing::Point(1212, 357);
+            this->label21->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label21->Name = L"label21";
+            this->label21->Size = System::Drawing::Size(43, 23);
+            this->label21->TabIndex = 31;
+            this->label21->Text = L"Quit";
+            // 
+            // label20
+            // 
+            this->label20->AutoSize = true;
+            this->label20->BackColor = System::Drawing::Color::White;
+            this->label20->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label20->ForeColor = System::Drawing::Color::Blue;
+            this->label20->Location = System::Drawing::Point(1212, 309);
+            this->label20->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
+            this->label20->Name = L"label20";
+            this->label20->Size = System::Drawing::Size(64, 23);
+            this->label20->TabIndex = 32;
+            this->label20->Text = L"Logout";
             // 
             // pictureBox33
             // 
-            this->pictureBox33->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox33->BackColor = System::Drawing::Color::Transparent;
+            this->pictureBox33->Cursor = System::Windows::Forms::Cursors::Arrow;
             this->pictureBox33->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox33.Image")));
-            this->pictureBox33->Location = System::Drawing::Point(1109, 275);
+            this->pictureBox33->Location = System::Drawing::Point(1096, 77);
             this->pictureBox33->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox33->Name = L"pictureBox33";
-            this->pictureBox33->Size = System::Drawing::Size(253, 345);
+            this->pictureBox33->Size = System::Drawing::Size(253, 342);
             this->pictureBox33->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox33->TabIndex = 55;
             this->pictureBox33->TabStop = false;
@@ -1850,16 +2392,6 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox30->TabIndex = 53;
             this->pictureBox30->TabStop = false;
             this->pictureBox30->Click += gcnew System::EventHandler(this, &MyForm::pictureBox30_Click);
-            // 
-            // pictureBox31
-            // 
-            this->pictureBox31->Location = System::Drawing::Point(1157, 225);
-            this->pictureBox31->Name = L"pictureBox31";
-            this->pictureBox31->Size = System::Drawing::Size(379, 326);
-            this->pictureBox31->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox31->TabIndex = 53;
-            this->pictureBox31->TabStop = false;
-            this->pictureBox31->Click += gcnew System::EventHandler(this, &MyForm::pictureBox31_Click);
             // 
             // label26
             // 
@@ -2073,18 +2605,6 @@ private: System::Windows::Forms::Button^ button5;
             this->button4->UseVisualStyleBackColor = true;
             this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
             // 
-            // pictureBox21
-            // 
-            this->pictureBox21->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox21->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox21.Image")));
-            this->pictureBox21->Location = System::Drawing::Point(1200, 172);
-            this->pictureBox21->Name = L"pictureBox21";
-            this->pictureBox21->Size = System::Drawing::Size(50, 50);
-            this->pictureBox21->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-            this->pictureBox21->TabIndex = 46;
-            this->pictureBox21->TabStop = false;
-            this->pictureBox21->Click += gcnew System::EventHandler(this, &MyForm::pictureBox21_Click_1);
-            // 
             // textBox5
             // 
             this->textBox5->Location = System::Drawing::Point(89, 552);
@@ -2137,47 +2657,6 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox28->TabStop = false;
             this->pictureBox28->Click += gcnew System::EventHandler(this, &MyForm::pictureBox28_Click);
             // 
-            // pictureBox20
-            // 
-            this->pictureBox20->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox20->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox20.Image")));
-            this->pictureBox20->Location = System::Drawing::Point(1207, 97);
-            this->pictureBox20->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox20->Name = L"pictureBox20";
-            this->pictureBox20->Size = System::Drawing::Size(50, 50);
-            this->pictureBox20->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-            this->pictureBox20->TabIndex = 38;
-            this->pictureBox20->TabStop = false;
-            this->pictureBox20->Click += gcnew System::EventHandler(this, &MyForm::pictureBox20_Click);
-            // 
-            // label20
-            // 
-            this->label20->AutoSize = true;
-            this->label20->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label20->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label20->ForeColor = System::Drawing::Color::White;
-            this->label20->Location = System::Drawing::Point(1264, 111);
-            this->label20->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label20->Name = L"label20";
-            this->label20->Size = System::Drawing::Size(64, 23);
-            this->label20->TabIndex = 32;
-            this->label20->Text = L"Logout";
-            // 
-            // label21
-            // 
-            this->label21->AutoSize = true;
-            this->label21->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label21->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label21->ForeColor = System::Drawing::Color::White;
-            this->label21->Location = System::Drawing::Point(1255, 180);
-            this->label21->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label21->Name = L"label21";
-            this->label21->Size = System::Drawing::Size(43, 23);
-            this->label21->TabIndex = 31;
-            this->label21->Text = L"Quit";
-            // 
             // label30
             // 
             this->label30->AutoSize = true;
@@ -2204,270 +2683,15 @@ private: System::Windows::Forms::Button^ button5;
             this->pictureBox27->TabStop = false;
             this->pictureBox27->Click += gcnew System::EventHandler(this, &MyForm::pictureBox27_Click);
             // 
-            // button3
+            // timer4
             // 
-            this->button3->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->button3->Location = System::Drawing::Point(106, 504);
-            this->button3->Name = L"button3";
-            this->button3->Size = System::Drawing::Size(108, 35);
-            this->button3->TabIndex = 47;
-            this->button3->Text = L"End";
-            this->button3->UseVisualStyleBackColor = true;
-            this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+            this->timer4->Interval = 150;
+            this->timer4->Tick += gcnew System::EventHandler(this, &MyForm::timer4_Tick);
             // 
-            // label19
+            // timer5
             // 
-            this->label19->AutoSize = true;
-            this->label19->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 14));
-            this->label19->ForeColor = System::Drawing::Color::White;
-            this->label19->Location = System::Drawing::Point(121, 200);
-            this->label19->Name = L"label19";
-            this->label19->Size = System::Drawing::Size(0, 32);
-            this->label19->TabIndex = 46;
-            // 
-            // button2
-            // 
-            this->button2->Location = System::Drawing::Point(106, 504);
-            this->button2->Name = L"button2";
-            this->button2->Size = System::Drawing::Size(108, 35);
-            this->button2->TabIndex = 45;
-            this->button2->Text = L"Next";
-            this->button2->UseVisualStyleBackColor = true;
-            this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click_1);
-            // 
-            // label18
-            // 
-            this->label18->AutoSize = true;
-            this->label18->Location = System::Drawing::Point(129, 418);
-            this->label18->Name = L"label18";
-            this->label18->Size = System::Drawing::Size(0, 17);
-            this->label18->TabIndex = 44;
-            // 
-            // textBox4
-            // 
-            this->textBox4->Location = System::Drawing::Point(127, 465);
-            this->textBox4->Name = L"textBox4";
-            this->textBox4->Size = System::Drawing::Size(196, 24);
-            this->textBox4->TabIndex = 43;
-            this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox4_KeyPress_1);
-            // 
-            // label17
-            // 
-            this->label17->AutoSize = true;
-            this->label17->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 20));
-            this->label17->ForeColor = System::Drawing::Color::Snow;
-            this->label17->Location = System::Drawing::Point(88, 93);
-            this->label17->Name = L"label17";
-            this->label17->Size = System::Drawing::Size(0, 46);
-            this->label17->TabIndex = 42;
-            // 
-            // label16
-            // 
-            this->label16->AutoSize = true;
-            this->label16->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label16->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label16->ForeColor = System::Drawing::Color::White;
-            this->label16->Location = System::Drawing::Point(952, 592);
-            this->label16->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label16->Name = L"label16";
-            this->label16->Size = System::Drawing::Size(126, 28);
-            this->label16->TabIndex = 41;
-            this->label16->Text = L"Clear history";
-            // 
-            // pictureBox10
-            // 
-            this->pictureBox10->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox10.Image")));
-            this->pictureBox10->Location = System::Drawing::Point(618, 271);
-            this->pictureBox10->Name = L"pictureBox10";
-            this->pictureBox10->Size = System::Drawing::Size(146, 142);
-            this->pictureBox10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
-            this->pictureBox10->TabIndex = 40;
-            this->pictureBox10->TabStop = false;
-            // 
-            // pictureBox11
-            // 
-            this->pictureBox11->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox11->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox11.Image")));
-            this->pictureBox11->Location = System::Drawing::Point(875, 504);
-            this->pictureBox11->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox11->Name = L"pictureBox11";
-            this->pictureBox11->Size = System::Drawing::Size(69, 78);
-            this->pictureBox11->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox11->TabIndex = 39;
-            this->pictureBox11->TabStop = false;
-            this->pictureBox11->Click += gcnew System::EventHandler(this, &MyForm::pictureBox11_Click);
-            // 
-            // pictureBox13
-            // 
-            this->pictureBox13->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox13->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox13.Image")));
-            this->pictureBox13->Location = System::Drawing::Point(441, 516);
-            this->pictureBox13->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox13->Name = L"pictureBox13";
-            this->pictureBox13->Size = System::Drawing::Size(81, 78);
-            this->pictureBox13->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox13->TabIndex = 37;
-            this->pictureBox13->TabStop = false;
-            this->pictureBox13->Click += gcnew System::EventHandler(this, &MyForm::pictureBox13_Click);
-            // 
-            // pictureBox14
-            // 
-            this->pictureBox14->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox14->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox14.Image")));
-            this->pictureBox14->Location = System::Drawing::Point(441, 95);
-            this->pictureBox14->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox14->Name = L"pictureBox14";
-            this->pictureBox14->Size = System::Drawing::Size(70, 73);
-            this->pictureBox14->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox14->TabIndex = 36;
-            this->pictureBox14->TabStop = false;
-            this->pictureBox14->Click += gcnew System::EventHandler(this, &MyForm::pictureBox14_Click);
-            // 
-            // label8
-            // 
-            this->label8->AutoSize = true;
-            this->label8->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label8->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label8->ForeColor = System::Drawing::Color::White;
-            this->label8->Location = System::Drawing::Point(946, 83);
-            this->label8->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label8->Name = L"label8";
-            this->label8->Size = System::Drawing::Size(125, 28);
-            this->label8->TabIndex = 35;
-            this->label8->Text = L"View history";
-            // 
-            // label9
-            // 
-            this->label9->AutoSize = true;
-            this->label9->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label9->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label9->ForeColor = System::Drawing::Color::White;
-            this->label9->Location = System::Drawing::Point(172, 592);
-            this->label9->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label9->Name = L"label9";
-            this->label9->Size = System::Drawing::Size(339, 28);
-            this->label9->TabIndex = 34;
-            this->label9->Text = L"View symptoms of a certain disease";
-            // 
-            // label12
-            // 
-            this->label12->AutoSize = true;
-            this->label12->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label12->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label12->ForeColor = System::Drawing::Color::White;
-            this->label12->Location = System::Drawing::Point(296, 94);
-            this->label12->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label12->Name = L"label12";
-            this->label12->Size = System::Drawing::Size(141, 28);
-            this->label12->TabIndex = 33;
-            this->label12->Text = L"Self-Diagnosis";
-            // 
-            // pictureBox15
-            // 
-            this->pictureBox15->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox15.Image")));
-            this->pictureBox15->Location = System::Drawing::Point(441, 94);
-            this->pictureBox15->Name = L"pictureBox15";
-            this->pictureBox15->Size = System::Drawing::Size(503, 500);
-            this->pictureBox15->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox15->TabIndex = 32;
-            this->pictureBox15->TabStop = false;
-            // 
-            // pictureBox16
-            // 
-            this->pictureBox16->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox16->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox16.Image")));
-            this->pictureBox16->Location = System::Drawing::Point(1207, 77);
-            this->pictureBox16->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox16->Name = L"pictureBox16";
-            this->pictureBox16->Size = System::Drawing::Size(50, 50);
-            this->pictureBox16->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-            this->pictureBox16->TabIndex = 31;
-            this->pictureBox16->TabStop = false;
-            this->pictureBox16->Click += gcnew System::EventHandler(this, &MyForm::pictureBox16_Click);
-            // 
-            // pictureBox17
-            // 
-            this->pictureBox17->Cursor = System::Windows::Forms::Cursors::Hand;
-            this->pictureBox17->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox17.Image")));
-            this->pictureBox17->Location = System::Drawing::Point(1207, 15);
-            this->pictureBox17->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox17->Name = L"pictureBox17";
-            this->pictureBox17->Size = System::Drawing::Size(50, 50);
-            this->pictureBox17->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
-            this->pictureBox17->TabIndex = 30;
-            this->pictureBox17->TabStop = false;
-            this->pictureBox17->Click += gcnew System::EventHandler(this, &MyForm::pictureBox17_Click);
-            // 
-            // label13
-            // 
-            this->label13->AutoSize = true;
-            this->label13->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label13->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label13->ForeColor = System::Drawing::Color::White;
-            this->label13->Location = System::Drawing::Point(1152, 88);
-            this->label13->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label13->Name = L"label13";
-            this->label13->Size = System::Drawing::Size(51, 28);
-            this->label13->TabIndex = 29;
-            this->label13->Text = L"Quit";
-            // 
-            // label14
-            // 
-            this->label14->AutoSize = true;
-            this->label14->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label14->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label14->ForeColor = System::Drawing::Color::White;
-            this->label14->Location = System::Drawing::Point(1126, 25);
-            this->label14->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label14->Name = L"label14";
-            this->label14->Size = System::Drawing::Size(77, 28);
-            this->label14->TabIndex = 28;
-            this->label14->Text = L"Logout";
-            // 
-            // label15
-            // 
-            this->label15->AutoSize = true;
-            this->label15->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->label15->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 32, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
-            this->label15->ForeColor = System::Drawing::Color::White;
-            this->label15->Location = System::Drawing::Point(50, 13);
-            this->label15->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-            this->label15->Name = L"label15";
-            this->label15->Size = System::Drawing::Size(501, 72);
-            this->label15->TabIndex = 27;
-            this->label15->Text = L"The Patient\'s Menu";
-            // 
-            // pictureBox18
-            // 
-            this->pictureBox18->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox18.Image")));
-            this->pictureBox18->Location = System::Drawing::Point(0, 0);
-            this->pictureBox18->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox18->Name = L"pictureBox18";
-            this->pictureBox18->Size = System::Drawing::Size(1352, 690);
-            this->pictureBox18->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox18->TabIndex = 26;
-            this->pictureBox18->TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this->pictureBox1->BackColor = System::Drawing::SystemColors::ActiveCaption;
-            this->pictureBox1->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-            this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-            this->pictureBox1->Location = System::Drawing::Point(0, 0);
-            this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
-            this->pictureBox1->Name = L"pictureBox1";
-            this->pictureBox1->Size = System::Drawing::Size(1923, 938);
-            this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-            this->pictureBox1->TabIndex = 46;
-            this->pictureBox1->TabStop = false;
-            this->pictureBox1->Click += gcnew System::EventHandler(this, &MyForm::pictureBox1_Click_1);
+            this->timer5->Interval = 150;
+            this->timer5->Tick += gcnew System::EventHandler(this, &MyForm::timer5_Tick);
             // 
             // MyForm
             // 
@@ -2476,10 +2700,11 @@ private: System::Windows::Forms::Button^ button5;
             this->BackColor = System::Drawing::SystemColors::ActiveCaption;
             this->ClientSize = System::Drawing::Size(1699, 831);
             this->ControlBox = false;
-            this->Controls->Add(this->panel3);
+            this->Controls->Add(this->panel5);
             this->Controls->Add(this->label11);
             this->Controls->Add(this->Register);
             this->Controls->Add(this->Sign_in);
+            this->Controls->Add(this->panel3);
             this->DoubleBuffered = true;
             this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
             this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -2502,136 +2727,164 @@ private: System::Windows::Forms::Button^ button5;
             this->panel3->PerformLayout();
             this->panel4->ResumeLayout(false);
             this->panel4->PerformLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox37))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox38))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox39))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox40))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox41))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox42))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox43))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox12))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox31))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
             this->panel5->ResumeLayout(false);
             this->panel5->PerformLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox36))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox35))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox34))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox21))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox33))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox32))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox30))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox31))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox25))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox23))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox22))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox19))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox24))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox26))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox21))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox29))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox28))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox20))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox27))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox10))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox11))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox13))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox14))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox15))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox16))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox17))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox18))->EndInit();
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
             this->ResumeLayout(false);
             this->PerformLayout();
 
         }
 #pragma endregion
-		int counter_timer = 0;
-	private: System::Void Sign_in_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (Sign_in->Text == "Sign-in")
-		{
-			label10->Hide();
-			pictureBox8->Hide();
-			pictureBox9->Hide();
-			Sign_in->Show();
-			textBox1->Text = "";
-			textBox2->Text = "";
-			Register->Text = "Register.";
-			Username->Text = "Username";
-			Password->Text = "Password";
-			Next->Hide();
-			Password->Show();
-			textBox2->Show();
-			textBox3->Show();
-			label2->Hide();
-			timer1->Start();
-			Sign_in->Text = "Sign-in.";
-		}
-        else{
-			Register->Text = "Register";
-			timer2->Start();
-			Sign_in->Text = "Sign-in";
-		}
-	}
-	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
-		if (counter_timer < 10)
-		{
-			Form::Width += 40;
-			counter_timer++;
-		}
-		else
-		{
-			timer1->Stop();
-		}
-	}
-	private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
-		if (counter_timer > 0)
-		{
-			Form::Width -= 40;
-			counter_timer--;
-		}
-		else
-			timer2->Stop();
-	}
-	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+        int counter_timer = 0;
+    private: System::Void Sign_in_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (Sign_in->Text == "Sign-in")
+        {
+            label10->Hide();
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+            Sign_in->Show();
+            textBox1->Text = "";
+            textBox2->Text = "";
+            Register->Text = "Register.";
+            Username->Text = "Username";
+            Password->Text = "Password";
+            Next->Hide();
+            Password->Show();
+            textBox2->Show();
+            textBox3->Show();
+            label2->Hide();
+            timer1->Start();
+            button9->Hide();
+            Sign_in->Text = "Sign-in.";
+        }
+        else {
+            Register->Text = "Register";
+            timer2->Start();
+            Sign_in->Text = "Sign-in";
+        }
+    }
+    private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
+        if (counter_timer < 10)
+        {
+            Form::Width += 40;
+            counter_timer++;
+        }
+        else
+        {
+            timer1->Stop();
+        }
+    }
+    private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
+        if (counter_timer > 0)
+        {
+            Form::Width -= 40;
+            counter_timer--;
+        }
+        else
+            timer2->Stop();
+    }
+    private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+        Opacity = 0;
+        timer4->Start();
         getAllDoctors(allDoctors);
         getAllPatients(allPatients);
         getAllDiseases((&allDiseases));
         extract_Symptoms();
+        ValidatoryData();
+
         GraphicsPath^ gp = gcnew GraphicsPath();
         gp->AddEllipse(pictureBox32->DisplayRectangle);
         pictureBox32->Region = gcnew System::Drawing::Region(gp);
+
+
+        GraphicsPath^ gp1 = gcnew GraphicsPath();
+        gp1->AddEllipse(pictureBox36->DisplayRectangle);
+        pictureBox36->Region = gcnew System::Drawing::Region(gp1);
+
+        GraphicsPath^ gp2 = gcnew GraphicsPath();
+        gp2->AddEllipse(pictureBox43->DisplayRectangle);
+        pictureBox43->Region = gcnew System::Drawing::Region(gp2);
+
+        GraphicsPath^ gp3 = gcnew GraphicsPath();
+        gp3->AddEllipse(pictureBox37->DisplayRectangle);
+        pictureBox37->Region = gcnew System::Drawing::Region(gp3);
+
+
         button9->Hide();
         timer3->Start();
         pictureBox1->SendToBack();
-		Username->Parent = pictureBox1;
-		Username->BackColor = BackColor.Transparent;
-		Password->Parent = pictureBox1;
-		Password->BackColor = BackColor.Transparent;
-		pictureBox6->Parent = pictureBox1;
-		pictureBox6->BackColor = BackColor.Transparent;
-		pictureBox7->Parent = pictureBox1;
-		pictureBox7->BackColor = BackColor.Transparent;
+        Username->Parent = pictureBox1;
+        Username->BackColor = BackColor.Transparent;
+        Password->Parent = pictureBox1;
+        Password->BackColor = BackColor.Transparent;
+        pictureBox6->Parent = pictureBox1;
+        pictureBox6->BackColor = BackColor.Transparent;
+        pictureBox7->Parent = pictureBox1;
+        pictureBox7->BackColor = BackColor.Transparent;
         label34->Parent = pictureBox1;
-		label34->BackColor = BackColor.Transparent;
+        label34->BackColor = BackColor.Transparent;
         label33->Parent = pictureBox1;
         label33->BackColor = BackColor.Transparent;
-		label3->Parent = pictureBox1;
-		label3->BackColor = BackColor.Transparent;
-		label4->Parent = pictureBox1;
-		label4->BackColor = BackColor.Transparent;
-		label5->Parent = pictureBox1;
-		label5->BackColor = BackColor.Transparent;
-		label6->Parent = pictureBox1;
-		label6->BackColor = BackColor.Transparent;
-		label7->Parent = pictureBox1;
-		label7->BackColor = BackColor.Transparent;
-		label10->Parent = pictureBox1;
-		label10->BackColor = BackColor.Transparent;
-		pictureBox8->Parent = pictureBox1;
-		pictureBox8->BackColor = BackColor.Transparent;
-		pictureBox9->Parent = pictureBox1;
-		pictureBox9->BackColor = BackColor.Transparent;
-		pictureBox2->Parent = pictureBox1;
-		pictureBox2->BackColor = BackColor.Transparent;
-		label1->Parent = pictureBox1;
-		label1->BackColor = BackColor.Transparent;
-		pictureBox3->Parent = pictureBox1;
-		pictureBox3->BackColor = BackColor.Transparent;
-		pictureBox4->Parent = pictureBox1;
-		pictureBox4->BackColor = BackColor.Transparent;
-		pictureBox5->Parent = pictureBox1;
-		pictureBox5->BackColor = BackColor.Transparent;
+        label3->Parent = pictureBox1;
+        label3->BackColor = BackColor.Transparent;
+        label4->Parent = pictureBox1;
+        label4->BackColor = BackColor.Transparent;
+        label5->Parent = pictureBox1;
+        label5->BackColor = BackColor.Transparent;
+        label6->Parent = pictureBox1;
+        label6->BackColor = BackColor.Transparent;
+        label7->Parent = pictureBox1;
+        label7->BackColor = BackColor.Transparent;
+        label10->Parent = pictureBox1;
+        label10->BackColor = BackColor.Transparent;
+        pictureBox8->Parent = pictureBox1;
+        pictureBox8->BackColor = BackColor.Transparent;
+        pictureBox9->Parent = pictureBox1;
+        pictureBox9->BackColor = BackColor.Transparent;
+        pictureBox2->Parent = pictureBox1;
+        pictureBox2->BackColor = BackColor.Transparent;
+        label1->Parent = pictureBox1;
+        label1->BackColor = BackColor.Transparent;
+        pictureBox3->Parent = pictureBox1;
+        pictureBox3->BackColor = BackColor.Transparent;
+        pictureBox4->Parent = pictureBox1;
+        pictureBox4->BackColor = BackColor.Transparent;
+        pictureBox5->Parent = pictureBox1;
+        pictureBox5->BackColor = BackColor.Transparent;
         label15->Parent = pictureBox18;
-        label15->BackColor = BackColor.Transparent; 
+        label15->BackColor = BackColor.Transparent;
         label12->Parent = pictureBox18;
         label12->BackColor = BackColor.Transparent;
         label8->Parent = pictureBox18;
@@ -2640,18 +2893,10 @@ private: System::Windows::Forms::Button^ button5;
         label9->BackColor = BackColor.Transparent;
         label16->Parent = pictureBox18;
         label16->BackColor = BackColor.Transparent;
-        label14->Parent = pictureBox18;
-        label14->BackColor = BackColor.Transparent; 
-        label13->Parent = pictureBox18;
-        label13->BackColor = BackColor.Transparent; 
         label19->Parent = pictureBox18;
         label19->BackColor = BackColor.Transparent;
         label17->Parent = pictureBox18;
         label17->BackColor = BackColor.Transparent;
-        label20->Parent = pictureBox27;
-        label20->BackColor = BackColor.Transparent;
-        label21->Parent = pictureBox27;
-        label21->BackColor = BackColor.Transparent;
         label22->Parent = pictureBox27;
         label22->BackColor = BackColor.Transparent;
         label23->Parent = pictureBox27;
@@ -2672,6 +2917,11 @@ private: System::Windows::Forms::Button^ button5;
         label30->BackColor = BackColor.Transparent;
         label31->Parent = pictureBox27;
         label31->BackColor = BackColor.Transparent;
+
+
+        pictureBox33->Parent = pictureBox27;
+        pictureBox33->BackColor = BackColor.Transparent;
+
         pictureBox10->Parent = pictureBox18;
         pictureBox10->BackColor = BackColor.Transparent;
         pictureBox11->Parent = pictureBox18;
@@ -2683,17 +2933,11 @@ private: System::Windows::Forms::Button^ button5;
         pictureBox14->Parent = pictureBox18;
         pictureBox14->BackColor = BackColor.Transparent;
         pictureBox15->Parent = pictureBox18;
+        pictureBox42->BackColor = BackColor.Transparent;
+        pictureBox42->Parent = pictureBox18;
         pictureBox15->BackColor = BackColor.Transparent;
-        pictureBox16->Parent = pictureBox18;
-        pictureBox16->BackColor = BackColor.Transparent;
-        pictureBox17->Parent = pictureBox18;
-        pictureBox17->BackColor = BackColor.Transparent;
         pictureBox19->Parent = pictureBox27;
         pictureBox19->BackColor = BackColor.Transparent;
-        pictureBox20->Parent = pictureBox27;
-        pictureBox20->BackColor = BackColor.Transparent;
-        pictureBox21->Parent = pictureBox27;
-        pictureBox21->BackColor = BackColor.Transparent;
         pictureBox22->Parent = pictureBox27;
         pictureBox22->BackColor = BackColor.Transparent;
         pictureBox23->Parent = pictureBox27;
@@ -2710,6 +2954,8 @@ private: System::Windows::Forms::Button^ button5;
         pictureBox29->BackColor = BackColor.Transparent;
         pictureBox28->Parent = pictureBox27;
         pictureBox28->BackColor = BackColor.Transparent;
+
+
 
 
         textBox3->Hide();
@@ -2737,16 +2983,34 @@ private: System::Windows::Forms::Button^ button5;
         pictureBox31->Hide();
         button8->Hide();
         label34->Hide();
-	}
-	private: System::Void Quit_Click(System::Object^ sender, System::EventArgs^ e) {
+        label20->Hide();
+        label21->Hide();
+        pictureBox20->Hide();
+        pictureBox21->Hide();
+        pictureBox33->Hide();
+        pictureBox34->Hide();
+        pictureBox35->Hide();
+        label35->Hide();
+        pictureBox36->Hide();
+        label36->Hide();
+        label37->Hide();
+        label38->Hide();
+        pictureBox38->Hide();
+        pictureBox40->Hide();
+        pictureBox41->Hide();
+        pictureBox42->Hide();
+        pictureBox39->Hide();
+        pictureBox37->Hide();
+    }
+    private: System::Void Quit_Click(System::Object^ sender, System::EventArgs^ e) {
         writeAllPatients(allPatients);
         writeAllDiseases(allDiseases);
         writeAllDoctors(allDoctors);
-		this->Close();
-	}
-	private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+        this->Close();
+    }
+    private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
         if (button1->Text == "Sign-in") {
             textBox3->Hide();
             if (textBox1->Text != "" && textBox2->Text != "") {
@@ -2762,7 +3026,8 @@ private: System::Windows::Forms::Button^ button5;
                     PrintDoctorMenu();
                     Form::Width -= 200;
                     Form::Height -= 150;
-                    
+                    textBox2->Select(0, 0);
+
                     label6->ForeColor = Color::FromArgb(255, 255, 255);
                     label5->ForeColor = Color::FromArgb(255, 255, 255);
                 }
@@ -2773,6 +3038,8 @@ private: System::Windows::Forms::Button^ button5;
                     printPatientMenu();
                     Form::Width -= 200;
                     Form::Height -= 150;
+                    textBox2->Select(0, 0);
+
                 }
                 else {
                     label2->Text = "Incorrect Username or Password.";
@@ -2786,31 +3053,31 @@ private: System::Windows::Forms::Button^ button5;
                 label2->Show();
             }
         }
-       
-	}
-	private: System::Void Register_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		if (Register->Text == "Register")
+    }
+    private: System::Void Register_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		{
+        if (Register->Text == "Register")
+
+        {
             textBox3->Text = "";
-			label10->Hide();
-			pictureBox6->Show();
-			pictureBox7->Show();
-			pictureBox8->Hide();
-			pictureBox9->Hide();
-		}
-		else
-		{
-			Sign_in->Text = "Sign-in";
-			timer2->Start();
-			Register->Text = "Register";
-		}
-		//Doc_name=label->Text;
-	}
-	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+            label10->Hide();
+            pictureBox6->Show();
+            pictureBox7->Show();
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+        }
+        else
+        {
+            Sign_in->Text = "Sign-in";
+            timer2->Start();
+            Register->Text = "Register";
+        }
+        //Doc_name=label->Text;
+    }
+    private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
         if (Next->Text == "NEXT") {
             if (Password->Text == "E-Mail") {
                 string from, pass, MessageBody;
@@ -2905,7 +3172,7 @@ private: System::Windows::Forms::Button^ button5;
                                         try {
                                             smtp->Send(message);
                                             message->To->Clear();
-                                            MyForm2^ sc = gcnew MyForm2(randomCode, allPatients[i].account.username,allPatients[i].account.password);
+                                            MyForm2^ sc = gcnew MyForm2(randomCode, allPatients[i].account.username, allPatients[i].account.password);
                                             string Pass1 = allPatients[i].account.password;
                                             this->Hide();
                                             sc->ShowDialog();
@@ -3119,7 +3386,7 @@ private: System::Windows::Forms::Button^ button5;
                                 Next->Text = "Capture";
                                 Username->Text = "Cam";
 
-                            }  
+                            }
                             else {
                                 label2->Show();
                                 label2->Text = "This Email  is used by an another account";
@@ -3329,7 +3596,7 @@ private: System::Windows::Forms::Button^ button5;
                                 button8->Show();
                                 Username->Text = "Cam";
                                 Next->Text = "Capture";
-                               
+
                             }
                             else {
                                 label2->Show();
@@ -3357,340 +3624,409 @@ private: System::Windows::Forms::Button^ button5;
             Next->Text = "Retake";
         }
         else if (Next->Text == "Retake") {
-        MyCamera->Start(0);
-        Next->Text = "Capture";
-        button8->Text = "No Profile Picture";
+            MyCamera->Start(0);
+            Next->Text = "Capture";
+            button8->Text = "No Profile Picture";
         }
         else if (Next->Text == "Take a Picture") {
-        button8->Text = "No Profile Picture";
-        MyCamera->Start(0);
-}
-	
-}
+            button8->Text = "No Profile Picture";
+            MyCamera->Start(0);
+        }
+
+    }
 
 
-private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void textBox3_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-	char ch = e->KeyChar;
-	if (!isdigit(ch) && ch != 8)
-	{
-		e->Handled = true;
-	}
-}
-private: System::Void pictureBox2_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (Sign_in->Text == "Sign-in")
-	{
-        label5->ForeColor = Color::FromArgb(0, 0, 153);
-        label6->ForeColor = Color::FromArgb(255, 255, 255);
-        label34->Hide();
-        pictureBox31->Hide();
-        button8->Hide();
-        Next->Text = "NEXT";
-        button1->Text="Sign-in";
-        this->textBox2->PasswordChar = '*';
-        button5->Hide();
-        label33->Show();
+    private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+    }
+    private: System::Void textBox3_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+        char ch = e->KeyChar;
+        if (!isdigit(ch) && ch != 8)
+        {
+            e->Handled = true;
+        }
+    }
+    private: System::Void pictureBox2_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (Sign_in->Text == "Sign-in")
+        {
+            label5->ForeColor = Color::FromArgb(0, 0, 153);
+            label6->ForeColor = Color::FromArgb(255, 255, 255);
+            label34->Hide();
+            pictureBox31->Hide();
+            button8->Hide();
+            Next->Text = "NEXT";
+            button1->Text = "Sign-in";
+            this->textBox2->PasswordChar = '*';
+            button5->Hide();
+            label33->Show();
+            textBox1->Show();
+            textBox3->Hide();
+            label10->Hide();
+            label3->Hide();
+            label4->Hide();
+            button1->Show();
+            Username->Show();
+            panel1->Show();
+            panel2->Show();
+            pictureBox6->Hide();
+            pictureBox7->Hide();
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+            Sign_in->Show();
+            textBox1->Text = "";
+            textBox2->Text = "";
+            Register->Text = "Register.";
+            Username->Text = "Username";
+            Password->Text = "Password";
+            Next->Hide();
+            Password->Show();
+            textBox2->Show();
+            textBox3->Show();
+            label2->Hide();
+            timer1->Start();
+            Sign_in->Text = "Sign-in.";
+            button9->Hide();
+        }
+        else
+
+        {
+            Register->Text = "Register";
+            timer2->Start();
+            Sign_in->Text = "Sign-in";
+
+        }
+    }
+
+    private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
+
+        if (Register->Text == "Register")
+
+        {
+
+            this->textBox2->PasswordChar = NULL;
+            label34->Hide();
+            pictureBox31->Hide();
+            button8->Hide();
+            Next->Text = "NEXT";
+            Password->Text = "";
+            label3->Text = "DOCTOR";
+            label4->Text = "PATIENT";
+            button5->Location = Drawing::Point(1180, 479);
+            button5->Hide();
+            label3->Show();
+            label4->Show();
+            label10->Hide();
+            label33->Hide();
+            pictureBox6->Show();
+            pictureBox7->Show();
+
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+
+            textBox1->Text = "";
+            textBox2->Text = "";
+            textBox1->Hide();
+            textBox3->Hide();
+            panel1->Hide();
+            panel2->Hide();
+            Next->Hide();
+            Sign_in->Text = "Sign-in.";
+            label2->Hide();
+            timer1->Start();
+            Register->Text = "Register.";
+            Password->Hide();
+            textBox2->Hide();
+            Username->Text = "Please enter your Full Name.";
+            Username->Hide();
+            button1->Hide();
+            button9->Hide();
+        }
+        else
+        {
+            Sign_in->Text = "Sign-in";
+            timer2->Start();
+            Register->Text = "Register";
+        }
+    }
+    private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
+
+        System::Windows::Forms::SendKeys::Send("%");
+        /*if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+            writeAllPatients(allPatients);
+            writeAllDiseases(allDiseases);
+            writeAllDoctors(allDoctors);*/
+        this->Close();
+        //}
+    }
+    private: System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void z(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+    }
+    private: System::Void axWindowsMediaPlayer1_Enter(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox6_Click(System::Object^ sender, System::EventArgs^ e) {
+        label11->Text = "d";
+        button5->Show();
+        label3->Hide();
+        label4->Hide();
+        pictureBox6->Hide();
+        pictureBox7->Hide();
+        textBox1->Text = "";
+        textBox2->Text = "";
         textBox1->Show();
         textBox3->Hide();
-		label10->Hide();
-		label3->Hide();
-		label4->Hide();
-		button1->Show();
-		Username->Show();
-		panel1->Show();
-		panel2->Show();
-		pictureBox6->Hide();
-		pictureBox7->Hide();
-		pictureBox8->Hide();
-		pictureBox9->Hide();
-		Sign_in->Show();
-		textBox1->Text = "";
-		textBox2->Text = "";
-		Register->Text = "Register.";
-		Username->Text = "Username";
-		Password->Text = "Password";
-		Next->Hide();
-		Password->Show();
-		textBox2->Show();
-		textBox3->Show();
-		label2->Hide();
-		timer1->Start();
-		Sign_in->Text = "Sign-in.";
-	}
-	else
+        panel1->Show();
+        panel2->Hide();
+        Next->Show();
+        Sign_in->Text = "Sign-in.";
+        label2->Hide();
+        timer1->Start();
+        Register->Text = "Register.";
+        Password->Hide();
+        textBox2->Hide();
+        Username->Text = "Please enter your Full Name.";
+        Username->Show();
+        button1->Hide();
+    }
+    private: System::Void pictureBox7_Click(System::Object^ sender, System::EventArgs^ e) {
+        label11->Text = "p";
+        button5->Show();
+        label3->Hide();
+        label4->Hide();
+        pictureBox6->Hide();
+        pictureBox7->Hide();
+        textBox1->Text = "";
+        textBox2->Text = "";
+        textBox1->Show();
+        textBox3->Hide();
+        panel1->Show();
+        panel2->Hide();
+        Next->Show();
+        Sign_in->Text = "Sign-in.";
+        label2->Hide();
+        timer1->Start();
+        Register->Text = "Register.";
+        Password->Hide();
+        textBox2->Hide();
+        Username->Text = "Please enter your Full Name.";
+        Username->Show();
+        button1->Hide();
+    }
+    private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox2_Click_1(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox9_Click(System::Object^ sender, System::EventArgs^ e) {
+        Pat_gender = "M";
+        if (button8->Text != "No Profile Picture") {
 
-	{
-		Register->Text = "Register";
-		timer2->Start();
-		Sign_in->Text = "Sign-in";
-
-	}
-}
-
-private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
-
-	if (Register->Text == "Register")
-
-	{
-        
-        this->textBox2->PasswordChar = NULL;
-        label34->Hide();
-        pictureBox31->Hide();
-        button8->Hide();
-        Next->Text = "NEXT";
-        Password->Text = "";
-		label3->Text="DOCTOR";
-		label4->Text="PATIENT";
-        button5->Location = Drawing::Point(1180, 479);
-        button5->Hide();
-		label3->Show();
-		label4->Show();
-		label10->Hide();
-        label33->Hide();
-		pictureBox6->Show();
-		pictureBox7->Show();
-
-		pictureBox8->Hide();
-		pictureBox9->Hide();
-
-		textBox1->Text = "";
-		textBox2->Text = "";
-		textBox1->Hide();
-		textBox3->Hide();
-		panel1->Hide();
-		panel2->Hide();
-		Next->Hide();
-		Sign_in->Text = "Sign-in.";
-		label2->Hide();
-		timer1->Start();
-		Register->Text = "Register.";
-		Password->Hide();
-		textBox2->Hide();
-		Username->Text = "Please enter your Full Name.";
-		Username->Hide();
-		button1->Hide();
-	}
-	else
-	{
-		Sign_in->Text = "Sign-in";
-		timer2->Start();
-		Register->Text = "Register";
-	}
-}
-private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
-    
-    System::Windows::Forms::SendKeys::Send("%");
-    /*if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        writeAllPatients(allPatients);
-        writeAllDiseases(allDiseases);
-        writeAllDoctors(allDoctors);*/
-        this->Close();
-    //}
-}
-private: System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void z(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-}
-private: System::Void axWindowsMediaPlayer1_Enter(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox6_Click(System::Object^ sender, System::EventArgs^ e) {
-	label11->Text = "d";
-    button5->Show();
-	label3->Hide();
-	label4->Hide();
-	pictureBox6->Hide();
-	pictureBox7->Hide();
-	textBox1->Text = "";
-	textBox2->Text = "";
-	textBox1->Show();
-	textBox3->Hide();
-	panel1->Show();
-	panel2->Hide();
-	Next->Show();
-	Sign_in->Text = "Sign-in.";
-	label2->Hide();
-	timer1->Start();
-	Register->Text = "Register.";
-	Password->Hide();
-	textBox2->Hide();
-	Username->Text = "Please enter your Full Name.";
-	Username->Show();
-	button1->Hide();
-}
-private: System::Void pictureBox7_Click(System::Object^ sender, System::EventArgs^ e) {
-	label11->Text = "p";
-    button5->Show();
-	label3->Hide();
-	label4->Hide();
-	pictureBox6->Hide();
-	pictureBox7->Hide();
-	textBox1->Text = "";
-	textBox2->Text = "";
-	textBox1->Show();
-	textBox3->Hide();
-	panel1->Show();
-	panel2->Hide();
-	Next->Show();
-	Sign_in->Text = "Sign-in.";
-	label2->Hide();
-	timer1->Start();
-	Register->Text = "Register.";
-	Password->Hide();
-	textBox2->Hide();
-	Username->Text = "Please enter your Full Name.";
-	Username->Show();
-	button1->Hide();
-}
-private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox2_Click_1(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox9_Click(System::Object^ sender, System::EventArgs^ e) {
-    Pat_gender = "M";
-    if (button8->Text != "No Profile Picture") {
-        
-        string wow = "PICs\\Patients\\" + pat_username + ".jpg";
-        String^ str2 = gcnew String(wow.c_str());
-        if (System::IO::File::Exists(str2)) {
-            System::IO::File::Delete(str2);
+            string wow = "PICs\\Patients\\" + pat_username + ".jpg";
+            String^ str2 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str2)) {
+                System::IO::File::Delete(str2);
+            }
+            pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
         }
-        pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
-    }
-    Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
-    allPatients[index_allPatients] = New_Patient;
-    CurrentPatient = &allPatients[index_allPatients];
-    index_allPatients++;
-    panel4->Show();
-    panel5->Hide();
-    Form::Width -= 200;
-    Form::Height -= 150;
-    printPatientMenu();
-   
-}
-private: System::Void pictureBox8_Click(System::Object^ sender, System::EventArgs^ e) {
-    if (button8->Text != "No Profile Picture") {
+        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
+        allPatients[index_allPatients] = New_Patient;
+        CurrentPatient = &allPatients[index_allPatients];
+        index_allPatients++;
+        panel4->Show();
+        panel5->Hide();
+        Form::Width -= 200;
+        Form::Height -= 150;
+        printPatientMenu();
+        textBox2->Select(0, 0);
 
-        string wow = "PICs\\Patients\\" + pat_username + ".jpg";
-        String^ str2 = gcnew String(wow.c_str());
-        if (System::IO::File::Exists(str2)) {
-            System::IO::File::Delete(str2);
+
+    }
+    private: System::Void pictureBox8_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (button8->Text != "No Profile Picture") {
+
+            string wow = "PICs\\Patients\\" + pat_username + ".jpg";
+            String^ str2 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str2)) {
+                System::IO::File::Delete(str2);
+            }
+            pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
         }
-        pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
-    }
-    Pat_gender = "F";
-    Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
-    allPatients[index_allPatients] = New_Patient;
-    CurrentPatient = &allPatients[index_allPatients];
-    index_allPatients++;
-    panel4->Show();
-    panel5->Hide();
-    Form::Width -= 200;
-    Form::Height -= 150;
-    printPatientMenu();
-}
+        Pat_gender = "F";
+        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
+        allPatients[index_allPatients] = New_Patient;
+        CurrentPatient = &allPatients[index_allPatients];
+        index_allPatients++;
+        panel4->Show();
+        panel5->Hide();
+        Form::Width -= 200;
+        Form::Height -= 150;
+        printPatientMenu();
+        textBox2->Select(0, 0);
 
-    int counter_timer1=0;
-private: System::Void timer3_Tick(System::Object^ sender, System::EventArgs^ e) {
-    if (counter_timer1 > 10) {
-      /*  pictureBox31->Hide();*/
     }
-    else {
-        counter_timer1++;
-    }
-}
 
-private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-
-private: System::Void panel3_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void pictureBox16_Click(System::Object^ sender, System::EventArgs^ e) {
-    System::Windows::Forms::SendKeys::Send("%");
-   /* if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        writeAllPatients(allPatients);
-        writeAllDiseases(allDiseases);
-        writeAllDoctors(allDoctors);
-    }*/
-        this->Close();
-}
-private: System::Void pictureBox17_Click(System::Object^ sender, System::EventArgs^ e) {
-    if (MessageBox::Show("Are you sure you want to Logout?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        logout_back();
+           int counter_timer1 = 0;
+    private: System::Void timer3_Tick(System::Object^ sender, System::EventArgs^ e) {
+        if (counter_timer1 > 10) {
+            /*  pictureBox31->Hide();*/
+        }
+        else {
+            counter_timer1++;
+        }
     }
-}
-private: System::Void pictureBox14_Click(System::Object^ sender, System::EventArgs^ e) {
-    label12->Hide();
-    label8->Hide();
-    label9->Hide();
-    label16->Hide();
-    pictureBox10->Hide();
-    pictureBox11->Hide();
-    pictureBox12->Hide();
-    pictureBox13->Hide();
-    pictureBox14->Hide();
-    pictureBox15->Hide();
-    textBox4->Show();
-    button2->Text = "Next";
-    button2->Show();
-    Back_P->Show();
-    view_all_Symptoms();
-    symptoms_patient_feeling.clear();
-   
-}
-private: System::Void pictureBox12_Click(System::Object^ sender, System::EventArgs^ e) {
-   
+
+    private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+
+    private: System::Void panel3_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+    }
+    private: System::Void pictureBox16_Click(System::Object^ sender, System::EventArgs^ e) {
+
+    }
+    private: System::Void pictureBox17_Click(System::Object^ sender, System::EventArgs^ e) {
+
+    }
+    private: System::Void pictureBox14_Click(System::Object^ sender, System::EventArgs^ e) {
+        label12->Hide();
+        label8->Hide();
+        label9->Hide();
+        label16->Hide();
+        pictureBox10->Hide();
+        pictureBox11->Hide();
+        pictureBox12->Hide();
+        pictureBox13->Hide();
+        pictureBox14->Hide();
+        pictureBox15->Hide();
+        textBox4->Show();
+        button2->Text = "Next";
+        button2->Show();
+        Back_P->Show();
+        view_all_Symptoms();
+        symptoms_patient_feeling.clear();
+
+    }
+    private: System::Void pictureBox12_Click(System::Object^ sender, System::EventArgs^ e) {
 
 
-}
-private: System::Void pictureBox13_Click(System::Object^ sender, System::EventArgs^ e) {
-   
-    Back_P->Show();
-    label12->Hide();
-    label8->Hide();
-    label9->Hide();
-    label16->Hide();
-    pictureBox10->Hide();
-    pictureBox11->Hide();
-    pictureBox12->Hide();
-    pictureBox13->Hide();
-    pictureBox14->Hide();
-    pictureBox15->Hide();
-    display_Symptoms_for_Disease();
-}
-private: System::Void pictureBox11_Click(System::Object^ sender, System::EventArgs^ e) {
 
-    if ((*CurrentPatient).Disease_History.size() == 0) {
-        MessageBox::Show("You Do not have a History to delete.", "Delete History?", MessageBoxButtons::OK, MessageBoxIcon::Error);
     }
-    else {
-       
-         if (MessageBox::Show("Are you sure you want to delete your history?", "Delete History?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        (*CurrentPatient).Disease_History.clear();
-                  }
+    private: System::Void pictureBox13_Click(System::Object^ sender, System::EventArgs^ e) {
+
+        Back_P->Show();
+        label12->Hide();
+        label8->Hide();
+        label9->Hide();
+        label16->Hide();
+        pictureBox10->Hide();
+        pictureBox11->Hide();
+        pictureBox12->Hide();
+        pictureBox13->Hide();
+        pictureBox14->Hide();
+        pictureBox15->Hide();
+        display_Symptoms_for_Disease();
     }
-}
-private: System::Void textBox4_KeyPress_1(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-    char ch = e->KeyChar;
-    if (!isdigit(ch) && ch != 8)
-    {
-        e->Handled = true;
+    private: System::Void pictureBox11_Click(System::Object^ sender, System::EventArgs^ e) {
+
+        if ((*CurrentPatient).Disease_History.size() == 0) {
+            MessageBox::Show("You Do not have a History to delete.", "Delete History?", MessageBoxButtons::OK, MessageBoxIcon::Error);
+        }
+        else {
+
+            if (MessageBox::Show("Are you sure you want to delete your history?", "Delete History?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                (*CurrentPatient).Disease_History.clear();
+            }
+        }
     }
-}
-bool check1 = true;
-private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^ e) {
-    string x = "";
-    bool check = true;
-   
-     if (textBox4->Text != ""&&check1==true) {
-        MarshalString(textBox4->Text, x);
-        if (x == "0" && symptoms_patient_feeling.size() == 0) {
+    private: System::Void textBox4_KeyPress_1(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+        char ch = e->KeyChar;
+        if (!isdigit(ch) && ch != 8)
+        {
+            e->Handled = true;
+        }
+    }
+           bool check1 = true;
+    private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^ e) {
+        string x = "";
+        bool check = true;
+
+        if (textBox4->Text != "" && check1 == true) {
+            MarshalString(textBox4->Text, x);
+            if (x == "0" && symptoms_patient_feeling.size() == 0) {
+                label12->Show();
+                label8->Show();
+                label9->Show();
+                label16->Show();
+                pictureBox10->Show();
+                pictureBox11->Show();
+                pictureBox12->Show();
+                pictureBox13->Show();
+                pictureBox14->Show();
+                pictureBox15->Show();
+                label18->Hide();
+                button2->Hide();
+                textBox4->Hide();
+                textBox4->Text = "";
+                label17->Hide();
+                label19->Hide();
+                check = false;
+            }
+            else if (x == "0") {
+
+                textBox4->Text = "";
+                textBox4->Hide();
+                button2->Hide();
+                label19->Hide();
+                label18->Hide();
+                check = false;
+                check1 = false;
+                index_self = 1;
+                index_related = 1;
+                Back_P->Hide();
+                selfdiagnosis();
+
+                label17->Hide();
+                button2->Text = "Next";
+                button2->Show();
+            }
+            else if (stoi(x) > allSymptoms.size()) {
+                label18->Text = "Invalid entry";
+                label18->Show();
+                check = false;
+
+            }
+            if (check) {
+                bool check_duplicate = true;
+                for (int i = 0; i < symptoms_patient_feeling.size(); i++) {
+                    if (symptoms_patient_feeling[i] == x) {
+                        check_duplicate = false;
+                        break;
+                    }
+                }
+
+                if (check_duplicate) {
+                    symptoms_patient_feeling.push_back(x);
+                    label18->Hide();
+                    textBox4->Text = "";
+                }
+
+
+                else
+                {
+                    label18->Text = "You entered this number before. Please enter another number";
+                    label18->Show();
+                }
+            }
+
+        }
+        else {
+            label18->Text = "Enter 0 when you are done";
+            label18->Show();
+        }
+        if (button2->Text == "End") {
             label12->Show();
             label8->Show();
             label9->Show();
@@ -3707,710 +4043,640 @@ private: System::Void button2_Click_1(System::Object^ sender, System::EventArgs^
             textBox4->Text = "";
             label17->Hide();
             label19->Hide();
-            check = false;
         }
-        else if (x == "0") {
-
-            textBox4->Text = "";
-            textBox4->Hide();
-            button2->Hide();
-            label19->Hide();
+        else if (button2->Text == "Next" && check1 == false) {
             label18->Hide();
-            check = false;
-            check1 = false;
-            index_self = 1;
-            index_related = 1;
-            Back_P->Hide();
-            selfdiagnosis();
-            
-            label17->Hide();
-            button2->Text = "Next";
-            button2->Show();
-        }
-        else if (stoi(x) > allSymptoms.size()) {
-            label18->Text = "Invalid entry";
-            label18->Show();
-            check = false;
-
-        }
-        if (check) {
-            bool check_duplicate = true;
-            for (int i = 0; i < symptoms_patient_feeling.size(); i++) {
-                if (symptoms_patient_feeling[i] == x) {
-                    check_duplicate = false;
-                    break;
+            if (index_self <= Disease_Diagnosed.size()) {
+                String^ index = gcnew String(to_string(index_self).c_str());
+                String^ str2 = gcnew String(Disease_Diagnosed[index_self - 1].name.c_str());
+                string per = to_string(percentage_of_diagnosed_Disease[index_self - 1] * 100);
+                per = per.substr(0, 4);
+                String^ percentage = gcnew String(per.c_str());
+                String^ info = gcnew String(Disease_Diagnosed[index_self - 1].info.c_str());
+                label19->Text = String::Format("You are {0}% diagnosed with: {1}\nGeneral Information:\n{2}\nYou may feel symptoms like:", percentage, str2, info);
+                for (int j = 1; j <= Disease_Diagnosed[index_self - 1].symps.size(); j++) {
+                    string symp = Disease_Diagnosed[index_self - 1].symps[j - 1];
+                    String^ symptom = gcnew String(symp.c_str());
+                    String^ index1 = gcnew String(to_string(j).c_str());
+                    if (j == 1 || j % 5 == 0)
+                        label19->Text += String::Format("\n{0}-{1}", index1, symptom);
+                    else
+                        label19->Text += String::Format("     {0}-{1}", index1, symptom);
                 }
-            }
-
-            if (check_duplicate) {
-                symptoms_patient_feeling.push_back(x);
-                label18->Hide();
-                textBox4->Text = "";
-            }
-
-
-            else
-            {
-                label18->Text = "You entered this number before. Please enter another number";
-                label18->Show();
-            }
-        }
-
-    }
-    else {
-        label18->Text = "Enter 0 when you are done";
-        label18->Show();
-    }
-     if (button2->Text == "End") {
-         label12->Show();
-         label8->Show();
-         label9->Show();
-         label16->Show();
-         pictureBox10->Show();
-         pictureBox11->Show();
-         pictureBox12->Show();
-         pictureBox13->Show();
-         pictureBox14->Show();
-         pictureBox15->Show();
-         label18->Hide();
-         button2->Hide();
-         textBox4->Hide();
-         textBox4->Text = "";
-         label17->Hide();
-         label19->Hide();
-     }
-     else if (button2->Text == "Next" && check1 == false) {
-         label18->Hide();
-         if (index_self <= Disease_Diagnosed.size()) {
-             String^ index = gcnew String(to_string(index_self).c_str());
-             String^ str2 = gcnew String(Disease_Diagnosed[index_self-1].name.c_str());
-             string per = to_string(percentage_of_diagnosed_Disease[index_self-1] * 100);
-             per = per.substr(0, 4);
-             String^ percentage = gcnew String(per.c_str());
-             String^ info = gcnew String(Disease_Diagnosed[index_self-1].info.c_str());
-             label19->Text = String::Format("You are {0}% diagnosed with: {1}\nGeneral Information:\n{2}\nYou may feel symptoms like:", percentage, str2, info);
-             for (int j = 1; j <= Disease_Diagnosed[index_self-1].symps.size(); j++) {
-                 string symp = Disease_Diagnosed[index_self-1].symps[j - 1];
-                 String^ symptom = gcnew String(symp.c_str());
-                 String^ index1 = gcnew String(to_string(j).c_str());
-                 if(j==1||j%5==0)
-                     label19->Text += String::Format("\n{0}-{1}", index1, symptom);
-                 else
-                     label19->Text += String::Format("     {0}-{1}", index1, symptom);
-             }
-             String^ name = gcnew String(Disease_Diagnosed[index_self-1].doc_name.c_str());
-             String^ phone = gcnew String(Disease_Diagnosed[index_self-1].doc_phone.c_str());
-             label19->Text += String::Format("\nYou can contact Dr.{0} to make an appointment\nPhone Number: {1}", name, phone);
-             label19->Show();
-             if (index_self == Disease_Diagnosed.size()) {
-                 button2->Text = "End";
-                 check1 = true;
-             }
-             string from, pass, MessageBody;
-             MailMessage^ message = gcnew MailMessage();
-             from = "selfdiagnosissupp@gmail.com";
-             pass = "eomootfkfmpefvut";
-             MessageBody = ( * CurrentPatient).patient_name+" has been diagnosed with "+Disease_Diagnosed[index_self-1].name+".\nfor contact: "+(*CurrentPatient).account.email;
-             String^ From = gcnew String(from.c_str());
-             String^ MB = gcnew String(MessageBody.c_str());
-             String^ To;
-             String^ Pass = gcnew String(pass.c_str());
-             message->From = gcnew MailAddress(From);
-             message->Body = MB;
-             message->Subject = "A New Patient has been diagnosed with your disease"; 
-             for (int i = 0; i < index_allDoctors; i++) {
-                 if (Disease_Diagnosed[index_self - 1].doc_name == allDoctors[i].doc_name) {
-                     To = gcnew String(allDoctors[i].account.email.c_str());
-                 }
-             }
-             SmtpClient^ smtp = gcnew SmtpClient("smtp.gmail.com");
-             smtp->EnableSsl = true;
-             message->To->Add(To);
-             smtp->Port = 587;
-             smtp->DeliveryMethod = SmtpDeliveryMethod::Network;
-             smtp->Credentials = gcnew NetworkCredential(From, Pass);
-             smtp->Send(message);
-             message->To->Clear();
-
-             index_self++;
-
-         }
-         else if (Related_Diseases.size() > 0) {
-             float max_value = -1;
-             int max_index;
-             vector<int> index_max;
-
-             label17->Text="You are not diagnosed with any Diseases,\nHere is the closest disease related to your symptoms:\n";
-             label17->Show();
-             for (int i = 0; i < percentage_of_related_Disease.size(); i++) {
-                 if (percentage_of_related_Disease[i] > max_value) {
-                     max_value = percentage_of_related_Disease[i];
-                     max_index = i;
-                 }
-             }
-             index_max.push_back(max_index);
-             max_index++;
-             for (max_index; max_index < percentage_of_related_Disease.size(); max_index++) {
-                 if (percentage_of_related_Disease[max_index] == max_value) {
-                     index_max.push_back(max_index);
-                 }
-             }
-             label19->Text = "";
-  
-             if (index_related <= index_max.size()) {
-                 String^ index = gcnew String(to_string(index_related).c_str());
-                 String^ str2 = gcnew String(Related_Diseases[index_related-1].name.c_str());
-                 string per = to_string(percentage_of_related_Disease[index_related-1] * 100);
-                 per = per.substr(0, 4);
-                 String^ percentage = gcnew String(per.c_str());
-                 String^ info = gcnew String(Related_Diseases[index_related - 1].info.c_str());
-                 label19->Text += String::Format("{0}-{1} with {2}%\nGeneral Information:\n{3}\nYou may feel symptoms like", index, str2,percentage,info);
-                 for (int j = 1; j <= Related_Diseases[index_related - 1].symps.size(); j++) {
-                     string symp = Related_Diseases[index_related - 1].symps[j - 1];
-                     String^ symptom = gcnew String(symp.c_str());
-                     String^ index1 = gcnew String(to_string(j).c_str());
-                     if (j == 1 || j % 5 == 0)
-                         label19->Text += String::Format("\n{0}-{1}", index1, symptom);
-                     else
-                         label19->Text += String::Format("     {0}-{1}", index1, symptom);
-                 }
-                 String^ name = gcnew String(Related_Diseases[index_related - 1].doc_name.c_str());
-                 String^ phone = gcnew String(Related_Diseases[index_related - 1].doc_phone.c_str());
-                 label19->Text += String::Format("\nYou can contact Dr.{0} to make an appointment\nPhone Number: {1}", name, phone);
-                 label19->Show();
-                 if (index_related == Related_Diseases.size()) {
-                     button2->Text = "End";
-                     check1 = true;
-                 }
-                 index_related++;
-             }
-         }
-     }
-}
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-    if (button3->Text == "End") {
-        label12->Show();
-        label8->Show();
-        label9->Show();
-        label16->Show();
-        pictureBox10->Show();
-        pictureBox11->Show();
-        pictureBox12->Show();
-        pictureBox13->Show();
-        pictureBox14->Show();
-        pictureBox15->Show();
-        label18->Hide();
-        button2->Hide();
-        textBox4->Hide();
-        textBox4->Text = "";
-        label17->Hide();
-        label19->Hide();
-        button3->Hide();
-        Back_P->Hide();
-    }
-    else if (button3->Text == "Next") {
-        string y;
-        if (textBox4->Text != "") {
-            MarshalString(textBox4->Text, y);
-            if (stoi(y) < 1 || stoi(y) > allDiseases.size()) {
-                label18->Text = "please enter the correct number for the Disease";
-                label18->Show();
-            }
-            else {
-                label18->Hide();
-                label19->Text = "";
-                label17->Text = "";
-                String^ str2 = gcnew String(allDiseases[stoi(y) - 1].name.c_str());
-                String^ info = gcnew String(allDiseases[stoi(y) - 1].info.c_str());
-                label17->Text = String::Format("Viewing {0}", str2);
-                label19->Text += String::Format("General Information:\n{0}\nSymptoms:", info);
-                if (allDiseases[stoi(y) - 1].symps.size() > 0) {
-                    for (int i = 1; i <= allDiseases[stoi(y) - 1].symps.size(); i++) {
-                        String^ index = gcnew String(to_string(i).c_str());
-                        String^ str2 = gcnew String(allDiseases[stoi(y) - 1].symps[i - 1].c_str());
-                        if (i % 5 == 0)
-                            label19->Text += String::Format("{0}-{1}\n", index, str2);
-                        else label19->Text += String::Format("{0}-{1}     ", index, str2);
-
+                String^ name = gcnew String(Disease_Diagnosed[index_self - 1].doc_name.c_str());
+                String^ phone = gcnew String(Disease_Diagnosed[index_self - 1].doc_phone.c_str());
+                label19->Text += String::Format("\nYou can contact Dr.{0} to make an appointment\nPhone Number: {1}", name, phone);
+                label19->Show();
+                if (index_self == Disease_Diagnosed.size()) {
+                    button2->Text = "End";
+                    check1 = true;
+                }
+                string from, pass, MessageBody;
+                MailMessage^ message = gcnew MailMessage();
+                from = "selfdiagnosissupp@gmail.com";
+                pass = "eomootfkfmpefvut";
+                MessageBody = (*CurrentPatient).patient_name + " has been diagnosed with " + Disease_Diagnosed[index_self - 1].name + ".\nfor contact: " + (*CurrentPatient).account.email;
+                String^ From = gcnew String(from.c_str());
+                String^ MB = gcnew String(MessageBody.c_str());
+                String^ To;
+                String^ Pass = gcnew String(pass.c_str());
+                message->From = gcnew MailAddress(From);
+                message->Body = MB;
+                message->Subject = "A New Patient has been diagnosed with your disease";
+                for (int i = 0; i < index_allDoctors; i++) {
+                    if (Disease_Diagnosed[index_self - 1].doc_name == allDoctors[i].doc_name) {
+                        To = gcnew String(allDoctors[i].account.email.c_str());
                     }
                 }
-                else {
-                    label19->Text += String::Format("\nNo symptoms for this disease yet.");
-                }
-                String^ name = gcnew String(allDiseases[stoi(y) - 1].doc_name.c_str());
-                String^ phone = gcnew String(allDiseases[stoi(y) - 1].doc_phone.c_str());
-                label19->Text += String::Format("\nYou can contact Dr.{0}\nPhone Number: {1}", name, phone);
-                label19->Show();
-                
-                button3->Text = "End";
-                textBox4->Text = "";
-                textBox4->Hide();
+                SmtpClient^ smtp = gcnew SmtpClient("smtp.gmail.com");
+                smtp->EnableSsl = true;
+                message->To->Add(To);
+                smtp->Port = 587;
+                smtp->DeliveryMethod = SmtpDeliveryMethod::Network;
+                smtp->Credentials = gcnew NetworkCredential(From, Pass);
+                smtp->Send(message);
+                message->To->Clear();
 
+                index_self++;
+
+            }
+            else if (Related_Diseases.size() > 0) {
+                float max_value = -1;
+                int max_index;
+                vector<int> index_max;
+
+                label17->Text = "You are not diagnosed with any Diseases,\nHere is the closest disease related to your symptoms:\n";
+                label17->Show();
+                for (int i = 0; i < percentage_of_related_Disease.size(); i++) {
+                    if (percentage_of_related_Disease[i] > max_value) {
+                        max_value = percentage_of_related_Disease[i];
+                        max_index = i;
+                    }
+                }
+                index_max.push_back(max_index);
+                max_index++;
+                for (max_index; max_index < percentage_of_related_Disease.size(); max_index++) {
+                    if (percentage_of_related_Disease[max_index] == max_value) {
+                        index_max.push_back(max_index);
+                    }
+                }
+                label19->Text = "";
+
+                if (index_related <= index_max.size()) {
+                    String^ index = gcnew String(to_string(index_related).c_str());
+                    String^ str2 = gcnew String(Related_Diseases[index_related - 1].name.c_str());
+                    string per = to_string(percentage_of_related_Disease[index_related - 1] * 100);
+                    per = per.substr(0, 4);
+                    String^ percentage = gcnew String(per.c_str());
+                    String^ info = gcnew String(Related_Diseases[index_related - 1].info.c_str());
+                    label19->Text += String::Format("{0}-{1} with {2}%\nGeneral Information:\n{3}\nYou may feel symptoms like", index, str2, percentage, info);
+                    for (int j = 1; j <= Related_Diseases[index_related - 1].symps.size(); j++) {
+                        string symp = Related_Diseases[index_related - 1].symps[j - 1];
+                        String^ symptom = gcnew String(symp.c_str());
+                        String^ index1 = gcnew String(to_string(j).c_str());
+                        if (j == 1 || j % 5 == 0)
+                            label19->Text += String::Format("\n{0}-{1}", index1, symptom);
+                        else
+                            label19->Text += String::Format("     {0}-{1}", index1, symptom);
+                    }
+                    String^ name = gcnew String(Related_Diseases[index_related - 1].doc_name.c_str());
+                    String^ phone = gcnew String(Related_Diseases[index_related - 1].doc_phone.c_str());
+                    label19->Text += String::Format("\nYou can contact Dr.{0} to make an appointment\nPhone Number: {1}", name, phone);
+                    label19->Show();
+                    if (index_related == Related_Diseases.size()) {
+                        button2->Text = "End";
+                        check1 = true;
+                    }
+                    index_related++;
+                }
             }
         }
     }
-}
-private: System::Void panel5_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-private: System::Void pictureBox22_Click(System::Object^ sender, System::EventArgs^ e) {
-    button4->Text = "Next";
-    pictureBox30->Hide();
-    view_Patients();
-    textBox5->Show();
-    button4->Show();
-    button6->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void pictureBox27_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-
-private: System::Void pictureBox20_Click(System::Object^ sender, System::EventArgs^ e) {
-    panel4->TabIndex -= 5;
-    if (MessageBox::Show("Are you sure you want to Logout?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        logout_back();
-    }
-}
-private: System::Void pictureBox21_Click(System::Object^ sender, System::EventArgs^ e) {
-    textBox5->Show();
-    button4->Show();
-    button6->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void pictureBox19_Click(System::Object^ sender, System::EventArgs^ e) {
-    display_All_diseases();
-    pictureBox30->Hide();
-    button4->Text = "Next";
-    textBox5->Show();
-    button4->Show();
-    button6->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void textBox5_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-    char ch = e->KeyChar;
-	if (!isdigit(ch) && ch != 8)
-	{
-		e->Handled = true;
-	}
-}
-private: System::Void pictureBox21_Click_1(System::Object^ sender, System::EventArgs^ e) {
-    panel4->TabIndex -= 5;
-    System::Windows::Forms::SendKeys::Send("%");
-    /*if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-        writeAllPatients(allPatients);
-        writeAllDiseases(allDiseases);
-        writeAllDoctors(allDoctors);
-    }*/
-        this->Close();
-}
-private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
-    bool check_duplicate = true;
-    int k = 0;
-    bool check = true;
-    string x;
-    if (button4->Text == "Next") {
-        if (label29->Text == "Choose the disease you want to view.") {
-            if (textBox5->Text != "") {
-                MarshalString(textBox5->Text, x);
-                textBox5->Text = "";
-                if (stoi(x) > allDiseases.size()) {
-                    label32->Text = "Invalid Entry";
-                    label32->Show();
+    private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (button3->Text == "End") {
+            label12->Show();
+            label8->Show();
+            label9->Show();
+            label16->Show();
+            pictureBox10->Show();
+            pictureBox11->Show();
+            pictureBox12->Show();
+            pictureBox13->Show();
+            pictureBox14->Show();
+            pictureBox15->Show();
+            label18->Hide();
+            button2->Hide();
+            textBox4->Hide();
+            textBox4->Text = "";
+            label17->Hide();
+            label19->Hide();
+            button3->Hide();
+            Back_P->Hide();
+        }
+        else if (button3->Text == "Next") {
+            string y;
+            if (textBox4->Text != "") {
+                MarshalString(textBox4->Text, y);
+                if (stoi(y) < 1 || stoi(y) > allDiseases.size()) {
+                    label18->Text = "please enter the correct number for the Disease";
+                    label18->Show();
                 }
                 else {
-                    label32->Hide();
-                    String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
-                    String^ info = gcnew String(allDiseases[stoi(x) - 1].info.c_str());
-                    label29->Text = String::Format("Viewing {0}", str2);
-                    label28->Text = String::Format("General Information:\n{0}\nSymptoms:", info);
-                    if (allDiseases[stoi(x) - 1].symps.size() > 0) {
-                        for (int j = 1; j <= allDiseases[stoi(x) - 1].symps.size(); j++) {
-                            string symp = allDiseases[stoi(x) - 1].symps[j - 1];
-                            String^ symptom = gcnew String(symp.c_str());
-                            String^ index1 = gcnew String(to_string(j).c_str());
-                            if (j == 1 || j % 5 == 0) label28->Text += String::Format("\n{0}-{1}", index1, symptom);
-                            else label28->Text += String::Format("     {0}-{1}", index1, symptom);
+                    label18->Hide();
+                    label19->Text = "";
+                    label17->Text = "";
+                    String^ str2 = gcnew String(allDiseases[stoi(y) - 1].name.c_str());
+                    String^ info = gcnew String(allDiseases[stoi(y) - 1].info.c_str());
+                    label17->Text = String::Format("Viewing {0}", str2);
+                    label19->Text += String::Format("General Information:\n{0}\nSymptoms:", info);
+                    if (allDiseases[stoi(y) - 1].symps.size() > 0) {
+                        for (int i = 1; i <= allDiseases[stoi(y) - 1].symps.size(); i++) {
+                            String^ index = gcnew String(to_string(i).c_str());
+                            String^ str2 = gcnew String(allDiseases[stoi(y) - 1].symps[i - 1].c_str());
+                            if (i % 5 == 0)
+                                label19->Text += String::Format("{0}-{1}\n", index, str2);
+                            else label19->Text += String::Format("{0}-{1}     ", index, str2);
+
                         }
                     }
                     else {
-                        label28->Text += String::Format("\nNo symptoms for this disease yet.");
+                        label19->Text += String::Format("\nNo symptoms for this disease yet.");
                     }
-                    String^ name = gcnew String(allDiseases[stoi(x) - 1].doc_name.c_str());
-                    String^ phone = gcnew String(allDiseases[stoi(x) - 1].doc_phone.c_str());
-                    label28->Text += String::Format("\nYou can contact Dr.{0}\nPhone Number: {1}", name, phone);
-                    label28->Show();
-                    button4->Text = "End";
-                    textBox5->Hide();
-                }
+                    String^ name = gcnew String(allDiseases[stoi(y) - 1].doc_name.c_str());
+                    String^ phone = gcnew String(allDiseases[stoi(y) - 1].doc_phone.c_str());
+                    label19->Text += String::Format("\nYou can contact Dr.{0}\nPhone Number: {1}", name, phone);
+                    label19->Show();
 
+                    button3->Text = "End";
+                    textBox4->Text = "";
+                    textBox4->Hide();
+
+                }
             }
         }
-        else if (label29->Text == "Which Disease you want to display its Patients?") {
-            if (textBox5->Text != "") {
-                MarshalString(textBox5->Text, x);
-                textBox5->Text = "";
-                vector<string> Patient_with_Disease;
-                for (int i = 0; i < index_allPatients; i++) {
-                    for (int j = 0; j < allPatients[i].Disease_History.size(); j++) {
-                        if (allDiseases[stoi(x) - 1].name == allPatients[i].Disease_History[j]) {
-                            Patient_with_Disease.push_back(allPatients[i].patient_name);
+    }
+    private: System::Void panel5_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+    }
+    private: System::Void pictureBox22_Click(System::Object^ sender, System::EventArgs^ e) {
+        button4->Text = "Next";
+        pictureBox30->Hide();
+        view_Patients();
+        textBox5->Show();
+        button4->Show();
+        button6->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
+    }
+    private: System::Void pictureBox27_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+
+    private: System::Void pictureBox20_Click(System::Object^ sender, System::EventArgs^ e) {
+        panel4->TabIndex -= 5;
+        System::Windows::Forms::SendKeys::Send("%");
+        if (MessageBox::Show("Are you sure you want to Logout?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+            logout_back();
+        }
+    }
+    private: System::Void pictureBox21_Click(System::Object^ sender, System::EventArgs^ e) {
+        textBox5->Show();
+        button4->Show();
+        button6->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
+    }
+    private: System::Void pictureBox19_Click(System::Object^ sender, System::EventArgs^ e) {
+        display_All_diseases();
+        pictureBox30->Hide();
+        button4->Text = "Next";
+        textBox5->Show();
+        button4->Show();
+        button6->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
+    }
+    private: System::Void textBox5_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+        char ch = e->KeyChar;
+        if (!isdigit(ch) && ch != 8)
+        {
+            e->Handled = true;
+        }
+    }
+    private: System::Void pictureBox21_Click_1(System::Object^ sender, System::EventArgs^ e) {
+        panel4->TabIndex -= 5;
+        /*if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+            writeAllPatients(allPatients);
+            writeAllDiseases(allDiseases);
+            writeAllDoctors(allDoctors);
+        }*/
+        this->Close();
+        System::Windows::Forms::SendKeys::Send("%");
+    }
+    private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+        bool check_duplicate = true;
+        int k = 0;
+        bool check = true;
+        string x;
+        if (button4->Text == "Next") {
+            if (label29->Text == "Choose the disease you want to view.") {
+                if (textBox5->Text != "") {
+                    MarshalString(textBox5->Text, x);
+                    textBox5->Text = "";
+                    if (stoi(x) > allDiseases.size()) {
+                        label32->Text = "Invalid Entry";
+                        label32->Show();
+                    }
+                    else {
+                        label32->Hide();
+                        String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
+                        String^ info = gcnew String(allDiseases[stoi(x) - 1].info.c_str());
+                        label29->Text = String::Format("Viewing {0}", str2);
+                        label28->Text = String::Format("General Information:\n{0}\nSymptoms:", info);
+                        if (allDiseases[stoi(x) - 1].symps.size() > 0) {
+                            for (int j = 1; j <= allDiseases[stoi(x) - 1].symps.size(); j++) {
+                                string symp = allDiseases[stoi(x) - 1].symps[j - 1];
+                                String^ symptom = gcnew String(symp.c_str());
+                                String^ index1 = gcnew String(to_string(j).c_str());
+                                if (j == 1 || j % 5 == 0) label28->Text += String::Format("\n{0}-{1}", index1, symptom);
+                                else label28->Text += String::Format("     {0}-{1}", index1, symptom);
+                            }
                         }
-
-                    }
-                }
-                if (Patient_with_Disease.size() == 0) {
-                    String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
-                    label29->Text = String::Format("There's no patients diagnosed with {0}", str2);
-                    label28->Text = "";
-                    label28->Hide();
-                    button4->Text = "End";
-                    textBox5->Hide();
-                }
-                else {
-                    String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
-                    label29->Text = String::Format("Patients with {0} are.", str2);
-                    label28->Text = "";
-                    for (int i = 1; i <= Patient_with_Disease.size(); i++) {
-                        String^ index = gcnew String(to_string(i).c_str());
-                        String^ str3 = gcnew String(Patient_with_Disease[i].c_str());
-                        if (i==1||i%5==0)
-                            label28->Text += String::Format("{0}-{1}\n", index, str3);
-                        else 
-                            label28->Text += String::Format("{0}-{1}     ", index, str3);
-
-
-                    }
-                    label28->Show();
-                    button4->Text = "End";
-                    textBox5->Hide();
-                }
-            }
-        }
-        else if (label31->Text == "Please enter the disease name:") {
-            if (textBox6->Text != "") {
-                MarshalString(textBox6->Text, disease_name);
-                textBox6->Text = "";
-                check_disease_name(disease_name);
-                label32->Show();
-                if (check_disease_name(disease_name) == false) {
-                    label31->Text = "Please enter General info about this disease:";
-                    label32->Hide();
-                }
-            }
-        }
-        else if (label31->Text == "Please enter General info about this disease:") {
-            if (textBox6->Text != "") {
-                MarshalString(textBox6->Text, disease_info);
-                textBox6->Text = "";
-                label31->Text = "Please enter number of symptoms:";
-                textBox6->Hide();
-                textBox5->Show();
-            }
-        }
-
-        else if (label31->Text == "Please enter number of symptoms:") {
-            index_symp = 1;
-            if (textBox5->Text != "") {
-                textBox6->Show();
-                MarshalString(textBox5->Text, sympnum);
-                if (stoi(sympnum) == 0) {
-                    if (MessageBox::Show("Are you sure you do not want to add symptoms", "symptoms?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-                        (*CurrentDoctor).doc_diseases.push_back({ disease_name,disease_info,allsymps, (*CurrentDoctor).doc_name, (*CurrentDoctor).phone });
-                        Diseases newDisease = { disease_name,disease_info,allsymps, (*CurrentDoctor).doc_name, (*CurrentDoctor).phone };
-                        allDiseases.push_back(newDisease);
-                        extract_New_Symptoms(newDisease);
-                        disease_name = "";
-                        disease_info = "";
+                        else {
+                            label28->Text += String::Format("\nNo symptoms for this disease yet.");
+                        }
+                        String^ name = gcnew String(allDiseases[stoi(x) - 1].doc_name.c_str());
+                        String^ phone = gcnew String(allDiseases[stoi(x) - 1].doc_phone.c_str());
+                        label28->Text += String::Format("\nYou can contact Dr.{0}\nPhone Number: {1}", name, phone);
+                        label28->Show();
                         button4->Text = "End";
-                        button4->PerformClick();
-                        button4->Text = "Next";
-                        label31->Text = "Weeeeeeeee";
-                        label31->Hide();
+                        textBox5->Hide();
+                    }
+
+                }
+            }
+            else if (label29->Text == "Which Disease you want to display its Patients?") {
+                if (textBox5->Text != "") {
+                    MarshalString(textBox5->Text, x);
+                    textBox5->Text = "";
+                    vector<string> Patient_with_Disease;
+                    for (int i = 0; i < index_allPatients; i++) {
+                        for (int j = 0; j < allPatients[i].Disease_History.size(); j++) {
+                            if (allDiseases[stoi(x) - 1].name == allPatients[i].Disease_History[j]) {
+                                Patient_with_Disease.push_back(allPatients[i].patient_name);
+                            }
+
+                        }
+                    }
+                    if (Patient_with_Disease.size() == 0) {
+                        String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
+                        label29->Text = String::Format("There's no patients diagnosed with {0}", str2);
+                        label28->Text = "";
+                        label28->Hide();
+                        button4->Text = "End";
+                        textBox5->Hide();
+                    }
+                    else {
+                        String^ str2 = gcnew String(allDiseases[stoi(x) - 1].name.c_str());
+                        label29->Text = String::Format("Patients with {0} are.", str2);
+                        label28->Text = "";
+                        for (int i = 1; i <= Patient_with_Disease.size(); i++) {
+                            String^ index = gcnew String(to_string(i).c_str());
+                            String^ str3 = gcnew String(Patient_with_Disease[i].c_str());
+                            if (i == 1 || i % 5 == 0)
+                                label28->Text += String::Format("{0}-{1}\n", index, str3);
+                            else
+                                label28->Text += String::Format("{0}-{1}     ", index, str3);
+
+
+                        }
+                        label28->Show();
+                        button4->Text = "End";
+                        textBox5->Hide();
                     }
                 }
-                else {
-                    label31->Text = String::Format("Symptom #1");
-                    label31->Show();
+            }
+            else if (label31->Text == "Please enter the disease name:") {
+                if (textBox6->Text != "") {
+                    MarshalString(textBox6->Text, disease_name);
+                    textBox6->Text = "";
+                    check_disease_name(disease_name);
+                    label32->Show();
+                    if (check_disease_name(disease_name) == false) {
+                        label31->Text = "Please enter General info about this disease:";
+                        label32->Hide();
+                    }
+                }
+            }
+            else if (label31->Text == "Please enter General info about this disease:") {
+                if (textBox6->Text != "") {
+                    MarshalString(textBox6->Text, disease_info);
+                    textBox6->Text = "";
+                    label31->Text = "Please enter number of symptoms:";
+                    textBox6->Hide();
+                    textBox5->Show();
+                }
+            }
+
+            else if (label31->Text == "Please enter number of symptoms:") {
+                index_symp = 1;
+                if (textBox5->Text != "") {
+                    textBox6->Show();
+                    MarshalString(textBox5->Text, sympnum);
+                    if (stoi(sympnum) == 0) {
+                        if (MessageBox::Show("Are you sure you do not want to add symptoms", "symptoms?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                            (*CurrentDoctor).doc_diseases.push_back({ disease_name,disease_info,allsymps, (*CurrentDoctor).doc_name, (*CurrentDoctor).phone });
+                            Diseases newDisease = { disease_name,disease_info,allsymps, (*CurrentDoctor).doc_name, (*CurrentDoctor).phone };
+                            allDiseases.push_back(newDisease);
+                            extract_New_Symptoms(newDisease);
+                            disease_name = "";
+                            disease_info = "";
+                            button4->Text = "End";
+                            button4->PerformClick();
+                            button4->Text = "Next";
+                            label31->Text = "Weeeeeeeee";
+                            label31->Hide();
+                        }
+                    }
+                    else {
+                        label31->Text = String::Format("Symptom #1");
+                        label31->Show();
+                        if (index_symp == stoi(sympnum)) {
+                            button4->Text = "End";
+                        }
+                    }
+                }
+            }
+
+
+            else if (label31->Text != "") {
+                if (label31->Text[0] == 'S') {
+                    if (index_symp <= stoi(sympnum)) {
+                        if (textBox6->Text != "") {
+                            textBox5->Hide();
+                            textBox6->Show();
+                            string symp;
+                            MarshalString(textBox6->Text, symp);
+                            textBox6->Text = "";
+                            bool check2 = true;
+                            if (index_symp != 1) {
+                                for (int j = 0; j < allsymps.size(); j++) {
+                                    if (symp == allsymps[j]) {
+                                        check2 = false;
+                                        label32->Text = "you added this symptom before";
+                                        label32->Show();
+                                        break;
+                                    }
+
+                                }
+                            }
+                            if (check2) {
+                                label32->Hide();
+                                allsymps.push_back(symp);
+                                index_symp++;
+                                String^ index = gcnew String(to_string(index_symp).c_str());
+                                label31->Text = String::Format("Symptom #{0}", index);
+                                label31->Show();
+                            }
+                        }
+                    }
                     if (index_symp == stoi(sympnum)) {
                         button4->Text = "End";
                     }
                 }
             }
-        }
+            else if (label29->Text == "Please choose Which disease you want\nto add its symptoms....") {
+                if (textBox5->Text != "") {
+                    bool check2 = true;
+                    MarshalString(textBox5->Text, menuChoice);
+                    if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
 
-
-        else if (label31->Text != "") {
-            if (label31->Text[0] == 'S') {
-                if (index_symp <= stoi(sympnum)) {
-                    if (textBox6->Text != "") {
+                        check2 = false;
+                        label32->Text = "Invalid entry";
+                        label32->Show();
+                    }
+                    else  if (stoi(menuChoice) == 0) {
+                        check2 = false;
+                        label32->Text = "Invalid entry";
+                        label32->Show();
+                    }
+                    if (check2) {
+                        button4->Text = "End.";
+                        label32->Hide();
+                        diseaseChoice = stoi(menuChoice) - 1;
+                        bool check_duplicate = true;
+                        String^ index = gcnew String(to_string((*CurrentDoctor).doc_diseases[diseaseChoice].symps.size() + 1).c_str());
+                        String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].name.c_str());
+                        label31->Text = String::Format("You are adding symptom number {0} to {1}", index, str2);
+                        label31->Show();
                         textBox5->Hide();
                         textBox6->Show();
-                        string symp;
-                        MarshalString(textBox6->Text, symp);
-                        textBox6->Text = "";
-                        bool check2 = true;
-                        if (index_symp != 1) {
-                            for (int j = 0; j < allsymps.size(); j++) {
-                                if (symp == allsymps[j]) {
-                                    check2 = false;
-                                    label32->Text = "you added this symptom before";
-                                    label32->Show();
-                                    break;
-                                }
-
-                            }
-                        }
-                        if (check2) {
-                            label32->Hide();
-                            allsymps.push_back(symp);
-                            index_symp++;
-                            String^ index = gcnew String(to_string(index_symp).c_str());
-                            label31->Text = String::Format("Symptom #{0}", index);
-                            label31->Show();
-                        }
-                    }
-                }
-                if (index_symp == stoi(sympnum)) {
-                    button4->Text = "End";
-                }
-            }
-        }
-        else if (label29->Text == "Please choose Which disease you want\nto add its symptoms....") {
-            if (textBox5->Text != "") {
-                bool check2 = true;
-                MarshalString(textBox5->Text, menuChoice);
-                if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
-
-                    check2 = false;
-                    label32->Text = "Invalid entry";
-                    label32->Show();
-                }
-                else  if (stoi(menuChoice) == 0) {
-                    check2 = false;
-                    label32->Text = "Invalid entry";
-                    label32->Show();
-                }
-                if (check2) {
-                    button4->Text = "End.";
-                    label32->Hide();
-                    diseaseChoice = stoi(menuChoice) - 1;
-                    bool check_duplicate = true;
-                    String^ index = gcnew String(to_string((*CurrentDoctor).doc_diseases[diseaseChoice].symps.size() + 1).c_str());
-                    String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].name.c_str());
-                    label31->Text = String::Format("You are adding symptom number {0} to {1}", index, str2);
-                    label31->Show();
-                    textBox5->Hide();
-                    textBox6->Show();
-                    label29->Hide();
-                    label28->Hide();
-                }
-            }
-        }
-
-        else if (label29->Text == "Please choose Which disease you want to delete..") {
-            int disease_choice;
-            if (textBox5->Text != "") {
-                bool check3 = true;
-                MarshalString(textBox5->Text, menuChoice);
-                if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
-                    check3 = false;
-                    label32->Text = "Invalid entry";
-                    label32->Show();
-                }
-                else  if (stoi(menuChoice) == 0) {
-                    check3 = false;
-                    label32->Text = "Invalid entry";
-                    label32->Show();
-                }
-                disease_choice = stoi(menuChoice) - 1;
-                if (check3) {
-                    String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[disease_choice].name.c_str());
-                    if (MessageBox::Show(String::Format("Are you sure you want to delete {0}",str2),str2, MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-                    remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease_choice]);
-                    remove_Disease_from_all_Diseases((*CurrentDoctor).doc_diseases[disease_choice]);
-                    (*CurrentDoctor).doc_diseases.erase((*CurrentDoctor).doc_diseases.begin() + disease_choice);
-                    button4->Text = "End";
-                    button4->PerformClick();
-                    button4->Text = "Next";
-                    }
-                }
-            }
-        }
-        else if (label29->Text == "Please choose Which disease you want\nto delete its symptoms..") {
-            if (textBox5->Text != "") {
-                bool check3 = true;
-                MarshalString(textBox5->Text, menuChoice);
-                int diseaseChoice, symptomChoice;
-                if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
-                    label32->Text = "Invalid Entry";
-                    label32->Show();
-                    check3 = true;
-                }
-                else  if (stoi(menuChoice) == 0) {
-                    label32->Text = "Invalid Entry";
-                    label32->Show();
-                    check3 = true;
-                }
-
-
-                diseaseChoice = stoi(menuChoice) - 1;
-
-                if (check3) {
-                    label32->Hide();
-                    textBox5->Text = "";
-                    if ((*CurrentDoctor).doc_diseases[diseaseChoice].symps.size() == 0) {
-                        label31->Text = "there is no Symptoms for this disease";
-                        label31->Show();
-                        label28->Hide();
                         label29->Hide();
-                        label29->Text="wEEE";
-                        textBox5 -> Hide();
-                        button4->Text = "End";
-                    }
-                    else {
-
-                        label28->Text = "";
-                        //displaying all the symptoms of the chosen disease to choose among the them
-                        for (int i = 0; i < (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size(); i++) {
-                            String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].symps[i].c_str());
-                            String^ index = gcnew String(to_string(i + 1).c_str());
-                            if (i % 5 == 0 && i != 0)
-                                label28->Text += String::Format("{0}-{1}\n", index, str2);
-                            else
-                                label28->Text += String::Format("{0}-{1}     ", index, str2);
-                        }
-                        label28->Show();
-
-
-                        label29->Text = "Please choose Which symptom you want to remove ....";
-                        label29->Show();
+                        label28->Hide();
                     }
                 }
             }
-        }
-                else if (label29->Text == "Please choose Which symptom you want to remove ....") {
-                    if (textBox5->Text != "") {
-                        MarshalString(textBox5->Text, menuChoice);
-                        bool check4 = true;
+
+            else if (label29->Text == "Please choose Which disease you want to delete..") {
+                int disease_choice;
+                if (textBox5->Text != "") {
+                    bool check3 = true;
+                    MarshalString(textBox5->Text, menuChoice);
+                    if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
+                        check3 = false;
+                        label32->Text = "Invalid entry";
+                        label32->Show();
+                    }
+                    else  if (stoi(menuChoice) == 0) {
+                        check3 = false;
+                        label32->Text = "Invalid entry";
+                        label32->Show();
+                    }
+                    disease_choice = stoi(menuChoice) - 1;
+                    if (check3) {
+                        String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[disease_choice].name.c_str());
+                        if (MessageBox::Show(String::Format("Are you sure you want to delete {0}", str2), str2, MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                            remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease_choice]);
+                            remove_Disease_from_all_Diseases((*CurrentDoctor).doc_diseases[disease_choice]);
+                            (*CurrentDoctor).doc_diseases.erase((*CurrentDoctor).doc_diseases.begin() + disease_choice);
+                            button4->Text = "End";
+                            button4->PerformClick();
+                            button4->Text = "Next";
+                        }
+                    }
+                }
+            }
+            else if (label29->Text == "Please choose Which disease you want\nto delete its symptoms..") {
+                if (textBox5->Text != "") {
+                    bool check3 = true;
+                    MarshalString(textBox5->Text, menuChoice);
+                    int diseaseChoice, symptomChoice;
+                    if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases.size()) {
+                        label32->Text = "Invalid Entry";
+                        label32->Show();
+                        check3 = true;
+                    }
+                    else  if (stoi(menuChoice) == 0) {
+                        label32->Text = "Invalid Entry";
+                        label32->Show();
+                        check3 = true;
+                    }
 
 
-                        if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size()) {
-                            label32->Text = "Invalid Entry";
-                            label32->Show();
-                            check4 = true;
+                    diseaseChoice = stoi(menuChoice) - 1;
+
+                    if (check3) {
+                        label32->Hide();
+                        textBox5->Text = "";
+                        if ((*CurrentDoctor).doc_diseases[diseaseChoice].symps.size() == 0) {
+                            label31->Text = "there is no Symptoms for this disease";
+                            label31->Show();
+                            label28->Hide();
+                            label29->Hide();
+                            label29->Text = "wEEE";
+                            textBox5->Hide();
+                            button4->Text = "End";
                         }
-                        else  if (stoi(menuChoice) == 0) {
-                            label32->Text = "Invalid Entry";
-                            label32->Show();
-                            check4 = true;
-                        }
-                        symptom_Choice = stoi(menuChoice) - 1;
-                        if (check4) {
-                            String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].symps[symptom_Choice].c_str());
-                            if (MessageBox::Show(String::Format("Are you sure you want to delete {0}", str2), str2, MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
-                                remove_symptom_from_all_Disease((*CurrentDoctor).doc_diseases[diseaseChoice], symptom_Choice);
-                                remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[diseaseChoice], symptom_Choice);
-                                (*CurrentDoctor).doc_diseases[diseaseChoice].symps.erase((*CurrentDoctor).doc_diseases[diseaseChoice].symps.begin() + symptom_Choice);
-                                button4->Text = "End";
-                                button4->PerformClick();
-                                button4->Text = "Next";
-                                symptom_Choice = 0;
+                        else {
+
+                            label28->Text = "";
+                            //displaying all the symptoms of the chosen disease to choose among the them
+                            for (int i = 0; i < (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size(); i++) {
+                                String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].symps[i].c_str());
+                                String^ index = gcnew String(to_string(i + 1).c_str());
+                                if (i % 5 == 0 && i != 0)
+                                    label28->Text += String::Format("{0}-{1}\n", index, str2);
+                                else
+                                    label28->Text += String::Format("{0}-{1}     ", index, str2);
                             }
+                            label28->Show();
+
+
+                            label29->Text = "Please choose Which symptom you want to remove ....";
+                            label29->Show();
                         }
                     }
                 }
-        
-}
+            }
+            else if (label29->Text == "Please choose Which symptom you want to remove ....") {
+                if (textBox5->Text != "") {
+                    MarshalString(textBox5->Text, menuChoice);
+                    bool check4 = true;
 
-    else if (button4->Text == "End.") {
-        if (textBox6->Text != "") {
-            MarshalString(textBox6->Text, symptom_info);
-            bool check_duplicate1 = true;
-            for (int i = 0; i < (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size(); i++) {
-                if ((*CurrentDoctor).doc_diseases[diseaseChoice].symps[i] == symptom_info) {
-                    label32->Text = ("This symptom is already added before");
-                    label32->Show();
-                    check_duplicate1 = false;
+
+                    if (stoi(menuChoice) > (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size()) {
+                        label32->Text = "Invalid Entry";
+                        label32->Show();
+                        check4 = true;
+                    }
+                    else  if (stoi(menuChoice) == 0) {
+                        label32->Text = "Invalid Entry";
+                        label32->Show();
+                        check4 = true;
+                    }
+                    symptom_Choice = stoi(menuChoice) - 1;
+                    if (check4) {
+                        String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[diseaseChoice].symps[symptom_Choice].c_str());
+                        if (MessageBox::Show(String::Format("Are you sure you want to delete {0}", str2), str2, MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                            remove_symptom_from_all_Disease((*CurrentDoctor).doc_diseases[diseaseChoice], symptom_Choice);
+                            remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[diseaseChoice], symptom_Choice);
+                            (*CurrentDoctor).doc_diseases[diseaseChoice].symps.erase((*CurrentDoctor).doc_diseases[diseaseChoice].symps.begin() + symptom_Choice);
+                            button4->Text = "End";
+                            button4->PerformClick();
+                            button4->Text = "Next";
+                            symptom_Choice = 0;
+                        }
+                    }
                 }
             }
 
-            if (check_duplicate1) {
-                (*CurrentDoctor).doc_diseases[diseaseChoice].symps.push_back(symptom_info);
-                extract_New_Symptoms((*CurrentDoctor).doc_diseases[diseaseChoice]);
-                extract_New_Symptoms_to_alldiseases((*CurrentDoctor).doc_diseases[diseaseChoice]);
-                label31->Text = "weeeeeeee";
-                label31->Hide();
-                textBox5->Text = "";
-                textBox5->Hide();
-                button4->Hide();
-                button6->Hide();
-                label28->Hide();
-                pictureBox19->Show();
-                pictureBox22->Show();
-                pictureBox23->Show();
-                pictureBox24->Show();
-                pictureBox25->Show();
-                pictureBox26->Show();
-                pictureBox29->Show();
-                pictureBox28->Show();
-                pictureBox30->Show();
+        }
 
-                label22->Show();
-                label23->Show();
-                label24->Show();
-                label25->Show();
-                label26->Show();
-                label27->Show();
-                label30->Show();
-                label31->Hide();
-                textBox6->Text = "";
-                textBox6->Hide();
-                label29->Text = "";
-                label29->Hide();
+        else if (button4->Text == "End.") {
+            if (textBox6->Text != "") {
+                MarshalString(textBox6->Text, symptom_info);
+                bool check_duplicate1 = true;
+                for (int i = 0; i < (*CurrentDoctor).doc_diseases[diseaseChoice].symps.size(); i++) {
+                    if ((*CurrentDoctor).doc_diseases[diseaseChoice].symps[i] == symptom_info) {
+                        label32->Text = ("This symptom is already added before");
+                        label32->Show();
+                        check_duplicate1 = false;
+                    }
+                }
+
+                if (check_duplicate1) {
+                    (*CurrentDoctor).doc_diseases[diseaseChoice].symps.push_back(symptom_info);
+                    extract_New_Symptoms((*CurrentDoctor).doc_diseases[diseaseChoice]);
+                    extract_New_Symptoms_to_alldiseases((*CurrentDoctor).doc_diseases[diseaseChoice]);
+                    label31->Text = "weeeeeeee";
+                    label31->Hide();
+                    textBox5->Text = "";
+                    textBox5->Hide();
+                    button4->Hide();
+                    button6->Hide();
+                    label28->Hide();
+                    pictureBox19->Show();
+                    pictureBox22->Show();
+                    pictureBox23->Show();
+                    pictureBox24->Show();
+                    pictureBox25->Show();
+                    pictureBox26->Show();
+                    pictureBox29->Show();
+                    pictureBox28->Show();
+                    pictureBox30->Show();
+
+                    label22->Show();
+                    label23->Show();
+                    label24->Show();
+                    label25->Show();
+                    label26->Show();
+                    label27->Show();
+                    label30->Show();
+                    label31->Hide();
+                    textBox6->Text = "";
+                    textBox6->Hide();
+                    label29->Text = "";
+                    label29->Hide();
+                }
             }
         }
-    }
         else if (button4->Text == "End" && index_symp == stoi(sympnum)) {
             if (textBox6->Text != "") {
                 textBox5->Hide();
@@ -4499,9 +4765,9 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
             label29->Hide();
             pictureBox30->Show();
         }
-    
-}
-private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
+
+    }
+    private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {
         if (label29->Text[0] == 'V') { //Viewing disease kaza
             button4->Text = "Next";
             display_All_diseases();
@@ -4525,39 +4791,110 @@ private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e
             label30->Hide();
             label29->Text == "Choose the disease you want to view.";
         }
-    
-    else if (label29->Text[0] == 'C' || label29->Text[0] == 'W'|| label31->Text == "Please enter the disease name:"||label29->Text == "Please choose Which disease you want\nto add its symptoms...."|| label29->Text == "Please choose Which disease you want\nto delete its symptoms..") { //Choose disease to view
-        pictureBox30->Show();
-        label32->Hide();
-        textBox6->Text = "";
-        textBox5->Hide();
-        textBox6->Hide();
-        button4->Hide();
-        button6->Hide();
-        label28->Hide();
-        label29->Hide();
-        pictureBox19->Show();
-        pictureBox22->Show();
-        pictureBox23->Show();
-        pictureBox24->Show();
-        pictureBox25->Show();
-        pictureBox26->Show();
-        pictureBox29->Show();
-        pictureBox28->Show();
-        label22->Show();
-        label23->Show();
-        label24->Show();
-        label25->Show();
-        label26->Show();
-        label27->Show();
-        label30->Show();
-        label31->Hide();
+
+        else if (label29->Text[0] == 'C' || label29->Text[0] == 'W' || label31->Text == "Please enter the disease name:" || label29->Text == "Please choose Which disease you want\nto add its symptoms...." || label29->Text == "Please choose Which disease you want\nto delete its symptoms..") { //Choose disease to view
+            pictureBox30->Show();
+            label32->Hide();
+            textBox6->Text = "";
+            textBox5->Hide();
+            textBox6->Hide();
+            button4->Hide();
+            button6->Hide();
+            label28->Hide();
+            label29->Hide();
+            pictureBox19->Show();
+            pictureBox22->Show();
+            pictureBox23->Show();
+            pictureBox24->Show();
+            pictureBox25->Show();
+            pictureBox26->Show();
+            pictureBox29->Show();
+            pictureBox28->Show();
+            label22->Show();
+            label23->Show();
+            label24->Show();
+            label25->Show();
+            label26->Show();
+            label27->Show();
+            label30->Show();
+            label31->Hide();
+        }
+        if (label29->Text[0] == 'T' || label29->Text[1] == 'a') {
+            label29->Text = "Which Disease you want to display its Patients?";
+            button4->Text = "Next";
+            view_Patients();
+            textBox5->Show();
+            button4->Show();
+            button6->Show();
+            pictureBox19->Hide();
+            pictureBox22->Hide();
+            pictureBox23->Hide();
+            pictureBox24->Hide();
+            pictureBox25->Hide();
+            pictureBox26->Hide();
+            pictureBox29->Hide();
+            pictureBox28->Hide();
+            label22->Hide();
+            label23->Hide();
+            label24->Hide();
+            label25->Hide();
+            label26->Hide();
+            label27->Hide();
+            label30->Hide();
+        }
+        else if (label31->Text == "Please enter General info about this disease:") {
+            label31->Text = "Please enter the disease name:";
+            textBox6->Text = "";
+        }
+        else if (label31->Text == "Please enter number of symptoms:") {
+            label31->Text = "Please enter General info about this disease:";;
+            textBox5->Hide();
+            textBox5->Text = "";
+            textBox6->Text = "";
+            textBox6->Show();
+        }
+        if (label31->Text[8] == '#' && index_symp == 1) {
+            label31->Text = "Please enter number of symptoms:";
+            textBox6->Text = "";
+            textBox5->Text = "";
+            textBox5->Show();
+            textBox6->Hide();
+            button4->Text = "Next";
+            if (index_symp == allsymps.size()) {
+                allsymps.erase(allsymps.begin() + (index_symp - 1));
+            }
+        }
+        else if (index_symp != 1) {
+            if (index_symp == allsymps.size()) {
+                allsymps.erase(allsymps.begin() + (index_symp - 1));
+            }
+            index_symp--;
+            String^ index = gcnew String(to_string(index_symp).c_str());
+            label31->Text = String::Format("Symptom #{0}", index);
+            textBox5->Text = "";
+            button4->Text = "Next";
+        }
+        else if (label31->Text == "there is no Symptoms for this disease" || label29->Text == "Please choose Which symptom you want to remove ....") {
+            label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
+            label31->Text = "weeeeeeeeee";
+            label31->Hide();
+            button4->Text = "Next";
+            label29->Show();
+            label28->Show();
+            textBox5->Show();
+        }
+        else if (symptom_Choice > 0) {
+            label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
+        }
+
     }
-     if (label29->Text[0] == 'T' || label29->Text[1] == 'a') {
-        label29->Text = "Which Disease you want to display its Patients?";
+    private: System::Void pictureBox26_Click(System::Object^ sender, System::EventArgs^ e) {
+        label31->Text = "Please enter the disease name:";
+        pictureBox30->Hide();
+        label31->Show();
         button4->Text = "Next";
-        view_Patients();
-        textBox5->Show();
+        textBox6->Show();
+        textBox5->Hide();
         button4->Show();
         button6->Show();
         pictureBox19->Hide();
@@ -4576,200 +4913,74 @@ private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e
         label27->Hide();
         label30->Hide();
     }
-    else if (label31->Text == "Please enter General info about this disease:") {
-        label31->Text = "Please enter the disease name:";
-        textBox6->Text = "";
+    private: System::Void pictureBox28_Click(System::Object^ sender, System::EventArgs^ e) {
     }
-    else if (label31->Text=="Please enter number of symptoms:") {
-        label31->Text = "Please enter General info about this disease:";;
-        textBox5->Hide();
-        textBox5->Text = "";
-        textBox6->Text = "";
-        textBox6->Show();
-    }
-    if (label31->Text[8] == '#' && index_symp == 1) {
-        label31->Text = "Please enter number of symptoms:";
-        textBox6->Text = "";
-        textBox5->Text = "";
-        textBox5->Show();
-        textBox6->Hide();
+    private: System::Void pictureBox24_Click(System::Object^ sender, System::EventArgs^ e) {
         button4->Text = "Next";
-        if (index_symp == allsymps.size()) {
-            allsymps.erase(allsymps.begin() + (index_symp - 1));
-        }
+        add_Symptom();
+        button4->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
+        pictureBox30->Hide();
     }
-    else if (index_symp != 1) {
-        if (index_symp == allsymps.size()) {
-            allsymps.erase(allsymps.begin()+(index_symp-1));
-        }
-        index_symp--;
-        String^ index = gcnew String(to_string(index_symp).c_str());
-        label31->Text = String::Format("Symptom #{0}", index);
-        textBox5->Text = "";
-        button4->Text = "Next";
+    private: System::Void pictureBox25_Click(System::Object^ sender, System::EventArgs^ e) {
+        remove_disease();
+        pictureBox30->Hide();
+        button4->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
     }
-    else if (label31->Text =="there is no Symptoms for this disease"|| label29->Text == "Please choose Which symptom you want to remove ....") {
-    label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
-    label31->Text = "weeeeeeeeee";
-    label31->Hide();
-    button4->Text="Next";
-    label29->Show();
-    label28->Show();
-    textBox5->Show();
-}
-    else if (symptom_Choice > 0) {
-    label29->Text = "Please choose Which disease you want\nto delete its symptoms..";
-}
-    
+    private: System::Void pictureBox23_Click(System::Object^ sender, System::EventArgs^ e) {
+        remove_Symptom();
+        pictureBox30->Hide();
+        button4->Show();
+        pictureBox19->Hide();
+        pictureBox22->Hide();
+        pictureBox23->Hide();
+        pictureBox24->Hide();
+        pictureBox25->Hide();
+        pictureBox26->Hide();
+        pictureBox29->Hide();
+        pictureBox28->Hide();
+        label22->Hide();
+        label23->Hide();
+        label24->Hide();
+        label25->Hide();
+        label26->Hide();
+        label27->Hide();
+        label30->Hide();
     }
-private: System::Void pictureBox26_Click(System::Object^ sender, System::EventArgs^ e) {
-    label31->Text = "Please enter the disease name:";
-    pictureBox30->Hide();
-    label31->Show();
-    button4->Text = "Next";
-    textBox6->Show();
-    textBox5->Hide();
-    button4->Show();
-    button6->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void pictureBox28_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox24_Click(System::Object^ sender, System::EventArgs^ e) {
-    button4->Text = "Next";
-    add_Symptom();
-    button4->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-    pictureBox30->Hide();
-}
-private: System::Void pictureBox25_Click(System::Object^ sender, System::EventArgs^ e) {
-    remove_disease();
-    pictureBox30->Hide();
-    button4->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void pictureBox23_Click(System::Object^ sender, System::EventArgs^ e) {
-    remove_Symptom();
-    pictureBox30->Hide();
-    button4->Show();
-    pictureBox19->Hide();
-    pictureBox22->Hide();
-    pictureBox23->Hide();
-    pictureBox24->Hide();
-    pictureBox25->Hide();
-    pictureBox26->Hide();
-    pictureBox29->Hide();
-    pictureBox28->Hide();
-    label22->Hide();
-    label23->Hide();
-    label24->Hide();
-    label25->Hide();
-    label26->Hide();
-    label27->Hide();
-    label30->Hide();
-}
-private: System::Void label28_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox30_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox12_Click_1(System::Object^ sender, System::EventArgs^ e) {
-    label12->Hide();
-    label8->Hide();
-    label9->Hide();
-    label16->Hide();
-    pictureBox10->Hide();
-    pictureBox11->Hide();
-    pictureBox12->Hide();
-    pictureBox13->Hide();
-    pictureBox14->Hide();
-    pictureBox15->Hide();
-    label19->Show();
-    viewhist();
-    button3->Show();
-}
-private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-    if (label17->Text == "Please enter the symptoms you are currently feeling.\nWhen you are done, enter 0\n") {
-        label12->Show();
-        label8->Show();
-        label9->Show();
-        label16->Show();
-        pictureBox10->Show();
-        pictureBox11->Show();
-        pictureBox12->Show();
-        pictureBox13->Show();
-        pictureBox14->Show();
-        pictureBox15->Show();
-        textBox4->Hide();
-        Back_P->Hide();
-        label17->Hide();
-        label19->Hide();
-        button3->Hide();
-        button2->Hide();
-        textBox4->Hide();
-   }
-    else if (label17->Text == "please enter the number for the particular Disease.") {
-        label12->Show();
-        label8->Show();
-        label9->Show();
-        label16->Show();
-        pictureBox10->Show();
-        pictureBox11->Show();
-        pictureBox12->Show();
-        pictureBox13->Show();
-        pictureBox14->Show();
-        pictureBox15->Show();
-        textBox4->Hide();
-        Back_P->Hide();
-        label17->Hide();
-        label19->Hide();
-        button3->Hide();
-        button2->Hide();
-        textBox4->Hide();
+    private: System::Void label28_Click(System::Object^ sender, System::EventArgs^ e) {
     }
-    else if (label17->Text[0] == 'V') {
-        Back_P->Show();
+    private: System::Void pictureBox30_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox12_Click_1(System::Object^ sender, System::EventArgs^ e) {
         label12->Hide();
         label8->Hide();
         label9->Hide();
@@ -4780,202 +4991,259 @@ private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e
         pictureBox13->Hide();
         pictureBox14->Hide();
         pictureBox15->Hide();
-        display_Symptoms_for_Disease();
+        label19->Show();
+        viewhist();
+        button3->Show();
     }
-    
-}
-private: System::Void button5_Click_1(System::Object^ sender, System::EventArgs^ e) {
-    pictureBox13_Click(pictureBox13, e);
-}
-private: System::Void label33_Click(System::Object^ sender, System::EventArgs^ e) {
-    Password->Text = "E-Mail";
-    textBox2->Text = "";
-    this->textBox2->PasswordChar = NULL;
-    Next->Show();
-    label33->Hide();
-    button5->Show();
-    button1->Hide();
-    label2->Text="";
-    label2->Hide();
-    button5->Location = Drawing::Point(1180, 479);
-
-}
-private: System::Void label33_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label33->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void label33_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label33->ForeColor = Color::FromArgb(0,0,0);
-}
-private: System::Void button5_Click_2(System::Object^ sender, System::EventArgs^ e) {
-    if (Password->Text == "E-Mail"&&Username->Text=="Username") {
-        button5->Hide();
-        button1->Text = "Sign-in";
-        this->textBox2->PasswordChar = '*';
-        label33->Show();
-        textBox1->Show();
-        textBox3->Hide();
-        label10->Hide();
-        label3->Hide();
-        label4->Hide();
-        button1->Show();
-        Username->Show();
-        panel1->Show();
-        panel2->Show();
-        pictureBox6->Hide();
-        pictureBox7->Hide();
-        pictureBox8->Hide();
-        pictureBox9->Hide();
-        Sign_in->Show();
-        textBox1->Text = "";
-        textBox2->Text = "";
-        Register->Text = "Register.";
-        Username->Text = "Username";
-        Password->Text = "Password";
-        Next->Hide();
-        Password->Show();
-        textBox2->Show();
-        textBox3->Show();
-        label2->Hide();
-        timer1->Start();
-        Sign_in->Text = "Sign-in.";
-        label2->Hide();
-    }
-    else if (Username->Text == "Please enter your Full Name.") {
-        pictureBox6->Show();
-        pictureBox7->Show();
-        textBox1->Text = "";
-        textBox1->Hide();
-        Username->Hide();
-        button5->Hide();
-        Next->Hide();
-        panel1->Hide();
-        label3->Show();
-        label4->Show();
-        label2->Hide();
-
-    }
-    else if (Username->Text == "Username") {
-        Username->Text = "Please enter your Full Name.";
-        textBox1->Text = "";
-        label2->Hide();
-    }
-    else if (Username->Text == "Password") {
-        Username->Text = "Username";
-        Password->Hide();
-        textBox2->Hide();
-        panel2->Hide();
-    }
-    else if (Username->Text == "Please select Age") {
-        Username->Text = "Password";
-        Password->Text = "Renter Password";
-        textBox2->Show();
-        panel2->Show();
-        textBox1->Show();
-        textBox3->Hide();
-    }
-    else if (Username->Text == "E-Mail"&&label11->Text=="p") {
-        textBox3->Show();
-        textBox1->Text = "";
-        textBox1->Hide();
-        Username->Text = "Please select Age";
-        label2->Hide();
-    }
-    else if (Username->Text == "E-Mail" && label11->Text == "d") {
-        textBox1->Hide();
-        textBox1->Text="";
-        textBox3->Show();
-        textBox3->Text = "";
-        Username->Text = "Mobile Phone Number";
-        label2->Hide();
-    }
-    else if (button5->Location == Drawing::Point(1110, 479)) {
-        label3->Hide();
-        label4->Hide();
-        label10->Hide();
-        pictureBox8->Hide();
-        pictureBox9->Hide();
-        button5->Location = Drawing::Point(1180, 479);
-        button8->Text = "No Profile Picture";
-        button8->Show();
-        pictureBox31->Show();
-        button9->Show();
-        Next->Show();
-    }
-    else if (Username->Text == "Mobile Phone Number") {
-        Username->Text = "Password";
-        Password->Text = "Renter Password";
-        Password->Show();
-        textBox2->Show();
-        panel2->Show();
-        textBox1->Show();
-        textBox3->Hide();
-        textBox3->Text="";
-        textBox1->Text="";
-        textBox2->Text="";
-    }
-    else if (Next->Text == "Capture"|| Next->Text == "Retake"||Next->Text== "Take a Picture") {
-    Next->Text = "NEXT";
-    button8->Hide();
-    MyCamera->Stop();
-    pictureBox31->Hide();
-    label34->Hide();
-    textBox1->Text = "";    
-    Username->Text = "E-Mail";
-    label2->Hide();
-    button9->Hide();
-    textBox1->Show();
-}
-
-
-    
-}
-private: System::Void pictureBox7_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label4->ForeColor = Color::FromArgb(54, 242, 242);
-}
-private: System::Void pictureBox7_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label4->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void pictureBox6_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label3->ForeColor = Color::FromArgb(54, 242, 242); 
-}
-private: System::Void pictureBox6_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label3->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void label6_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox3_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label5->ForeColor = Color::FromArgb(0, 0, 153);
-    label6->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void pictureBox3_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label5->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void pictureBox4_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label6->ForeColor = Color::FromArgb(0, 255, 128);
-}
-private: System::Void pictureBox4_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label6->ForeColor = Color::FromArgb(255, 255, 255);
-}
-private: System::Void pictureBox5_MouseHover(System::Object^ sender, System::EventArgs^ e) {
-    label7->ForeColor = Color::FromArgb(255, 0, 0);
-}
-private: System::Void pictureBox5_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-    label7->ForeColor = Color::FromArgb(255, 255, 255);
-
-}
-private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
-
-    if  (button8->Text == "End"||(button8->Text == "No Profile Picture"&&label11->Text=="d")) {
-       
-
-        if (button8->Text == "End") {
-            string wow = "PICs\\Doctors\\" + doc_username + ".jpg";
-            String^ str2 = gcnew String(wow.c_str());
-            if (System::IO::File::Exists(str2)) {
-                System::IO::File::Delete(str2);
-            }
-            pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
+    private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (label17->Text == "Please enter the symptoms you are currently feeling.\nWhen you are done, enter 0\n") {
+            label12->Show();
+            label8->Show();
+            label9->Show();
+            label16->Show();
+            pictureBox10->Show();
+            pictureBox11->Show();
+            pictureBox12->Show();
+            pictureBox13->Show();
+            pictureBox14->Show();
+            pictureBox15->Show();
+            textBox4->Hide();
+            Back_P->Hide();
+            label17->Hide();
+            label19->Hide();
+            button3->Hide();
+            button2->Hide();
+            textBox4->Hide();
         }
+        else if (label17->Text == "please enter the number for the particular Disease.") {
+            label12->Show();
+            label8->Show();
+            label9->Show();
+            label16->Show();
+            pictureBox10->Show();
+            pictureBox11->Show();
+            pictureBox12->Show();
+            pictureBox13->Show();
+            pictureBox14->Show();
+            pictureBox15->Show();
+            textBox4->Hide();
+            Back_P->Hide();
+            label17->Hide();
+            label19->Hide();
+            button3->Hide();
+            button2->Hide();
+            textBox4->Hide();
+        }
+        else if (label17->Text[0] == 'V') {
+            Back_P->Show();
+            label12->Hide();
+            label8->Hide();
+            label9->Hide();
+            label16->Hide();
+            pictureBox10->Hide();
+            pictureBox11->Hide();
+            pictureBox12->Hide();
+            pictureBox13->Hide();
+            pictureBox14->Hide();
+            pictureBox15->Hide();
+            display_Symptoms_for_Disease();
+        }
+
+    }
+    private: System::Void button5_Click_1(System::Object^ sender, System::EventArgs^ e) {
+        pictureBox13_Click(pictureBox13, e);
+    }
+    private: System::Void label33_Click(System::Object^ sender, System::EventArgs^ e) {
+        Password->Text = "E-Mail";
+        textBox2->Text = "";
+        this->textBox2->PasswordChar = NULL;
+        Next->Show();
+        label33->Hide();
+        button5->Show();
+        button1->Hide();
+        label2->Text = "";
+        label2->Hide();
+        button5->Location = Drawing::Point(1180, 479);
+
+    }
+    private: System::Void label33_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label33->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void label33_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label33->ForeColor = Color::FromArgb(0, 0, 0);
+    }
+    private: System::Void button5_Click_2(System::Object^ sender, System::EventArgs^ e) {
+        if (Password->Text == "E-Mail" && Username->Text == "Username") {
+            button5->Hide();
+            button1->Text = "Sign-in";
+            this->textBox2->PasswordChar = '*';
+            label33->Show();
+            textBox1->Show();
+            textBox3->Hide();
+            label10->Hide();
+            label3->Hide();
+            label4->Hide();
+            button1->Show();
+            Username->Show();
+            panel1->Show();
+            panel2->Show();
+            pictureBox6->Hide();
+            pictureBox7->Hide();
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+            Sign_in->Show();
+            textBox1->Text = "";
+            textBox2->Text = "";
+            Register->Text = "Register.";
+            Username->Text = "Username";
+            Password->Text = "Password";
+            Next->Hide();
+            Password->Show();
+            textBox2->Show();
+            textBox3->Show();
+            label2->Hide();
+            timer1->Start();
+            Sign_in->Text = "Sign-in.";
+            label2->Hide();
+        }
+        else if (Username->Text == "Please enter your Full Name.") {
+            pictureBox6->Show();
+            pictureBox7->Show();
+            textBox1->Text = "";
+            textBox1->Hide();
+            Username->Hide();
+            button5->Hide();
+            Next->Hide();
+            panel1->Hide();
+            label3->Show();
+            label4->Show();
+            label2->Hide();
+
+        }
+        else if (Username->Text == "Username") {
+            Username->Text = "Please enter your Full Name.";
+            textBox1->Text = "";
+            label2->Hide();
+        }
+        else if (Username->Text == "Password") {
+            Username->Text = "Username";
+            Password->Hide();
+            textBox2->Hide();
+            panel2->Hide();
+        }
+        else if (Username->Text == "Please select Age") {
+            Username->Text = "Password";
+            Password->Text = "Renter Password";
+            textBox2->Show();
+            panel2->Show();
+            textBox1->Show();
+            textBox3->Hide();
+        }
+        else if (Username->Text == "E-Mail" && label11->Text == "p") {
+            textBox3->Show();
+            textBox1->Text = "";
+            textBox1->Hide();
+            Username->Text = "Please select Age";
+            label2->Hide();
+        }
+        else if (Username->Text == "E-Mail" && label11->Text == "d") {
+            textBox1->Hide();
+            textBox1->Text = "";
+            textBox3->Show();
+            textBox3->Text = "";
+            Username->Text = "Mobile Phone Number";
+            label2->Hide();
+        }
+        else if (button5->Location == Drawing::Point(1110, 479)) {
+            label3->Hide();
+            label4->Hide();
+            label10->Hide();
+            pictureBox8->Hide();
+            pictureBox9->Hide();
+            button5->Location = Drawing::Point(1180, 479);
+            button8->Text = "No Profile Picture";
+            button8->Show();
+            pictureBox31->Show();
+            button9->Show();
+            Next->Show();
+        }
+        else if (Username->Text == "Mobile Phone Number") {
+            Username->Text = "Password";
+            Password->Text = "Renter Password";
+            Password->Show();
+            textBox2->Show();
+            panel2->Show();
+            textBox1->Show();
+            textBox3->Hide();
+            textBox3->Text = "";
+            textBox1->Text = "";
+            textBox2->Text = "";
+        }
+        else if (Next->Text == "Capture" || Next->Text == "Retake" || Next->Text == "Take a Picture") {
+            Next->Text = "NEXT";
+            button8->Hide();
+            MyCamera->Stop();
+            pictureBox31->Hide();
+            label34->Hide();
+            textBox1->Text = "";
+            Username->Text = "E-Mail";
+            label2->Hide();
+            button9->Hide();
+            textBox1->Show();
+            button8->Text = "No Profile Picture";
+
+        }
+
+
+
+    }
+    private: System::Void pictureBox7_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label4->ForeColor = Color::FromArgb(54, 242, 242);
+    }
+    private: System::Void pictureBox7_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label4->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void pictureBox6_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label3->ForeColor = Color::FromArgb(54, 242, 242);
+    }
+    private: System::Void pictureBox6_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label3->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void label6_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void pictureBox3_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label5->ForeColor = Color::FromArgb(0, 0, 153);
+        label6->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void pictureBox3_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label5->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void pictureBox4_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label6->ForeColor = Color::FromArgb(0, 255, 128);
+    }
+    private: System::Void pictureBox4_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label6->ForeColor = Color::FromArgb(255, 255, 255);
+    }
+    private: System::Void pictureBox5_MouseHover(System::Object^ sender, System::EventArgs^ e) {
+        label7->ForeColor = Color::FromArgb(255, 0, 0);
+    }
+    private: System::Void pictureBox5_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+        label7->ForeColor = Color::FromArgb(255, 255, 255);
+
+    }
+    private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
+
+        if (button8->Text == "End" || (button8->Text == "No Profile Picture" && label11->Text == "d")) {
+
+            MyCamera->Stop();
+                if (button8->Text == "End") {
+                string wow = "PICs\\Doctors\\" + doc_username + ".jpg";
+                String^ str2 = gcnew String(wow.c_str());
+                if (System::IO::File::Exists(str2)) {
+                    System::IO::File::Delete(str2);
+                }
+                pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
+            }
             label2->Hide();
             textBox3->Text = "";
             Doctors NewDoctor = { doc_name,{doc_username, doc_password, mail }, doctor_phone };
@@ -4994,135 +5262,281 @@ private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e
             button9->Hide();
             pictureBox31->Hide();
             button5->Hide();
+        }
+        else if (button8->Text == "Next" || label11->Text == "p") {
+            label34->Hide();
+            button8->Hide();
+            pictureBox31->Hide();
+            button9->Hide();
+            pictureBox8->Show();
+            pictureBox9->Show();
+            panel1->Hide();
+
+
+            textBox3->Hide();
+            label2->Hide();
+
+            label10->Show();
+            label3->Text = "MALE";
+            label4->Text = "FEMALE";
+            label3->Show();
+            label4->Show();
+            Username->Text = "";
+            button5->Location = Drawing::Point(1110, 479);
+            Next->Hide();
+            textBox1->Hide();
+            panel2->Hide();
+        }
     }
-    else if (button8->Text == "Next"||label11->Text=="p") {
-        label34->Hide();
-        button8->Hide();
-        pictureBox31->Hide();
-        button9->Hide();
-        pictureBox8->Show();
-        pictureBox9->Show();
-        panel1->Hide();
-
-
-        textBox3->Hide();
-        label2->Hide();
-
-        label10->Show();
-        label3->Text = "MALE";
-        label4->Text = "FEMALE";
-        label3->Show();
-        label4->Show();
-        Username->Text = "";
-        button5->Location = Drawing::Point(1110, 479);
-        Next->Hide();
-        textBox1->Hide();
-        panel2->Hide();
+    private: System::Void pictureBox1_Click_1(System::Object^ sender, System::EventArgs^ e) {
     }
-}
-private: System::Void pictureBox1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void pictureBox31_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
-    MyCamera->Stop();
-}
-private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
-    OpenFileDialog^ dialog = gcnew OpenFileDialog();
-    string filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-    String^ str3 = gcnew String(filter.c_str());
-    dialog->Filter=str3 ;
-    if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+    private: System::Void pictureBox31_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void MyForm_FormClosed(System::Object^ sender, System::Windows::Forms::FormClosedEventArgs^ e) {
         MyCamera->Stop();
-        pictureBox31->ImageLocation = dialog->FileName;
-        Next->Text = "Take a Picture";
-        if (label11->Text == "p") {
-            button8->Text = "Next";
+    }
+    private: System::Void button9_Click(System::Object^ sender, System::EventArgs^ e) {
+        OpenFileDialog^ dialog = gcnew OpenFileDialog();
+        string filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+        String^ str3 = gcnew String(filter.c_str());
+        dialog->Filter = str3;
+        if (dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+            MyCamera->Stop();
+            pictureBox31->ImageLocation = dialog->FileName;
+            Next->Text = "Take a Picture";
+            if (label11->Text == "p") {
+                button8->Text = "Next";
+            }
+            else {
+                button8->Text = "End";
+            }
         }
-        else {
-            button8->Text = "End";
+
+    }
+    private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+        if (e->KeyCode == Keys::Enter && !panel4->Visible)
+        {
+            if (button1->Visible || Username->Text == "Password") {
+                textBox2->Select();
+            }
+            else {
+                Next->PerformClick();
+            }
+            e->Handled = true;
+            e->SuppressKeyPress = true;
         }
     }
- 
-}
-private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-    if (e->KeyCode == Keys::Enter&&!panel4->Visible)
-    {
-        if (button1->Visible) {
-            textBox2->Select();
+    private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+        if (e->KeyCode == Keys::Enter && !panel4->Visible)
+        {
+            if (button1->Visible) {
+                button1->PerformClick();
+            }
+            else {
+                Next->PerformClick();
+            }
+            e->Handled = true;
+            e->SuppressKeyPress = true;
         }
-        else {
+    }
+    private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+
+        if (e->KeyCode == Keys::Enter && !panel4->Visible)
+        {
             Next->PerformClick();
+            e->Handled = true;
+            e->SuppressKeyPress = true;
         }
-        e->Handled = true;
-        e->SuppressKeyPress = true;
     }
-}
-private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-    if (e->KeyCode == Keys::Enter&&!panel4->Visible)
-    {
-        if (button1->Visible) {
-            button1->PerformClick();
+    private: System::Void pictureBox32_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (!open) {
+            open = true;
+            pictureBox33->Show();
+            label20->Show();
+            label21->Show();
+            label35->Show();
+            pictureBox21->Show();
+            pictureBox20->Show();
+            pictureBox34->Show();
+            pictureBox35->Show();
+            pictureBox36->Show();
+
         }
         else {
-            Next->PerformClick();
+            open = false;
+            pictureBox33->Hide();
+            label20->Hide();
+            label21->Hide();
+            label35->Hide();
+            pictureBox21->Hide();
+            pictureBox20->Hide();
+            pictureBox34->Hide();
+            pictureBox35->Hide();
+            pictureBox36->Hide();
         }
-        e->Handled = true;
-        e->SuppressKeyPress = true;
     }
-}
-private: System::Void textBox3_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-
-    if (e->KeyCode == Keys::Enter && !panel4->Visible)
-    {
-        Next->PerformClick();
-        e->Handled = true;
-        e->SuppressKeyPress = true;
+    private: System::Void pictureBox33_Click(System::Object^ sender, System::EventArgs^ e) {
     }
-}
-private: System::Void pictureBox32_Click(System::Object^ sender, System::EventArgs^ e) {
+    private: System::Void Account_settings_Click(System::Object^ sender, System::EventArgs^ e) {
 
-}
-private: System::Void pictureBox33_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void Account_settings_Click(System::Object^ sender, System::EventArgs^ e) {
 
-    Account_Settings^ sc = gcnew Account_Settings((*CurrentDoctor).doc_name, (*CurrentDoctor).account.username, (*CurrentDoctor).account.password, (*CurrentDoctor).account.email, (*CurrentDoctor).phone,(*CurrentDoctor).send_email, check_database, check_database_email, check_phone);
-    this->Hide();
-    sc->ShowDialog();
-    this->Show();
-    if(sc->save_key()){
-        string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
-        String^ str3 = gcnew String(wow.c_str());
-        if (System::IO::File::Exists(str3)) {
-            pictureBox32->ImageLocation = str3;
+
+    }
+    private: System::Void MyForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+        if (Opacity > 0) {
+            System::Windows::Forms::SendKeys::Send("%");
+            if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::No) {
+                e->Cancel = true;
+            }
+            else {
+                e->Cancel = true;
+                writeAllPatients(allPatients);
+                writeAllDiseases(allDiseases);
+                writeAllDoctors(allDoctors);
+                panel4->Hide();
+                panel5->Hide();
+                timer5->Start();
+                if (MyForm::Opacity == 0) {
+                    e->Cancel = false;
+                    this->Close();
+                }
+                
+            }
+        }
+    }
+
+
+    private: System::Void pictureBox35_Click(System::Object^ sender, System::EventArgs^ e) {
+        Account_Settings^ sc = gcnew Account_Settings((*CurrentDoctor).doc_name, (*CurrentDoctor).account.username, (*CurrentDoctor).account.password, (*CurrentDoctor).account.email, (*CurrentDoctor).phone, (*CurrentDoctor).send_email, allEmails, allPhones, allUsernames);
+        this->Hide();
+        sc->ShowDialog();
+        this->Show();
+        if (sc->save_key()) {
+            string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
+            String^ str3 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str3)) {
+                pictureBox32->ImageLocation = str3;
+                pictureBox36->ImageLocation = str3;
+            }
+            else {
+                pictureBox32->ImageLocation = "PICs\\guest.jpg";
+                pictureBox36->ImageLocation = "PICs\\guest.jpg";
+            }
+            label30->Text = "Hello Dr. " + sc->GetFullname();
+            MarshalString(sc->GetUsername(), (*CurrentDoctor).account.username);
+            MarshalString(sc->GetPass(), (*CurrentDoctor).account.password);
+            MarshalString(sc->GetFullname(), (*CurrentDoctor).doc_name);
+            MarshalString(sc->GetEmail(), (*CurrentDoctor).account.email);
+            MarshalString(sc->GetPhone(), (*CurrentDoctor).phone);
+            (*CurrentDoctor).send_email = sc->Getsend_email();
+        }
+        if (sc->logout()) {
+            logout_back();
+        }
+        open = false;
+        pictureBox33->Hide();
+        label20->Hide();
+        label21->Hide();
+        label35->Hide();
+        pictureBox21->Hide();
+        pictureBox20->Hide();
+        pictureBox34->Hide();
+        pictureBox35->Hide();
+        pictureBox36->Hide();
+    }
+    private: System::Void pictureBox41_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (MessageBox::Show("Are you sure you want to Logout?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+            logout_back();
+        }
+    }
+    private: System::Void pictureBox40_Click(System::Object^ sender, System::EventArgs^ e) {
+        System::Windows::Forms::SendKeys::Send("%");
+        /* if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+             writeAllPatients(allPatients);
+             writeAllDiseases(allDiseases);
+             writeAllDoctors(allDoctors);
+         }*/
+        this->Close();
+    }
+    private: System::Void pictureBox43_Click(System::Object^ sender, System::EventArgs^ e) {
+        if (!open1) {
+            open1 = true;
+            pictureBox37->Show();
+            label36->Show();
+            label37->Show();
+            label38->Show();
+            pictureBox38->Show();
+            pictureBox40->Show();
+            pictureBox41->Show();
+            pictureBox42->Show();
+            pictureBox39->Show();
+            pictureBox37->Show();
+
         }
         else {
-            pictureBox32->ImageLocation = "PICs\\guest.jpg";
-        }
-        label30->Text = "Hello Dr. "+ sc->GetFullname();
-        MarshalString(sc->GetUsername(), (*CurrentDoctor).account.username);
-        MarshalString(sc->GetPass(), (*CurrentDoctor).account.password);
-        MarshalString(sc->GetFullname(), (*CurrentDoctor).doc_name);
-        MarshalString(sc->GetEmail(), (*CurrentDoctor).account.email);
-        MarshalString(sc->GetPhone(), (*CurrentDoctor).phone);
-        (*CurrentDoctor).send_email =sc->Getsend_email();
-    }
-    if (sc->logout()) {
-        logout_back();
-    }
+            open1 = false;
+            label36->Hide();
+            label37->Hide();
+            label38->Hide();
+            pictureBox38->Hide();
+            pictureBox40->Hide();
+            pictureBox41->Hide();
+            pictureBox42->Hide();
+            pictureBox39->Hide();
+            pictureBox37->Hide();
 
-}
-private: System::Void MyForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
-    if (MessageBox::Show("Are you sure you want to quit?", "Quit?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::No) {
-        e->Cancel = true;
+        }
     }
-    else {
-        writeAllPatients(allPatients);
-        writeAllDiseases(allDiseases);
-        writeAllDoctors(allDoctors);
-        
+    private: System::Void pictureBox38_Click(System::Object^ sender, System::EventArgs^ e) {
+        Account_Settings^ sc = gcnew Account_Settings((*CurrentPatient).patient_name, (*CurrentPatient).account.username, (*CurrentPatient).account.password, (*CurrentPatient).account.email, (*CurrentPatient).gender, allEmails, allPhones, allUsernames);
+        this->Hide();
+        sc->ShowDialog();
+        this->Show();
+        if (sc->save_key()) {
+            string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
+            String^ str3 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str3)) {
+                pictureBox32->ImageLocation = str3;
+                pictureBox36->ImageLocation = str3;
+            }
+            else {
+                pictureBox32->ImageLocation = "PICs\\guest.jpg";
+                pictureBox36->ImageLocation = "PICs\\guest.jpg";
+            }
+            label30->Text = "Hello Dr. " + sc->GetFullname();
+            MarshalString(sc->GetUsername(), (*CurrentDoctor).account.username);
+            MarshalString(sc->GetPass(), (*CurrentDoctor).account.password);
+            MarshalString(sc->GetFullname(), (*CurrentDoctor).doc_name);
+            MarshalString(sc->GetEmail(), (*CurrentDoctor).account.email);
+            MarshalString(sc->GetPhone(), (*CurrentDoctor).phone);
+            (*CurrentDoctor).send_email = sc->Getsend_email();
+        }
+        if (sc->logout()) {
+            logout_back();
+        }
+        open1 = false;
+        label36->Hide();
+        label37->Hide();
+        label38->Hide();
+        pictureBox38->Hide();
+        pictureBox40->Hide();
+        pictureBox41->Hide();
+        pictureBox42->Hide();
+        pictureBox39->Hide();
+        pictureBox37->Hide();
     }
+    private: System::Void timer4_Tick(System::Object^ sender, System::EventArgs^ e) {
+        if (Opacity == 1) {
+            timer4->Stop();
+        }
+        Opacity += .2;
+    }
+private: System::Void timer5_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (Opacity <= 0) {
+        timer5->Stop();
+        this->Close();
+    }
+    MyForm::Opacity -= .2;
 }
 };
 }

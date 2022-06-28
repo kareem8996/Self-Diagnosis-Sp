@@ -41,18 +41,37 @@ Class Project38.Camera_winform: AutoLayout, AnsiClass, Class, Public, BeforeFiel
     MyCamera_OnFrameArrived(Object, FrameArrivedEventArgs): PrivateScope, Public, HideBySig
 Class Project38.Account_Settings: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
-    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*, SByte, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*, std.vector<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >\,std::allocator<std::basic_string<char\,std::char_traits<char>\,std::allocator<char> > > >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    Int32 timer1_counter : Public
+    Int32 timer1_counter2 : Public
+    Int32 timer2_counter : Public
+    Int32 timer2_counter2 : Public
     SByte who IsSignUnspecifiedByte : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.PictureBox] pics : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.Label] labels : Public
+    System.String old_username : Public
+    System.String old_phone : Public
+    System.String old_email : Public
+    System.String old_name : Public
+    System.String old_pass : Public
     Boolean changed : Public
     SByte s_key IsSignUnspecifiedByte : Public
+    System.Collections.Generic.List`1[System.String] EMAILS : Public
+    System.Collections.Generic.List`1[System.String] PHONES : Public
+    System.Collections.Generic.List`1[System.String] UNAMES : Public
     SByte Logoutkey IsSignUnspecifiedByte : Public
+    Int32 curr_loc : Public
     System.String Code : Public, Static
   Methods:
+    ufunC(function<bool __cdecl(std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >)>*, basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig
     Blue(PictureBox, Label): PrivateScope, Public, HideBySig
+    Green(PictureBox, Label): PrivateScope, Public, HideBySig
+    Red(PictureBox, Label): PrivateScope, Public, HideBySig
     Blacken(PictureBox, Label): PrivateScope, Public, HideBySig
+    Bluen(PictureBox, Label): PrivateScope, Public, HideBySig
     MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
     save(): PrivateScope, Public, HideBySig
     GetPass(): PrivateScope, Public, HideBySig
@@ -74,6 +93,8 @@ Class Project38.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    Boolean open : Public
+    Boolean open1 : Public
     DarrenLee.Media.Camera MyCamera : Public
     Boolean button2_cliccked : Public
     System.String Code : Public, Static
