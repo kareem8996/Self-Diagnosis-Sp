@@ -17,11 +17,21 @@ Assembly DarrenLee.Media, Version=1.0.*, Culture=Invariant Language (Invariant C
 	hash=None, flags=None
 Assembly MessageBoxManager, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=None, flags=None
+Assembly Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly Siticone.UI, Version=1.0.0.3, Culture=neutral, PublicKeyToken=da23b5286e22db85: 
+	hash=None, flags=None
+Assembly System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
 Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
 	hash=None, flags=None
 Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
 Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
 	hash=None, flags=None
 Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
@@ -66,7 +76,6 @@ Class Project38.Account_Settings: AutoLayout, AnsiClass, Class, Public, BeforeFi
     Int32 curr_loc : Public
     System.String Code : Public, Static
   Methods:
-    ufunC(function<bool __cdecl(std::basic_string<char\,std::char_traits<char>\,std::allocator<char> >)>*, basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig
     Blue(PictureBox, Label): PrivateScope, Public, HideBySig
     Green(PictureBox, Label): PrivateScope, Public, HideBySig
     Red(PictureBox, Label): PrivateScope, Public, HideBySig
@@ -79,6 +88,7 @@ Class Project38.Account_Settings: AutoLayout, AnsiClass, Class, Public, BeforeFi
     GetUsername(): PrivateScope, Public, HideBySig
     GetEmail(): PrivateScope, Public, HideBySig
     GetPhone(): PrivateScope, Public, HideBySig
+    change_occured(): PrivateScope, Public, HideBySig
     Getsend_email(): PrivateScope, Public, HideBySig
     logout(): PrivateScope, Public, HideBySig
     save_key(): PrivateScope, Public, HideBySig
@@ -93,6 +103,13 @@ Class Project38.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(std.basic_string<char\,std::char_traits<char>\,std::allocator<char> >*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    System.Drawing.Image light_pic : Public
+    System.Drawing.Image dark_pic : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.PictureBox] backgrounds : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.Label] recently_added_labels : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.Label] recently_deleted_labels : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.PictureBox] recently_added_pics : Public
+    System.Collections.Generic.List`1[System.Windows.Forms.PictureBox] recently_deleted_pics : Public
     Boolean open : Public
     Boolean open1 : Public
     DarrenLee.Media.Camera MyCamera : Public
@@ -101,6 +118,8 @@ Class Project38.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Events:
     DarrenLee.Media.FrameArrivedEventHandler wow: SpecialName
   Methods:
+    Feed(): PrivateScope, Public, HideBySig
+    add_to_recently_deleted(Diseases*): PrivateScope, Public, HideBySig
     MarshalString(String, basic_string<char\,std::char_traits<char>\,std::allocator<char> >* IsImplicitlyDereferenced): PrivateScope, Public, HideBySig
     add_wow(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName
     remove_wow(FrameArrivedEventHandler): PrivateScope, Public, HideBySig, SpecialName

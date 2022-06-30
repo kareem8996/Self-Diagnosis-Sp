@@ -11,19 +11,21 @@
 #include "MyForm2.h"
 #include "Account_Settings.h"
 #include <functional>
-
+char send_email='F';
 string doc_name;
 string pat_name;
 string doc_username;
 string pat_username;
 string pat_password;
 string doctor_phone = "";
+string pat_phone = "";
 string Pat_gender;
 string doc_password;
 string pat_age;
 string mail;
 string randomCode;
 string PASSWORD;
+string who_feed="";
 bool Capture;
 struct Accounts {
     string username;
@@ -38,6 +40,7 @@ struct Diseases {
     string doc_phone;
 
 }CurrentDisease;
+vector<Diseases> recently_deleted_diseases;
 
 string sympnum = "0";
 string disease_name;
@@ -65,6 +68,7 @@ struct Patient {
     Accounts account;
     char gender;
     int age;
+    string patient_phone;
     vector<string> Disease_History;
 };
 Patient* CurrentPatient;
@@ -117,12 +121,12 @@ vector<string> allUsernames = {};
 vector<string> allPhones = {};
 vector<string> allEmails = {};
 void ValidatoryData() {
-    for (int i = 0; i<index_allPatients; i++) {
+    for (int i = 0; i < index_allPatients; i++) {
         allUsernames.push_back(allPatients[i].account.username);
         //allPhones.push_back(allPatients[i].account.phone);
         allEmails.push_back(allPatients[i].account.email);
     }
-    for (int i = 0; i<index_allDoctors; i++) {
+    for (int i = 0; i < index_allDoctors; i++) {
         allUsernames.push_back(allDoctors[i].account.username);
         allEmails.push_back(allDoctors[i].account.email);
         allPhones.push_back(allDoctors[i].phone);
@@ -141,11 +145,11 @@ void getAllDiseases(vector<Diseases>* allDiseases);
 bool check_database(string username) {
     string org2 = "";
     for (int j = 0; j < username.size(); j++) {
-         if (isalpha(username[j]))
-                org2 += char(tolower(username[j]));
-            else {
-                org2 += username[j];
-            }
+        if (isalpha(username[j]))
+            org2 += char(tolower(username[j]));
+        else {
+            org2 += username[j];
+        }
     }
     for (int i = 0; i < index_allDoctors; i++) {
         string org = "";
@@ -185,17 +189,42 @@ bool check_phone(string phone) {
     return true;
 }
 bool check_database_email(string email) {
+    string org = "";
+    for (int j = 0; j < email.size(); j++) {
+        if (isalpha(email[j]))
+            org += char(tolower(email[j]));
+        else {
+            org += email[j];
+        }
+    }
+    string org2 = "";
     for (int i = 0; i < index_allDoctors; i++) {
-        if (email == allDoctors[i].account.email) {
+        for (int j = 0; j < allDoctors[i].account.email.size(); j++) {
+            if (isalpha(allDoctors[i].account.email[j]))
+                org2+= char(tolower(allDoctors[i].account.email[j]));
+            else {
+                org2 += allDoctors[i].account.email[j];
+            }
+        }
+
+        if (org==org2) {
             return false;
         }
 
     }
+    org2 = "";
     for (int i = 0; i < index_allPatients; i++) {
-        if (email == allPatients[i].account.email) {
-            return false;
+        for (int j = 0; j < allPatients[i].account.email.size(); j++) {
+            if (isalpha(allPatients[i].account.email[j]))
+                org2 += char(tolower(allPatients[i].account.email[j]));
+            else {
+                org2 += allPatients[i].account.email[j];
+            }
         }
 
+        if (org == org2) {
+            return false;
+        }
     }
     return true;
 }
@@ -572,7 +601,13 @@ namespace Project38 {
 
 
     public:
-
+        Image^ light_pic;
+        Image^ dark_pic = Image::FromFile("PICs\\sys\\dark_mode.GIF");
+        List<PictureBox^>^ backgrounds = gcnew List<PictureBox^>();
+        List<Label^>^ recently_added_labels = gcnew List<Label^>();
+        List<Label^>^ recently_deleted_labels = gcnew List<Label^>();
+        List<PictureBox^>^ recently_added_pics = gcnew List<PictureBox^>();
+        List<PictureBox^>^ recently_deleted_pics = gcnew List<PictureBox^>();
         bool open = false;
         bool open1 = false;
     private: System::Windows::Forms::PictureBox^ pictureBox20;
@@ -594,11 +629,260 @@ namespace Project38 {
     private: System::Windows::Forms::PictureBox^ pictureBox43;
     private: System::Windows::Forms::Timer^ timer4;
     private: System::Windows::Forms::Timer^ timer5;
+    private: System::Windows::Forms::Button^ delete_symps_button;
+    private: System::Windows::Forms::Panel^ panel6;
+    private: System::Windows::Forms::Button^ button10;
+    private: System::Windows::Forms::Button^ clear_remove_list_button;
+    private: System::Windows::Forms::Button^ Remove_all_symps_button;
+    private: System::Windows::Forms::Button^ remove_symp_from_removed_button;
+    private: System::Windows::Forms::Button^ add_symp_to_removed_button;
+    private: System::Windows::Forms::ComboBox^ Current_doc_diseases_combobox;
+    private: System::Windows::Forms::ListBox^ removed_symps_listbox;
+    private: System::Windows::Forms::ListBox^ current_disease_symps_listbox;
+    private: System::Windows::Forms::Button^ delete_diseases_button;
+    private: System::Windows::Forms::Button^ clear_removed_diseases_button;
+    private: System::Windows::Forms::Button^ remove_all_diseases_button;
+    private: System::Windows::Forms::Button^ remove_disease_from_removed_button;
+    private: System::Windows::Forms::Button^ add_disease_to_removed_button;
+    private: System::Windows::Forms::ListBox^ removed_diseases_listbox;
+    private: System::Windows::Forms::ListBox^ current_doctor_diseases_listbox;
+    private: System::Windows::Forms::ComboBox^ Alldiseases_combobox;
+    private: System::Windows::Forms::ListBox^ Patients_of_chosen_disease_listbox;
+    private: System::Windows::Forms::TextBox^ Disease_doc_phone_textbox;
+    private: System::Windows::Forms::TextBox^ Disease_docname_textbox;
+    private: System::Windows::Forms::ListBox^ Disease_symps_listbox;
+    private: System::Windows::Forms::TextBox^ Disease_info_textbox;
+    private: System::Windows::Forms::TextBox^ Disease_name_textbox;
+    private: System::Windows::Forms::Panel^ feed_panel;
+
+    private: System::Windows::Forms::PictureBox^ third_most_picturebox;
+    private: System::Windows::Forms::PictureBox^ second_most_picturebox;
+    private: System::Windows::Forms::PictureBox^ Most_picturebox;
+    private: System::Windows::Forms::PictureBox^ x_axis_picturebox;
+    private: System::Windows::Forms::PictureBox^ y_axis_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_deleted_third_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_deleted_second_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_deleted_first_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_added_third_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_added_second_picturebox;
+    private: System::Windows::Forms::PictureBox^ Recently_added_first_picturebox;
+    private: System::Windows::Forms::Label^ Recently_deleted_third_label;
+    private: System::Windows::Forms::Label^ Recently_deleted_second_label;
+    private: System::Windows::Forms::Label^ Recently_deleted_first_label;
+    private: System::Windows::Forms::Label^ Recently_added_third_label;
+    private: System::Windows::Forms::Label^ Recently_added_second_label;
+    private: System::Windows::Forms::Label^ Recently_added_first_label;
+    private: System::Windows::Forms::Label^ Recently_deleted_label;
+    private: System::Windows::Forms::Label^ Recently_added_label;
+    private: System::Windows::Forms::Timer^ timer6;
+    private: System::Windows::Forms::Timer^ timer7;
+    private: System::Windows::Forms::Timer^ timer8;
+    private: System::Windows::Forms::Timer^ timer9;
+    private: System::Windows::Forms::Timer^ timer10;
+    private: System::Windows::Forms::PictureBox^ second_most_front_picturebox;
+    private: System::Windows::Forms::PictureBox^ third_most_front_picturebox;
+
+
+    private: System::Windows::Forms::PictureBox^ most_front_picturebox;
+    private: System::Windows::Forms::Label^ third_most_value;
+    private: System::Windows::Forms::Label^ second_most_value;
+    private: System::Windows::Forms::Label^ Most_value;
+    private: System::Windows::Forms::Label^ Third_Most_name_label;
+    private: System::Windows::Forms::Label^ Most_name_label;
+    private: System::Windows::Forms::Label^ Second_Most_name_label;
+    private: System::Windows::Forms::PictureBox^ back_feed_picturebox;
+    private: System::Windows::Forms::Label^ Title_feed;
+
+    private: System::Windows::Forms::PictureBox^ feed_background_dark;
+    private: System::Windows::Forms::Label^ label13;
+    private: Siticone::UI::WinForms::SiticoneWinToggleSwith^ email_togglebutton;
+
+
+
+
+
+
+
+
+    private: System::Windows::Forms::PictureBox^ feed_background;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public:
 
 
     public:
+        void Feed() {
+            y_axis_picturebox->Hide();
+            x_axis_picturebox->Hide();
+            GraphicsPath^ gp = gcnew GraphicsPath();
+            gp->AddEllipse(Recently_added_first_picturebox->DisplayRectangle);
+            Recently_added_first_picturebox->Region = gcnew System::Drawing::Region(gp);
+
+            GraphicsPath^ gp1 = gcnew GraphicsPath();
+            gp1->AddEllipse(Recently_added_second_picturebox->DisplayRectangle);
+            Recently_added_second_picturebox->Region = gcnew System::Drawing::Region(gp1);
+            
+            GraphicsPath^ gp2 = gcnew GraphicsPath();
+            gp2->AddEllipse(Recently_added_third_picturebox->DisplayRectangle);
+            Recently_added_third_picturebox->Region = gcnew System::Drawing::Region(gp2);
+
+            GraphicsPath^ gp3 = gcnew GraphicsPath();
+            gp3->AddEllipse(Recently_deleted_first_picturebox->DisplayRectangle);
+            Recently_deleted_first_picturebox->Region = gcnew System::Drawing::Region(gp3);
+            
+            GraphicsPath^ gp4= gcnew GraphicsPath();
+            gp4->AddEllipse(Recently_deleted_second_picturebox->DisplayRectangle);
+            Recently_deleted_second_picturebox->Region = gcnew System::Drawing::Region(gp4);
+
+            GraphicsPath^ gp5= gcnew GraphicsPath();
+            gp5->AddEllipse(Recently_deleted_third_picturebox->DisplayRectangle);
+            Recently_deleted_third_picturebox->Region = gcnew System::Drawing::Region(gp5);
+
+            recently_added_labels->Add(Recently_added_first_label);
+            recently_added_labels->Add(Recently_added_second_label);
+            recently_added_labels->Add(Recently_added_third_label);
+            recently_added_pics->Add(Recently_added_first_picturebox);
+            recently_added_pics->Add(Recently_added_second_picturebox);
+            recently_added_pics->Add(Recently_added_third_picturebox);
+
+            for (int i = 1; i <= recently_added_labels->Count; i++) {
+                String^ dis_name = gcnew String(allDiseases[allDiseases.size() - i].name.c_str());
+                String^ doc_name = gcnew String(allDiseases[allDiseases.size() - i].doc_name.c_str());
+                string doc_name_string = allDiseases[allDiseases.size() - i].doc_name;
+                recently_added_labels[i - 1]->Text = String::Format("{0}\nhas been recently\ndiscovered by\n Dr.{1}", dis_name, doc_name);
+
+                for (int j = 0; j < index_allDoctors; j++) {
+                    if (allDoctors[j].doc_name == doc_name_string) {
+                        string wow = "PICs\\Doctors\\" + allDoctors[j].account.username + ".jpg";
+                        String^ str3 = gcnew String(wow.c_str());
+                        if (System::IO::File::Exists(str3)) {
+                            recently_added_pics[i - 1]->ImageLocation = str3;
+                        }
+                        else {
+                            recently_added_pics[i - 1]->ImageLocation = "PICs\\guest.jpg";
+                        }
+                    }
+                }
+            }
+            recently_deleted_labels->Add(Recently_deleted_first_label);
+            recently_deleted_labels->Add(Recently_deleted_second_label);
+            recently_deleted_labels->Add(Recently_deleted_third_label);
+            recently_deleted_pics->Add(Recently_deleted_first_picturebox);
+            recently_deleted_pics->Add(Recently_deleted_second_picturebox);
+            recently_deleted_pics->Add(Recently_deleted_third_picturebox);
+
+            if (recently_deleted_diseases.size() > 0) {
+                for (int i = 1; i <= recently_deleted_diseases.size(); i++) {
+                    String^ dis_name = gcnew String(recently_deleted_diseases[recently_deleted_diseases.size() - i].name.c_str());
+                    String^ doc_name = gcnew String(recently_deleted_diseases[recently_deleted_diseases.size() - i].doc_name.c_str());
+                    string doc_name_string = recently_deleted_diseases[recently_deleted_diseases.size() - i].doc_name;
+
+                    recently_deleted_labels[i - 1]->Text = String::Format("{0} was recently deleted by Dr. {1}", dis_name, doc_name);
+
+                    for (int j = 0; j < index_allDoctors; j++) {
+                        if (allDoctors[j].doc_name == doc_name_string) {
+                            string wow = "PICs\\Doctors\\" + allDoctors[j].account.username + ".jpg";
+                            String^ str3 = gcnew String(wow.c_str());
+                            if (System::IO::File::Exists(str3)) {
+                                recently_deleted_pics[i - 1]->ImageLocation = str3;
+                            }
+                            else {
+                                recently_deleted_pics[i - 1]->ImageLocation = "PICs\\guest.jpg";
+                            }
+                        }
+                    }
+                }
+
+
+            }
+            //getting the count of each disease
+            vector<int> count;
+            count.resize(allDiseases.size(), 0);
+            for (int i = 0; i < index_allPatients; i++) {
+                for (int j = 0; j < allDiseases.size(); j++) {
+                    for (int k = 0; k < allPatients[i].Disease_History.size(); k++) {
+                        if (allPatients[i].Disease_History[k] == allDiseases[j].name) {
+                            count[j]++;
+                        }
+                    }
+                }
+            }
+            //check the highest three
+            int max = 0,
+                second_max = 0,
+                third_max = 0;
+            string most_name="", second_most_name = "", third_most_name = "";
+            for (int i = 0; i < count.size(); i++) {
+                if (count[i] > max) {
+                    third_max = second_max;
+                    second_max = max;
+                    max = count[i];
+                    third_most_name = second_most_name;
+                    second_most_name = most_name;
+                    most_name = allDiseases[i].name;
+
+                }
+                else if (count[i] > second_max) {
+                    third_max = second_max;
+                    second_max = count[i];
+                    third_most_name = second_most_name;
+                    second_most_name = allDiseases[i].name;
+                }
+                else if (count[i] > third_max) {
+                    third_max = count[i];
+                    third_most_name = allDiseases[i].name;
+                }
+            }
+            String^ Max = gcnew String(to_string(max).c_str());
+            String^ second_Max = gcnew String(to_string(second_max).c_str());
+            String^ third_Max = gcnew String(to_string(third_max).c_str());
+            Most_value->Text = Max;
+            second_most_value->Text = second_Max;
+            third_most_value->Text = third_Max;
+
+            Max = gcnew String(most_name.c_str());
+            second_Max = gcnew String(second_most_name.c_str());
+            third_Max = gcnew String(third_most_name.c_str());
+            Most_name_label->Text= Max;
+            Second_Most_name_label->Text = second_Max;
+            Third_Most_name_label->Text = third_Max;
+
+        }
+        void add_to_recently_deleted(Diseases dis) {
+            if (recently_deleted_diseases.size() < 3) {
+                recently_deleted_diseases.push_back(dis);
+            }
+            else {
+                recently_deleted_diseases.erase(recently_deleted_diseases.begin());
+                recently_deleted_diseases.push_back(dis);
+            }
+        }
+
         Camera^ MyCamera = gcnew Camera();
 
         void MarshalString(String^ s, string& os) {
@@ -649,11 +933,22 @@ namespace Project38 {
         }
         //Patient--------------------------------------
         void printPatientMenu() {
+            who_feed = "p";
             String^ str2 = gcnew String((*CurrentPatient).patient_name.c_str());
             if ((*CurrentPatient).gender == 'f' || (*CurrentPatient).gender == 'F') {
                 label15->Text = String::Format("Hello Ms/Mrs.{0}", str2);
             }
             else label15->Text = String::Format("Hello Mr.{0}", str2);
+            string wow = "PICs\\Patients\\" + (*CurrentPatient).account.username + ".jpg";
+            String^ str3 = gcnew String(wow.c_str());
+            if (System::IO::File::Exists(str3)) {
+                pictureBox37->ImageLocation = str3;
+                pictureBox43->ImageLocation = str3;
+            }
+            else {
+                pictureBox37->ImageLocation = "PICs\\guest.jpg";
+                pictureBox43->ImageLocation = "PICs\\guest.jpg";
+            }
         }
         void view_all_Symptoms() {
             label17->Text = "Please enter the symptoms you are currently feeling.\nWhen you are done, enter 0\n";
@@ -828,6 +1123,7 @@ namespace Project38 {
             return false;
         }
         void PrintDoctorMenu() {
+            who_feed = "d";
             String^ str2 = gcnew String((*CurrentDoctor).doc_name.c_str());
             label30->Text = String::Format("Hello Dr.{0}", str2);
             string wow = "PICs\\Doctors\\" + (*CurrentDoctor).account.username + ".jpg";
@@ -849,14 +1145,22 @@ namespace Project38 {
             label28->Text = "";
             label28->Show();
             textBox4->Show();
+            Alldiseases_combobox->Items->Clear();
             for (int i = 1; i <= allDiseases.size(); i++) {
                 String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
                 String^ index = gcnew String(to_string(i).c_str());
-                if (i % 5 == 0 || i == allDiseases.size())
-                    label28->Text += String::Format("{0}-{1}\n", index, str2);
-                else
-                    label28->Text += String::Format("{0}-{1}     ", index, str2);
+                /* if (i % 5 == 0 || i == allDiseases.size())
+                     label28->Text += String::Format("{0}-{1}\n", index, str2);
+                 else
+                     label28->Text += String::Format("{0}-{1}     ", index, str2);*/
+                Alldiseases_combobox->Items->Add(str2);
             }
+            Alldiseases_combobox->Show();
+            Disease_docname_textbox->Show();
+            Disease_doc_phone_textbox->Show();
+            Disease_info_textbox->Show();
+            Disease_symps_listbox->Show();
+            Disease_name_textbox->Show();
         }
         void view_Patients() {
             bool check = true;
@@ -866,15 +1170,19 @@ namespace Project38 {
             label29->Show();
             label28->Text = "";
             textBox4->Show();
+            Alldiseases_combobox->Items->Clear();
             for (int i = 1; i <= allDiseases.size(); i++) {
                 String^ str2 = gcnew String(allDiseases[i - 1].name.c_str());
                 String^ index = gcnew String(to_string(i).c_str());
-                if (i % 5 == 0 || i == allDiseases.size())
+                /*if (i % 5 == 0 || i == allDiseases.size())
                     label28->Text += String::Format("{0}-{1}\n", index, str2);
                 else
-                    label28->Text += String::Format("{0}-{1}     ", index, str2);
+                    label28->Text += String::Format("{0}-{1}     ", index, str2);*/
+                Alldiseases_combobox->Items->Add(str2);
             }
-            label28->Show();
+            Alldiseases_combobox->Show();
+            Patients_of_chosen_disease_listbox->Show();
+            //label28->Show();
 
         }
         void add_Symptom() {
@@ -903,6 +1211,7 @@ namespace Project38 {
                     else label28->Text += String::Format("{0}-{1}     ", index, str2);
                 }
                 textBox5->Show();
+                textBox5->Focus();
                 button6->Show();
                 label28->Show();
             } // end of else
@@ -913,6 +1222,13 @@ namespace Project38 {
             //if the doctor doesn't have ant disease this if condition runs
             if ((*CurrentDoctor).doc_diseases.size() == 0) {
                 label29->Text = "Unfortunately You haven't added any disease yet.\n";
+                current_doctor_diseases_listbox->Hide();
+                removed_diseases_listbox->Hide();
+                add_disease_to_removed_button->Hide();
+                remove_disease_from_removed_button->Hide();
+                delete_diseases_button->Hide();
+                clear_removed_diseases_button->Hide();
+                remove_all_diseases_button->Hide();
                 label29->Show();
                 button4->Text = "End";
                 textBox5->Hide();
@@ -926,14 +1242,22 @@ namespace Project38 {
                     String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
                     if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
                     else label28->Text += String::Format("{0}-{1}     ", index, str2);
+                    current_doctor_diseases_listbox->Items->Add(str2);
                 }
                 button4->Text = "Next";
-                label28->Show();
+                 label28->Show();
                 label29->Text = "Please choose Which disease you want to delete..";
                 label29->Show();
                 textBox5->Show();
                 button6->Show();
                 label28->Show();
+                current_doctor_diseases_listbox->Show();
+                removed_diseases_listbox->Show();
+                add_disease_to_removed_button->Show();
+                remove_disease_from_removed_button->Show();
+                delete_diseases_button->Show();
+                clear_removed_diseases_button->Show();
+                remove_all_diseases_button->Show();
             }
         }
         void remove_Symptom() {
@@ -944,15 +1268,33 @@ namespace Project38 {
                 label29->Text = "Unfortunately You haven't added any disease yet.\n";
                 label29->Show();
                 button4->Text = "End";
+                Current_doc_diseases_combobox->Hide();
+                removed_symps_listbox->Hide();
+                current_disease_symps_listbox->Hide();
+                add_symp_to_removed_button->Hide();
+                remove_symp_from_removed_button->Hide();
+                delete_symps_button->Hide();
+                clear_remove_list_button->Hide();
+                Remove_all_symps_button->Hide();
                 textBox5->Hide();
                 button6->Hide();
             }
             else {
+                Current_doc_diseases_combobox->Show();
+                removed_symps_listbox->Show();
+                current_disease_symps_listbox->Show();
+                add_symp_to_removed_button->Show();
+                remove_symp_from_removed_button->Show();
+                delete_symps_button->Show();
+                clear_remove_list_button->Show();
+                Remove_all_symps_button->Show();
+                //panel6->BackColor = Color::FromArgb(100,0,0,0);
                 //This for loop is to display all diseases added by the doctor
                 label28->Text = "";
                 for (int i = 0; i < (*CurrentDoctor).doc_diseases.size(); i++) {
                     String^ index = gcnew String(to_string(i + 1).c_str());
                     String^ str2 = gcnew String((*CurrentDoctor).doc_diseases[i].name.c_str());
+                    Current_doc_diseases_combobox->Items->Add(str2);
                     if (i % 5 == 0 && i != 0)  label28->Text += String::Format("{0}-{1}\n", index, str2);
                     else label28->Text += String::Format("{0}-{1}     ", index, str2);
                 }
@@ -1072,7 +1414,7 @@ namespace Project38 {
     private: System::Windows::Forms::Label^ label11;
     private: System::Windows::Forms::Label^ label3;
 
-    private: System::Windows::Forms::Timer^ timer3;
+
     private: System::Windows::Forms::Label^ label7;
     private: System::Windows::Forms::Label^ label2;
     private: System::Windows::Forms::Panel^ panel3;
@@ -1226,10 +1568,11 @@ namespace Project38 {
             this->label10 = (gcnew System::Windows::Forms::Label());
             this->label11 = (gcnew System::Windows::Forms::Label());
             this->label3 = (gcnew System::Windows::Forms::Label());
-            this->timer3 = (gcnew System::Windows::Forms::Timer(this->components));
             this->label7 = (gcnew System::Windows::Forms::Label());
             this->label2 = (gcnew System::Windows::Forms::Label());
             this->panel3 = (gcnew System::Windows::Forms::Panel());
+            this->label13 = (gcnew System::Windows::Forms::Label());
+            this->email_togglebutton = (gcnew Siticone::UI::WinForms::SiticoneWinToggleSwith());
             this->panel4 = (gcnew System::Windows::Forms::Panel());
             this->pictureBox37 = (gcnew System::Windows::Forms::PictureBox());
             this->label36 = (gcnew System::Windows::Forms::Label());
@@ -1269,11 +1612,35 @@ namespace Project38 {
             this->label33 = (gcnew System::Windows::Forms::Label());
             this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
             this->panel5 = (gcnew System::Windows::Forms::Panel());
+            this->Disease_doc_phone_textbox = (gcnew System::Windows::Forms::TextBox());
+            this->Disease_docname_textbox = (gcnew System::Windows::Forms::TextBox());
+            this->Disease_symps_listbox = (gcnew System::Windows::Forms::ListBox());
+            this->Disease_info_textbox = (gcnew System::Windows::Forms::TextBox());
+            this->Disease_name_textbox = (gcnew System::Windows::Forms::TextBox());
+            this->Patients_of_chosen_disease_listbox = (gcnew System::Windows::Forms::ListBox());
+            this->Alldiseases_combobox = (gcnew System::Windows::Forms::ComboBox());
+            this->add_disease_to_removed_button = (gcnew System::Windows::Forms::Button());
+            this->removed_diseases_listbox = (gcnew System::Windows::Forms::ListBox());
+            this->remove_disease_from_removed_button = (gcnew System::Windows::Forms::Button());
+            this->remove_all_diseases_button = (gcnew System::Windows::Forms::Button());
+            this->clear_removed_diseases_button = (gcnew System::Windows::Forms::Button());
+            this->delete_diseases_button = (gcnew System::Windows::Forms::Button());
+            this->current_doctor_diseases_listbox = (gcnew System::Windows::Forms::ListBox());
+            this->delete_symps_button = (gcnew System::Windows::Forms::Button());
+            this->panel6 = (gcnew System::Windows::Forms::Panel());
+            this->button10 = (gcnew System::Windows::Forms::Button());
+            this->clear_remove_list_button = (gcnew System::Windows::Forms::Button());
             this->pictureBox36 = (gcnew System::Windows::Forms::PictureBox());
+            this->Remove_all_symps_button = (gcnew System::Windows::Forms::Button());
             this->label35 = (gcnew System::Windows::Forms::Label());
+            this->remove_symp_from_removed_button = (gcnew System::Windows::Forms::Button());
+            this->add_symp_to_removed_button = (gcnew System::Windows::Forms::Button());
             this->pictureBox35 = (gcnew System::Windows::Forms::PictureBox());
+            this->Current_doc_diseases_combobox = (gcnew System::Windows::Forms::ComboBox());
             this->pictureBox34 = (gcnew System::Windows::Forms::PictureBox());
+            this->removed_symps_listbox = (gcnew System::Windows::Forms::ListBox());
             this->pictureBox21 = (gcnew System::Windows::Forms::PictureBox());
+            this->current_disease_symps_listbox = (gcnew System::Windows::Forms::ListBox());
             this->pictureBox20 = (gcnew System::Windows::Forms::PictureBox());
             this->label21 = (gcnew System::Windows::Forms::Label());
             this->label20 = (gcnew System::Windows::Forms::Label());
@@ -1304,8 +1671,46 @@ namespace Project38 {
             this->pictureBox28 = (gcnew System::Windows::Forms::PictureBox());
             this->label30 = (gcnew System::Windows::Forms::Label());
             this->pictureBox27 = (gcnew System::Windows::Forms::PictureBox());
+            this->feed_panel = (gcnew System::Windows::Forms::Panel());
+            this->Title_feed = (gcnew System::Windows::Forms::Label());
+            this->back_feed_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Third_Most_name_label = (gcnew System::Windows::Forms::Label());
+            this->Most_name_label = (gcnew System::Windows::Forms::Label());
+            this->Second_Most_name_label = (gcnew System::Windows::Forms::Label());
+            this->third_most_value = (gcnew System::Windows::Forms::Label());
+            this->second_most_value = (gcnew System::Windows::Forms::Label());
+            this->Most_value = (gcnew System::Windows::Forms::Label());
+            this->second_most_front_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->third_most_front_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->most_front_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->third_most_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->second_most_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Most_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->x_axis_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->y_axis_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_deleted_third_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_deleted_second_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_deleted_first_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_added_third_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_added_second_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_added_first_picturebox = (gcnew System::Windows::Forms::PictureBox());
+            this->Recently_deleted_third_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_deleted_second_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_deleted_first_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_added_third_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_added_second_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_added_first_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_deleted_label = (gcnew System::Windows::Forms::Label());
+            this->Recently_added_label = (gcnew System::Windows::Forms::Label());
+            this->feed_background = (gcnew System::Windows::Forms::PictureBox());
+            this->feed_background_dark = (gcnew System::Windows::Forms::PictureBox());
             this->timer4 = (gcnew System::Windows::Forms::Timer(this->components));
             this->timer5 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer6 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer7 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer8 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer9 = (gcnew System::Windows::Forms::Timer(this->components));
+            this->timer10 = (gcnew System::Windows::Forms::Timer(this->components));
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
@@ -1333,6 +1738,7 @@ namespace Project38 {
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox31))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
             this->panel5->SuspendLayout();
+            this->panel6->SuspendLayout();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox36))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox35))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox34))->BeginInit();
@@ -1350,6 +1756,24 @@ namespace Project38 {
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox29))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox28))->BeginInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox27))->BeginInit();
+            this->feed_panel->SuspendLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->back_feed_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->second_most_front_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->third_most_front_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->most_front_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->third_most_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->second_most_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Most_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->x_axis_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->y_axis_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_third_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_second_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_first_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_third_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_second_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_first_picturebox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->feed_background))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->feed_background_dark))->BeginInit();
             this->SuspendLayout();
             // 
             // label1
@@ -1665,10 +2089,6 @@ namespace Project38 {
             this->label3->TabIndex = 33;
             this->label3->Text = L"DOCTOR";
             // 
-            // timer3
-            // 
-            this->timer3->Tick += gcnew System::EventHandler(this, &MyForm::timer3_Tick);
-            // 
             // label7
             // 
             this->label7->AutoSize = true;
@@ -1692,6 +2112,8 @@ namespace Project38 {
             // 
             // panel3
             // 
+            this->panel3->Controls->Add(this->label13);
+            this->panel3->Controls->Add(this->email_togglebutton);
             this->panel3->Controls->Add(this->panel4);
             this->panel3->Controls->Add(this->button9);
             this->panel3->Controls->Add(this->button8);
@@ -1731,6 +2153,26 @@ namespace Project38 {
             this->panel3->TabIndex = 44;
             this->panel3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel3_Paint);
             // 
+            // label13
+            // 
+            this->label13->AutoSize = true;
+            this->label13->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8));
+            this->label13->ForeColor = System::Drawing::Color::White;
+            this->label13->Location = System::Drawing::Point(1242, 431);
+            this->label13->Name = L"label13";
+            this->label13->Size = System::Drawing::Size(192, 38);
+            this->label13->TabIndex = 58;
+            this->label13->Text = L"Send email for each patient \r\ndiagnosed with your disease\? ";
+            // 
+            // email_togglebutton
+            // 
+            this->email_togglebutton->Location = System::Drawing::Point(1442, 440);
+            this->email_togglebutton->Name = L"email_togglebutton";
+            this->email_togglebutton->Size = System::Drawing::Size(45, 22);
+            this->email_togglebutton->TabIndex = 57;
+            this->email_togglebutton->Text = L"siticoneWinToggleSwith1";
+            this->email_togglebutton->CheckedChanged += gcnew System::EventHandler(this, &MyForm::siticoneWinToggleSwith1_CheckedChanged_1);
+            // 
             // panel4
             // 
             this->panel4->Controls->Add(this->pictureBox37);
@@ -1763,8 +2205,7 @@ namespace Project38 {
             this->panel4->Controls->Add(this->pictureBox15);
             this->panel4->Controls->Add(this->label15);
             this->panel4->Controls->Add(this->pictureBox18);
-            this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
-            this->panel4->Location = System::Drawing::Point(0, 0);
+            this->panel4->Location = System::Drawing::Point(3, 824);
             this->panel4->Name = L"panel4";
             this->panel4->Size = System::Drawing::Size(1896, 835);
             this->panel4->TabIndex = 50;
@@ -1772,6 +2213,7 @@ namespace Project38 {
             // pictureBox37
             // 
             this->pictureBox37->Cursor = System::Windows::Forms::Cursors::Arrow;
+            this->pictureBox37->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox37.Image")));
             this->pictureBox37->Location = System::Drawing::Point(1184, 116);
             this->pictureBox37->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox37->Name = L"pictureBox37";
@@ -1888,6 +2330,7 @@ namespace Project38 {
             // pictureBox43
             // 
             this->pictureBox43->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->pictureBox43->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox43.Image")));
             this->pictureBox43->Location = System::Drawing::Point(1197, 2);
             this->pictureBox43->Margin = System::Windows::Forms::Padding(2);
             this->pictureBox43->Name = L"pictureBox43";
@@ -2010,6 +2453,7 @@ namespace Project38 {
             this->pictureBox10->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
             this->pictureBox10->TabIndex = 40;
             this->pictureBox10->TabStop = false;
+            this->pictureBox10->Click += gcnew System::EventHandler(this, &MyForm::pictureBox10_Click);
             // 
             // pictureBox11
             // 
@@ -2173,7 +2617,7 @@ namespace Project38 {
             // 
             // pictureBox31
             // 
-            this->pictureBox31->Location = System::Drawing::Point(1157, 225);
+            this->pictureBox31->Location = System::Drawing::Point(732, 52);
             this->pictureBox31->Name = L"pictureBox31";
             this->pictureBox31->Size = System::Drawing::Size(379, 326);
             this->pictureBox31->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -2211,11 +2655,34 @@ namespace Project38 {
             // 
             // panel5
             // 
+            this->panel5->Controls->Add(this->Disease_doc_phone_textbox);
+            this->panel5->Controls->Add(this->Disease_docname_textbox);
+            this->panel5->Controls->Add(this->Disease_symps_listbox);
+            this->panel5->Controls->Add(this->Disease_info_textbox);
+            this->panel5->Controls->Add(this->Disease_name_textbox);
+            this->panel5->Controls->Add(this->Patients_of_chosen_disease_listbox);
+            this->panel5->Controls->Add(this->Alldiseases_combobox);
+            this->panel5->Controls->Add(this->add_disease_to_removed_button);
+            this->panel5->Controls->Add(this->removed_diseases_listbox);
+            this->panel5->Controls->Add(this->remove_disease_from_removed_button);
+            this->panel5->Controls->Add(this->remove_all_diseases_button);
+            this->panel5->Controls->Add(this->clear_removed_diseases_button);
+            this->panel5->Controls->Add(this->delete_diseases_button);
+            this->panel5->Controls->Add(this->current_doctor_diseases_listbox);
+            this->panel5->Controls->Add(this->delete_symps_button);
+            this->panel5->Controls->Add(this->panel6);
+            this->panel5->Controls->Add(this->clear_remove_list_button);
             this->panel5->Controls->Add(this->pictureBox36);
+            this->panel5->Controls->Add(this->Remove_all_symps_button);
             this->panel5->Controls->Add(this->label35);
+            this->panel5->Controls->Add(this->remove_symp_from_removed_button);
+            this->panel5->Controls->Add(this->add_symp_to_removed_button);
             this->panel5->Controls->Add(this->pictureBox35);
+            this->panel5->Controls->Add(this->Current_doc_diseases_combobox);
             this->panel5->Controls->Add(this->pictureBox34);
+            this->panel5->Controls->Add(this->removed_symps_listbox);
             this->panel5->Controls->Add(this->pictureBox21);
+            this->panel5->Controls->Add(this->current_disease_symps_listbox);
             this->panel5->Controls->Add(this->pictureBox20);
             this->panel5->Controls->Add(this->label21);
             this->panel5->Controls->Add(this->label20);
@@ -2246,11 +2713,182 @@ namespace Project38 {
             this->panel5->Controls->Add(this->pictureBox28);
             this->panel5->Controls->Add(this->label30);
             this->panel5->Controls->Add(this->pictureBox27);
+            this->panel5->Controls->Add(this->feed_panel);
             this->panel5->Location = System::Drawing::Point(1, -2);
             this->panel5->Name = L"panel5";
             this->panel5->Size = System::Drawing::Size(1896, 735);
             this->panel5->TabIndex = 48;
             this->panel5->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel5_Paint);
+            // 
+            // Disease_doc_phone_textbox
+            // 
+            this->Disease_doc_phone_textbox->Location = System::Drawing::Point(735, 568);
+            this->Disease_doc_phone_textbox->Name = L"Disease_doc_phone_textbox";
+            this->Disease_doc_phone_textbox->ReadOnly = true;
+            this->Disease_doc_phone_textbox->Size = System::Drawing::Size(169, 24);
+            this->Disease_doc_phone_textbox->TabIndex = 77;
+            // 
+            // Disease_docname_textbox
+            // 
+            this->Disease_docname_textbox->Location = System::Drawing::Point(733, 522);
+            this->Disease_docname_textbox->Name = L"Disease_docname_textbox";
+            this->Disease_docname_textbox->ReadOnly = true;
+            this->Disease_docname_textbox->Size = System::Drawing::Size(169, 24);
+            this->Disease_docname_textbox->TabIndex = 76;
+            // 
+            // Disease_symps_listbox
+            // 
+            this->Disease_symps_listbox->FormattingEnabled = true;
+            this->Disease_symps_listbox->ItemHeight = 16;
+            this->Disease_symps_listbox->Location = System::Drawing::Point(733, 380);
+            this->Disease_symps_listbox->Name = L"Disease_symps_listbox";
+            this->Disease_symps_listbox->Size = System::Drawing::Size(171, 132);
+            this->Disease_symps_listbox->TabIndex = 75;
+            // 
+            // Disease_info_textbox
+            // 
+            this->Disease_info_textbox->Location = System::Drawing::Point(733, 268);
+            this->Disease_info_textbox->Multiline = true;
+            this->Disease_info_textbox->Name = L"Disease_info_textbox";
+            this->Disease_info_textbox->ReadOnly = true;
+            this->Disease_info_textbox->Size = System::Drawing::Size(169, 100);
+            this->Disease_info_textbox->TabIndex = 74;
+            // 
+            // Disease_name_textbox
+            // 
+            this->Disease_name_textbox->Location = System::Drawing::Point(733, 227);
+            this->Disease_name_textbox->Name = L"Disease_name_textbox";
+            this->Disease_name_textbox->ReadOnly = true;
+            this->Disease_name_textbox->Size = System::Drawing::Size(169, 24);
+            this->Disease_name_textbox->TabIndex = 73;
+            // 
+            // Patients_of_chosen_disease_listbox
+            // 
+            this->Patients_of_chosen_disease_listbox->FormattingEnabled = true;
+            this->Patients_of_chosen_disease_listbox->ItemHeight = 16;
+            this->Patients_of_chosen_disease_listbox->Location = System::Drawing::Point(694, 196);
+            this->Patients_of_chosen_disease_listbox->Name = L"Patients_of_chosen_disease_listbox";
+            this->Patients_of_chosen_disease_listbox->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
+            this->Patients_of_chosen_disease_listbox->Size = System::Drawing::Size(251, 276);
+            this->Patients_of_chosen_disease_listbox->TabIndex = 72;
+            // 
+            // Alldiseases_combobox
+            // 
+            this->Alldiseases_combobox->FormattingEnabled = true;
+            this->Alldiseases_combobox->Location = System::Drawing::Point(375, 145);
+            this->Alldiseases_combobox->Name = L"Alldiseases_combobox";
+            this->Alldiseases_combobox->Size = System::Drawing::Size(106, 24);
+            this->Alldiseases_combobox->TabIndex = 71;
+            this->Alldiseases_combobox->SelectedValueChanged += gcnew System::EventHandler(this, &MyForm::Alldiseases_combobox_SelectedValueChanged);
+            // 
+            // add_disease_to_removed_button
+            // 
+            this->add_disease_to_removed_button->Location = System::Drawing::Point(618, 225);
+            this->add_disease_to_removed_button->Name = L"add_disease_to_removed_button";
+            this->add_disease_to_removed_button->Size = System::Drawing::Size(66, 23);
+            this->add_disease_to_removed_button->TabIndex = 66;
+            this->add_disease_to_removed_button->Text = L"Add";
+            this->add_disease_to_removed_button->UseVisualStyleBackColor = true;
+            this->add_disease_to_removed_button->Click += gcnew System::EventHandler(this, &MyForm::add_disease_to_removed_button_Click);
+            // 
+            // removed_diseases_listbox
+            // 
+            this->removed_diseases_listbox->FormattingEnabled = true;
+            this->removed_diseases_listbox->ItemHeight = 16;
+            this->removed_diseases_listbox->Location = System::Drawing::Point(694, 196);
+            this->removed_diseases_listbox->Name = L"removed_diseases_listbox";
+            this->removed_diseases_listbox->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
+            this->removed_diseases_listbox->Size = System::Drawing::Size(251, 276);
+            this->removed_diseases_listbox->TabIndex = 65;
+            // 
+            // remove_disease_from_removed_button
+            // 
+            this->remove_disease_from_removed_button->Location = System::Drawing::Point(618, 330);
+            this->remove_disease_from_removed_button->Name = L"remove_disease_from_removed_button";
+            this->remove_disease_from_removed_button->Size = System::Drawing::Size(66, 23);
+            this->remove_disease_from_removed_button->TabIndex = 67;
+            this->remove_disease_from_removed_button->Text = L"remove";
+            this->remove_disease_from_removed_button->UseVisualStyleBackColor = true;
+            this->remove_disease_from_removed_button->Click += gcnew System::EventHandler(this, &MyForm::remove_all_diseases_button_Click);
+            // 
+            // remove_all_diseases_button
+            // 
+            this->remove_all_diseases_button->Location = System::Drawing::Point(410, 490);
+            this->remove_all_diseases_button->Name = L"remove_all_diseases_button";
+            this->remove_all_diseases_button->Size = System::Drawing::Size(147, 23);
+            this->remove_all_diseases_button->TabIndex = 68;
+            this->remove_all_diseases_button->Text = L"Remove all diseases";
+            this->remove_all_diseases_button->UseVisualStyleBackColor = true;
+            this->remove_all_diseases_button->Click += gcnew System::EventHandler(this, &MyForm::remove_all_diseases_button_Click);
+            // 
+            // clear_removed_diseases_button
+            // 
+            this->clear_removed_diseases_button->Location = System::Drawing::Point(742, 498);
+            this->clear_removed_diseases_button->Name = L"clear_removed_diseases_button";
+            this->clear_removed_diseases_button->Size = System::Drawing::Size(147, 23);
+            this->clear_removed_diseases_button->TabIndex = 69;
+            this->clear_removed_diseases_button->Text = L"Clear list";
+            this->clear_removed_diseases_button->UseVisualStyleBackColor = true;
+            this->clear_removed_diseases_button->Click += gcnew System::EventHandler(this, &MyForm::clear_removed_diseases_button_Click);
+            // 
+            // delete_diseases_button
+            // 
+            this->delete_diseases_button->Location = System::Drawing::Point(975, 146);
+            this->delete_diseases_button->Name = L"delete_diseases_button";
+            this->delete_diseases_button->Size = System::Drawing::Size(66, 23);
+            this->delete_diseases_button->TabIndex = 70;
+            this->delete_diseases_button->Text = L"Delete";
+            this->delete_diseases_button->UseVisualStyleBackColor = true;
+            this->delete_diseases_button->Click += gcnew System::EventHandler(this, &MyForm::delete_diseases_button_Click);
+            // 
+            // current_doctor_diseases_listbox
+            // 
+            this->current_doctor_diseases_listbox->FormattingEnabled = true;
+            this->current_doctor_diseases_listbox->ItemHeight = 16;
+            this->current_doctor_diseases_listbox->Location = System::Drawing::Point(360, 196);
+            this->current_doctor_diseases_listbox->Name = L"current_doctor_diseases_listbox";
+            this->current_doctor_diseases_listbox->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
+            this->current_doctor_diseases_listbox->Size = System::Drawing::Size(251, 276);
+            this->current_doctor_diseases_listbox->TabIndex = 64;
+            // 
+            // delete_symps_button
+            // 
+            this->delete_symps_button->Location = System::Drawing::Point(977, 146);
+            this->delete_symps_button->Name = L"delete_symps_button";
+            this->delete_symps_button->Size = System::Drawing::Size(66, 23);
+            this->delete_symps_button->TabIndex = 15;
+            this->delete_symps_button->Text = L"Delete";
+            this->delete_symps_button->UseVisualStyleBackColor = true;
+            this->delete_symps_button->Click += gcnew System::EventHandler(this, &MyForm::delete_symps_button_Click);
+            // 
+            // panel6
+            // 
+            this->panel6->BackColor = System::Drawing::Color::Transparent;
+            this->panel6->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+            this->panel6->Controls->Add(this->button10);
+            this->panel6->Location = System::Drawing::Point(794, 697);
+            this->panel6->Name = L"panel6";
+            this->panel6->Size = System::Drawing::Size(175, 100);
+            this->panel6->TabIndex = 63;
+            // 
+            // button10
+            // 
+            this->button10->Location = System::Drawing::Point(44, 38);
+            this->button10->Name = L"button10";
+            this->button10->Size = System::Drawing::Size(66, 23);
+            this->button10->TabIndex = 4;
+            this->button10->Text = L"Add";
+            this->button10->UseVisualStyleBackColor = true;
+            // 
+            // clear_remove_list_button
+            // 
+            this->clear_remove_list_button->Location = System::Drawing::Point(742, 496);
+            this->clear_remove_list_button->Name = L"clear_remove_list_button";
+            this->clear_remove_list_button->Size = System::Drawing::Size(147, 23);
+            this->clear_remove_list_button->TabIndex = 14;
+            this->clear_remove_list_button->Text = L"Clear list";
+            this->clear_remove_list_button->UseVisualStyleBackColor = true;
+            this->clear_remove_list_button->Click += gcnew System::EventHandler(this, &MyForm::clear_remove_list_button_Click);
             // 
             // pictureBox36
             // 
@@ -2262,6 +2900,15 @@ namespace Project38 {
             this->pictureBox36->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->pictureBox36->TabIndex = 60;
             this->pictureBox36->TabStop = false;
+            // 
+            // Remove_all_symps_button
+            // 
+            this->Remove_all_symps_button->Location = System::Drawing::Point(410, 491);
+            this->Remove_all_symps_button->Name = L"Remove_all_symps_button";
+            this->Remove_all_symps_button->Size = System::Drawing::Size(147, 23);
+            this->Remove_all_symps_button->TabIndex = 13;
+            this->Remove_all_symps_button->Text = L"Remove all symps";
+            this->Remove_all_symps_button->UseVisualStyleBackColor = true;
             // 
             // label35
             // 
@@ -2277,6 +2924,25 @@ namespace Project38 {
             this->label35->TabIndex = 59;
             this->label35->Text = L"Settings";
             // 
+            // remove_symp_from_removed_button
+            // 
+            this->remove_symp_from_removed_button->Location = System::Drawing::Point(618, 330);
+            this->remove_symp_from_removed_button->Name = L"remove_symp_from_removed_button";
+            this->remove_symp_from_removed_button->Size = System::Drawing::Size(66, 23);
+            this->remove_symp_from_removed_button->TabIndex = 12;
+            this->remove_symp_from_removed_button->Text = L"remove";
+            this->remove_symp_from_removed_button->UseVisualStyleBackColor = true;
+            // 
+            // add_symp_to_removed_button
+            // 
+            this->add_symp_to_removed_button->Location = System::Drawing::Point(618, 225);
+            this->add_symp_to_removed_button->Name = L"add_symp_to_removed_button";
+            this->add_symp_to_removed_button->Size = System::Drawing::Size(66, 23);
+            this->add_symp_to_removed_button->TabIndex = 11;
+            this->add_symp_to_removed_button->Text = L"Add";
+            this->add_symp_to_removed_button->UseVisualStyleBackColor = true;
+            this->add_symp_to_removed_button->Click += gcnew System::EventHandler(this, &MyForm::add_symp_to_removed_button_Click);
+            // 
             // pictureBox35
             // 
             this->pictureBox35->BackColor = System::Drawing::Color::White;
@@ -2291,6 +2957,15 @@ namespace Project38 {
             this->pictureBox35->TabStop = false;
             this->pictureBox35->Click += gcnew System::EventHandler(this, &MyForm::pictureBox35_Click);
             // 
+            // Current_doc_diseases_combobox
+            // 
+            this->Current_doc_diseases_combobox->FormattingEnabled = true;
+            this->Current_doc_diseases_combobox->Location = System::Drawing::Point(598, 146);
+            this->Current_doc_diseases_combobox->Name = L"Current_doc_diseases_combobox";
+            this->Current_doc_diseases_combobox->Size = System::Drawing::Size(106, 24);
+            this->Current_doc_diseases_combobox->TabIndex = 10;
+            this->Current_doc_diseases_combobox->SelectedValueChanged += gcnew System::EventHandler(this, &MyForm::Current_doc_diseases_combobox_SelectedValueChanged);
+            // 
             // pictureBox34
             // 
             this->pictureBox34->BackColor = System::Drawing::Color::Blue;
@@ -2299,6 +2974,17 @@ namespace Project38 {
             this->pictureBox34->Size = System::Drawing::Size(187, 3);
             this->pictureBox34->TabIndex = 57;
             this->pictureBox34->TabStop = false;
+            // 
+            // removed_symps_listbox
+            // 
+            this->removed_symps_listbox->FormattingEnabled = true;
+            this->removed_symps_listbox->ItemHeight = 16;
+            this->removed_symps_listbox->Location = System::Drawing::Point(694, 195);
+            this->removed_symps_listbox->Name = L"removed_symps_listbox";
+            this->removed_symps_listbox->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
+            this->removed_symps_listbox->Size = System::Drawing::Size(251, 276);
+            this->removed_symps_listbox->TabIndex = 9;
+            this->removed_symps_listbox->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::removed_symps_listbox_SelectedIndexChanged);
             // 
             // pictureBox21
             // 
@@ -2312,6 +2998,16 @@ namespace Project38 {
             this->pictureBox21->TabIndex = 46;
             this->pictureBox21->TabStop = false;
             this->pictureBox21->Click += gcnew System::EventHandler(this, &MyForm::pictureBox21_Click_1);
+            // 
+            // current_disease_symps_listbox
+            // 
+            this->current_disease_symps_listbox->FormattingEnabled = true;
+            this->current_disease_symps_listbox->ItemHeight = 16;
+            this->current_disease_symps_listbox->Location = System::Drawing::Point(362, 195);
+            this->current_disease_symps_listbox->Name = L"current_disease_symps_listbox";
+            this->current_disease_symps_listbox->SelectionMode = System::Windows::Forms::SelectionMode::MultiSimple;
+            this->current_disease_symps_listbox->Size = System::Drawing::Size(251, 276);
+            this->current_disease_symps_listbox->TabIndex = 8;
             // 
             // pictureBox20
             // 
@@ -2384,6 +3080,7 @@ namespace Project38 {
             // 
             // pictureBox30
             // 
+            this->pictureBox30->Cursor = System::Windows::Forms::Cursors::Hand;
             this->pictureBox30->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox30.Image")));
             this->pictureBox30->Location = System::Drawing::Point(585, 271);
             this->pictureBox30->Name = L"pictureBox30";
@@ -2573,6 +3270,7 @@ namespace Project38 {
             this->textBox6->Name = L"textBox6";
             this->textBox6->Size = System::Drawing::Size(207, 24);
             this->textBox6->TabIndex = 51;
+            this->textBox6->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox6_KeyDown);
             // 
             // label32
             // 
@@ -2611,6 +3309,7 @@ namespace Project38 {
             this->textBox5->Name = L"textBox5";
             this->textBox5->Size = System::Drawing::Size(207, 24);
             this->textBox5->TabIndex = 45;
+            this->textBox5->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox5_KeyDown);
             this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox5_KeyPress);
             // 
             // label29
@@ -2683,6 +3382,370 @@ namespace Project38 {
             this->pictureBox27->TabStop = false;
             this->pictureBox27->Click += gcnew System::EventHandler(this, &MyForm::pictureBox27_Click);
             // 
+            // feed_panel
+            // 
+            this->feed_panel->Controls->Add(this->Title_feed);
+            this->feed_panel->Controls->Add(this->back_feed_picturebox);
+            this->feed_panel->Controls->Add(this->Third_Most_name_label);
+            this->feed_panel->Controls->Add(this->Most_name_label);
+            this->feed_panel->Controls->Add(this->Second_Most_name_label);
+            this->feed_panel->Controls->Add(this->third_most_value);
+            this->feed_panel->Controls->Add(this->second_most_value);
+            this->feed_panel->Controls->Add(this->Most_value);
+            this->feed_panel->Controls->Add(this->second_most_front_picturebox);
+            this->feed_panel->Controls->Add(this->third_most_front_picturebox);
+            this->feed_panel->Controls->Add(this->most_front_picturebox);
+            this->feed_panel->Controls->Add(this->third_most_picturebox);
+            this->feed_panel->Controls->Add(this->second_most_picturebox);
+            this->feed_panel->Controls->Add(this->Most_picturebox);
+            this->feed_panel->Controls->Add(this->x_axis_picturebox);
+            this->feed_panel->Controls->Add(this->y_axis_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_deleted_third_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_deleted_second_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_deleted_first_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_added_third_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_added_second_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_added_first_picturebox);
+            this->feed_panel->Controls->Add(this->Recently_deleted_third_label);
+            this->feed_panel->Controls->Add(this->Recently_deleted_second_label);
+            this->feed_panel->Controls->Add(this->Recently_deleted_first_label);
+            this->feed_panel->Controls->Add(this->Recently_added_third_label);
+            this->feed_panel->Controls->Add(this->Recently_added_second_label);
+            this->feed_panel->Controls->Add(this->Recently_added_first_label);
+            this->feed_panel->Controls->Add(this->Recently_deleted_label);
+            this->feed_panel->Controls->Add(this->Recently_added_label);
+            this->feed_panel->Controls->Add(this->feed_background);
+            this->feed_panel->Controls->Add(this->feed_background_dark);
+            this->feed_panel->Location = System::Drawing::Point(0, 4);
+            this->feed_panel->Name = L"feed_panel";
+            this->feed_panel->Size = System::Drawing::Size(1352, 834);
+            this->feed_panel->TabIndex = 78;
+            this->feed_panel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::feed_panel_Paint);
+            // 
+            // Title_feed
+            // 
+            this->Title_feed->AutoSize = true;
+            this->Title_feed->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 20));
+            this->Title_feed->ForeColor = System::Drawing::Color::White;
+            this->Title_feed->Location = System::Drawing::Point(418, 11);
+            this->Title_feed->Name = L"Title_feed";
+            this->Title_feed->Size = System::Drawing::Size(412, 46);
+            this->Title_feed->TabIndex = 52;
+            this->Title_feed->Text = L"Most Diseases Diagnosed";
+            // 
+            // back_feed_picturebox
+            // 
+            this->back_feed_picturebox->Cursor = System::Windows::Forms::Cursors::Hand;
+            this->back_feed_picturebox->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"back_feed_picturebox.Image")));
+            this->back_feed_picturebox->Location = System::Drawing::Point(11, 11);
+            this->back_feed_picturebox->Name = L"back_feed_picturebox";
+            this->back_feed_picturebox->Size = System::Drawing::Size(67, 60);
+            this->back_feed_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->back_feed_picturebox->TabIndex = 51;
+            this->back_feed_picturebox->TabStop = false;
+            this->back_feed_picturebox->Click += gcnew System::EventHandler(this, &MyForm::back_feed_picturebox_Click);
+            // 
+            // Third_Most_name_label
+            // 
+            this->Third_Most_name_label->AutoSize = true;
+            this->Third_Most_name_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Third_Most_name_label->ForeColor = System::Drawing::Color::White;
+            this->Third_Most_name_label->Location = System::Drawing::Point(764, 601);
+            this->Third_Most_name_label->Name = L"Third_Most_name_label";
+            this->Third_Most_name_label->Size = System::Drawing::Size(53, 19);
+            this->Third_Most_name_label->TabIndex = 50;
+            this->Third_Most_name_label->Text = L"label13";
+            // 
+            // Most_name_label
+            // 
+            this->Most_name_label->AutoSize = true;
+            this->Most_name_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Most_name_label->ForeColor = System::Drawing::Color::White;
+            this->Most_name_label->Location = System::Drawing::Point(614, 600);
+            this->Most_name_label->Name = L"Most_name_label";
+            this->Most_name_label->Size = System::Drawing::Size(53, 19);
+            this->Most_name_label->TabIndex = 49;
+            this->Most_name_label->Text = L"label13";
+            // 
+            // Second_Most_name_label
+            // 
+            this->Second_Most_name_label->AutoSize = true;
+            this->Second_Most_name_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Second_Most_name_label->ForeColor = System::Drawing::Color::White;
+            this->Second_Most_name_label->Location = System::Drawing::Point(461, 599);
+            this->Second_Most_name_label->Name = L"Second_Most_name_label";
+            this->Second_Most_name_label->Size = System::Drawing::Size(53, 19);
+            this->Second_Most_name_label->TabIndex = 48;
+            this->Second_Most_name_label->Text = L"label13";
+            // 
+            // third_most_value
+            // 
+            this->third_most_value->AutoSize = true;
+            this->third_most_value->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 9));
+            this->third_most_value->ForeColor = System::Drawing::Color::White;
+            this->third_most_value->Location = System::Drawing::Point(299, 369);
+            this->third_most_value->Name = L"third_most_value";
+            this->third_most_value->Size = System::Drawing::Size(56, 20);
+            this->third_most_value->TabIndex = 47;
+            this->third_most_value->Text = L"label13";
+            // 
+            // second_most_value
+            // 
+            this->second_most_value->AutoSize = true;
+            this->second_most_value->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 9));
+            this->second_most_value->ForeColor = System::Drawing::Color::White;
+            this->second_most_value->Location = System::Drawing::Point(299, 285);
+            this->second_most_value->Name = L"second_most_value";
+            this->second_most_value->Size = System::Drawing::Size(56, 20);
+            this->second_most_value->TabIndex = 46;
+            this->second_most_value->Text = L"label13";
+            // 
+            // Most_value
+            // 
+            this->Most_value->AutoSize = true;
+            this->Most_value->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 11));
+            this->Most_value->ForeColor = System::Drawing::Color::White;
+            this->Most_value->Location = System::Drawing::Point(299, 132);
+            this->Most_value->Name = L"Most_value";
+            this->Most_value->Size = System::Drawing::Size(72, 25);
+            this->Most_value->TabIndex = 45;
+            this->Most_value->Text = L"label13";
+            // 
+            // second_most_front_picturebox
+            // 
+            this->second_most_front_picturebox->Location = System::Drawing::Point(465, 287);
+            this->second_most_front_picturebox->Name = L"second_most_front_picturebox";
+            this->second_most_front_picturebox->Size = System::Drawing::Size(46, 294);
+            this->second_most_front_picturebox->TabIndex = 44;
+            this->second_most_front_picturebox->TabStop = false;
+            // 
+            // third_most_front_picturebox
+            // 
+            this->third_most_front_picturebox->Location = System::Drawing::Point(767, 368);
+            this->third_most_front_picturebox->Name = L"third_most_front_picturebox";
+            this->third_most_front_picturebox->Size = System::Drawing::Size(46, 214);
+            this->third_most_front_picturebox->TabIndex = 43;
+            this->third_most_front_picturebox->TabStop = false;
+            // 
+            // most_front_picturebox
+            // 
+            this->most_front_picturebox->Location = System::Drawing::Point(618, 133);
+            this->most_front_picturebox->Name = L"most_front_picturebox";
+            this->most_front_picturebox->Size = System::Drawing::Size(46, 449);
+            this->most_front_picturebox->TabIndex = 42;
+            this->most_front_picturebox->TabStop = false;
+            // 
+            // third_most_picturebox
+            // 
+            this->third_most_picturebox->BackColor = System::Drawing::Color::White;
+            this->third_most_picturebox->Location = System::Drawing::Point(767, 377);
+            this->third_most_picturebox->Name = L"third_most_picturebox";
+            this->third_most_picturebox->Size = System::Drawing::Size(46, 206);
+            this->third_most_picturebox->TabIndex = 40;
+            this->third_most_picturebox->TabStop = false;
+            // 
+            // second_most_picturebox
+            // 
+            this->second_most_picturebox->BackColor = System::Drawing::Color::White;
+            this->second_most_picturebox->Location = System::Drawing::Point(465, 288);
+            this->second_most_picturebox->Name = L"second_most_picturebox";
+            this->second_most_picturebox->Size = System::Drawing::Size(46, 293);
+            this->second_most_picturebox->TabIndex = 39;
+            this->second_most_picturebox->TabStop = false;
+            // 
+            // Most_picturebox
+            // 
+            this->Most_picturebox->BackColor = System::Drawing::Color::White;
+            this->Most_picturebox->Location = System::Drawing::Point(618, 142);
+            this->Most_picturebox->Name = L"Most_picturebox";
+            this->Most_picturebox->Size = System::Drawing::Size(46, 441);
+            this->Most_picturebox->TabIndex = 38;
+            this->Most_picturebox->TabStop = false;
+            // 
+            // x_axis_picturebox
+            // 
+            this->x_axis_picturebox->BackColor = System::Drawing::Color::White;
+            this->x_axis_picturebox->Location = System::Drawing::Point(352, 578);
+            this->x_axis_picturebox->Name = L"x_axis_picturebox";
+            this->x_axis_picturebox->Size = System::Drawing::Size(10, 5);
+            this->x_axis_picturebox->TabIndex = 37;
+            this->x_axis_picturebox->TabStop = false;
+            // 
+            // y_axis_picturebox
+            // 
+            this->y_axis_picturebox->BackColor = System::Drawing::Color::White;
+            this->y_axis_picturebox->Location = System::Drawing::Point(352, 76);
+            this->y_axis_picturebox->Name = L"y_axis_picturebox";
+            this->y_axis_picturebox->Size = System::Drawing::Size(6, 11);
+            this->y_axis_picturebox->TabIndex = 36;
+            this->y_axis_picturebox->TabStop = false;
+            // 
+            // Recently_deleted_third_picturebox
+            // 
+            this->Recently_deleted_third_picturebox->Location = System::Drawing::Point(1092, 402);
+            this->Recently_deleted_third_picturebox->Name = L"Recently_deleted_third_picturebox";
+            this->Recently_deleted_third_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_deleted_third_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_deleted_third_picturebox->TabIndex = 35;
+            this->Recently_deleted_third_picturebox->TabStop = false;
+            // 
+            // Recently_deleted_second_picturebox
+            // 
+            this->Recently_deleted_second_picturebox->Location = System::Drawing::Point(1092, 285);
+            this->Recently_deleted_second_picturebox->Name = L"Recently_deleted_second_picturebox";
+            this->Recently_deleted_second_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_deleted_second_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_deleted_second_picturebox->TabIndex = 34;
+            this->Recently_deleted_second_picturebox->TabStop = false;
+            // 
+            // Recently_deleted_first_picturebox
+            // 
+            this->Recently_deleted_first_picturebox->Location = System::Drawing::Point(1092, 156);
+            this->Recently_deleted_first_picturebox->Name = L"Recently_deleted_first_picturebox";
+            this->Recently_deleted_first_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_deleted_first_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_deleted_first_picturebox->TabIndex = 33;
+            this->Recently_deleted_first_picturebox->TabStop = false;
+            // 
+            // Recently_added_third_picturebox
+            // 
+            this->Recently_added_third_picturebox->Location = System::Drawing::Point(168, 402);
+            this->Recently_added_third_picturebox->Name = L"Recently_added_third_picturebox";
+            this->Recently_added_third_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_added_third_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_added_third_picturebox->TabIndex = 32;
+            this->Recently_added_third_picturebox->TabStop = false;
+            // 
+            // Recently_added_second_picturebox
+            // 
+            this->Recently_added_second_picturebox->Location = System::Drawing::Point(168, 285);
+            this->Recently_added_second_picturebox->Name = L"Recently_added_second_picturebox";
+            this->Recently_added_second_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_added_second_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_added_second_picturebox->TabIndex = 31;
+            this->Recently_added_second_picturebox->TabStop = false;
+            // 
+            // Recently_added_first_picturebox
+            // 
+            this->Recently_added_first_picturebox->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Recently_added_first_picturebox.Image")));
+            this->Recently_added_first_picturebox->Location = System::Drawing::Point(168, 156);
+            this->Recently_added_first_picturebox->Name = L"Recently_added_first_picturebox";
+            this->Recently_added_first_picturebox->Size = System::Drawing::Size(75, 68);
+            this->Recently_added_first_picturebox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->Recently_added_first_picturebox->TabIndex = 30;
+            this->Recently_added_first_picturebox->TabStop = false;
+            // 
+            // Recently_deleted_third_label
+            // 
+            this->Recently_deleted_third_label->AutoSize = true;
+            this->Recently_deleted_third_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_deleted_third_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_deleted_third_label->Location = System::Drawing::Point(1269, 415);
+            this->Recently_deleted_third_label->Name = L"Recently_deleted_third_label";
+            this->Recently_deleted_third_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_deleted_third_label->TabIndex = 29;
+            this->Recently_deleted_third_label->Text = L"label13";
+            // 
+            // Recently_deleted_second_label
+            // 
+            this->Recently_deleted_second_label->AutoSize = true;
+            this->Recently_deleted_second_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_deleted_second_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_deleted_second_label->Location = System::Drawing::Point(1269, 307);
+            this->Recently_deleted_second_label->Name = L"Recently_deleted_second_label";
+            this->Recently_deleted_second_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_deleted_second_label->TabIndex = 28;
+            this->Recently_deleted_second_label->Text = L"label13";
+            // 
+            // Recently_deleted_first_label
+            // 
+            this->Recently_deleted_first_label->AutoSize = true;
+            this->Recently_deleted_first_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_deleted_first_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_deleted_first_label->Location = System::Drawing::Point(1269, 180);
+            this->Recently_deleted_first_label->Name = L"Recently_deleted_first_label";
+            this->Recently_deleted_first_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_deleted_first_label->TabIndex = 27;
+            this->Recently_deleted_first_label->Text = L"label13";
+            // 
+            // Recently_added_third_label
+            // 
+            this->Recently_added_third_label->AutoSize = true;
+            this->Recently_added_third_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_added_third_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_added_third_label->Location = System::Drawing::Point(14, 418);
+            this->Recently_added_third_label->Name = L"Recently_added_third_label";
+            this->Recently_added_third_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_added_third_label->TabIndex = 26;
+            this->Recently_added_third_label->Text = L"label13";
+            // 
+            // Recently_added_second_label
+            // 
+            this->Recently_added_second_label->AutoSize = true;
+            this->Recently_added_second_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_added_second_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_added_second_label->Location = System::Drawing::Point(14, 307);
+            this->Recently_added_second_label->Name = L"Recently_added_second_label";
+            this->Recently_added_second_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_added_second_label->TabIndex = 25;
+            this->Recently_added_second_label->Text = L"label13";
+            // 
+            // Recently_added_first_label
+            // 
+            this->Recently_added_first_label->AutoSize = true;
+            this->Recently_added_first_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 8));
+            this->Recently_added_first_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_added_first_label->Location = System::Drawing::Point(14, 180);
+            this->Recently_added_first_label->Name = L"Recently_added_first_label";
+            this->Recently_added_first_label->Size = System::Drawing::Size(53, 19);
+            this->Recently_added_first_label->TabIndex = 24;
+            this->Recently_added_first_label->Text = L"label13";
+            // 
+            // Recently_deleted_label
+            // 
+            this->Recently_deleted_label->AutoSize = true;
+            this->Recently_deleted_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 11));
+            this->Recently_deleted_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_deleted_label->Location = System::Drawing::Point(1109, 97);
+            this->Recently_deleted_label->Name = L"Recently_deleted_label";
+            this->Recently_deleted_label->Size = System::Drawing::Size(235, 25);
+            this->Recently_deleted_label->TabIndex = 23;
+            this->Recently_deleted_label->Text = L"Recently Deleted Diseases";
+            // 
+            // Recently_added_label
+            // 
+            this->Recently_added_label->AutoSize = true;
+            this->Recently_added_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 11));
+            this->Recently_added_label->ForeColor = System::Drawing::Color::White;
+            this->Recently_added_label->Location = System::Drawing::Point(14, 94);
+            this->Recently_added_label->Name = L"Recently_added_label";
+            this->Recently_added_label->Size = System::Drawing::Size(224, 25);
+            this->Recently_added_label->TabIndex = 22;
+            this->Recently_added_label->Text = L"Recently Added Diseases";
+            // 
+            // feed_background
+            // 
+            this->feed_background->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"feed_background.Image")));
+            this->feed_background->Location = System::Drawing::Point(0, 0);
+            this->feed_background->Margin = System::Windows::Forms::Padding(2);
+            this->feed_background->Name = L"feed_background";
+            this->feed_background->Size = System::Drawing::Size(1352, 715);
+            this->feed_background->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->feed_background->TabIndex = 21;
+            this->feed_background->TabStop = false;
+            this->feed_background->Click += gcnew System::EventHandler(this, &MyForm::feed_background_Click);
+            // 
+            // feed_background_dark
+            // 
+            this->feed_background_dark->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"feed_background_dark.Image")));
+            this->feed_background_dark->Location = System::Drawing::Point(0, -1);
+            this->feed_background_dark->Margin = System::Windows::Forms::Padding(2);
+            this->feed_background_dark->Name = L"feed_background_dark";
+            this->feed_background_dark->Size = System::Drawing::Size(1352, 715);
+            this->feed_background_dark->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+            this->feed_background_dark->TabIndex = 54;
+            this->feed_background_dark->TabStop = false;
+            // 
             // timer4
             // 
             this->timer4->Interval = 150;
@@ -2693,6 +3756,31 @@ namespace Project38 {
             this->timer5->Interval = 150;
             this->timer5->Tick += gcnew System::EventHandler(this, &MyForm::timer5_Tick);
             // 
+            // timer6
+            // 
+            this->timer6->Interval = 1;
+            this->timer6->Tick += gcnew System::EventHandler(this, &MyForm::timer6_Tick);
+            // 
+            // timer7
+            // 
+            this->timer7->Interval = 1;
+            this->timer7->Tick += gcnew System::EventHandler(this, &MyForm::timer7_Tick);
+            // 
+            // timer8
+            // 
+            this->timer8->Interval = 70;
+            this->timer8->Tick += gcnew System::EventHandler(this, &MyForm::timer8_Tick);
+            // 
+            // timer9
+            // 
+            this->timer9->Interval = 70;
+            this->timer9->Tick += gcnew System::EventHandler(this, &MyForm::timer9_Tick);
+            // 
+            // timer10
+            // 
+            this->timer10->Interval = 70;
+            this->timer10->Tick += gcnew System::EventHandler(this, &MyForm::timer10_Tick);
+            // 
             // MyForm
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(7, 16);
@@ -2700,11 +3788,11 @@ namespace Project38 {
             this->BackColor = System::Drawing::SystemColors::ActiveCaption;
             this->ClientSize = System::Drawing::Size(1699, 831);
             this->ControlBox = false;
-            this->Controls->Add(this->panel5);
             this->Controls->Add(this->label11);
             this->Controls->Add(this->Register);
             this->Controls->Add(this->Sign_in);
             this->Controls->Add(this->panel3);
+            this->Controls->Add(this->panel5);
             this->DoubleBuffered = true;
             this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
             this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -2745,6 +3833,7 @@ namespace Project38 {
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
             this->panel5->ResumeLayout(false);
             this->panel5->PerformLayout();
+            this->panel6->ResumeLayout(false);
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox36))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox35))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox34))->EndInit();
@@ -2762,6 +3851,25 @@ namespace Project38 {
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox29))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox28))->EndInit();
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox27))->EndInit();
+            this->feed_panel->ResumeLayout(false);
+            this->feed_panel->PerformLayout();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->back_feed_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->second_most_front_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->third_most_front_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->most_front_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->third_most_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->second_most_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Most_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->x_axis_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->y_axis_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_third_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_second_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_deleted_first_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_third_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_second_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Recently_added_first_picturebox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->feed_background))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->feed_background_dark))->EndInit();
             this->ResumeLayout(false);
             this->PerformLayout();
 
@@ -2788,6 +3896,7 @@ namespace Project38 {
             timer1->Start();
             button9->Hide();
             Sign_in->Text = "Sign-in.";
+            textBox1->Focus();
         }
         else {
             Register->Text = "Register";
@@ -2815,14 +3924,29 @@ namespace Project38 {
         else
             timer2->Stop();
     }
+
     private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+        DoubleBuffered = true;
         Opacity = 0;
         timer4->Start();
         getAllDoctors(allDoctors);
         getAllPatients(allPatients);
         getAllDiseases((&allDiseases));
         extract_Symptoms();
+        extract_disease_to_doctor();
         ValidatoryData();
+        backgrounds->Add(pictureBox1);
+        backgrounds->Add(pictureBox18);
+        backgrounds->Add(pictureBox27);
+        backgrounds->Add(feed_background);
+        light_pic = pictureBox1->Image;
+        Bitmap ^img = gcnew Bitmap(back_feed_picturebox->Image);
+        img->RotateFlip(RotateFlipType::Rotate90FlipNone);
+        back_feed_picturebox->Image = img;
+        back_feed_picturebox->Parent = feed_background;
+        back_feed_picturebox->BackColor = BackColor.Transparent;
+
+
 
         GraphicsPath^ gp = gcnew GraphicsPath();
         gp->AddEllipse(pictureBox32->DisplayRectangle);
@@ -2843,7 +3967,6 @@ namespace Project38 {
 
 
         button9->Hide();
-        timer3->Start();
         pictureBox1->SendToBack();
         Username->Parent = pictureBox1;
         Username->BackColor = BackColor.Transparent;
@@ -2853,6 +3976,8 @@ namespace Project38 {
         pictureBox6->BackColor = BackColor.Transparent;
         pictureBox7->Parent = pictureBox1;
         pictureBox7->BackColor = BackColor.Transparent;
+        email_togglebutton->Parent = pictureBox1;
+        email_togglebutton->BackColor = BackColor.Transparent;
         label34->Parent = pictureBox1;
         label34->BackColor = BackColor.Transparent;
         label33->Parent = pictureBox1;
@@ -2954,8 +4079,60 @@ namespace Project38 {
         pictureBox29->BackColor = BackColor.Transparent;
         pictureBox28->Parent = pictureBox27;
         pictureBox28->BackColor = BackColor.Transparent;
+        Most_value->Hide();
+        second_most_value->Hide();
+        third_most_value->Hide();
+        Most_name_label->Hide();
+        Second_Most_name_label->Hide();
+        Third_Most_name_label->Hide();
+        //remove_disease_gbox->Parent = pictureBox27;
+        //remove_disease_gbox->BackColor = Color::FromArgb(100, 0, 0, 0);
+        //Remove_symps_Gbox->Parent = pictureBox27;
+        //Remove_symps_Gbox->BackColor = Color::FromArgb(100, 0, 0, 0);
 
+        most_front_picturebox->Parent = feed_background;
+        most_front_picturebox->BackColor = BackColor.Transparent; 
+        Recently_added_label->Parent = feed_background;
+        Recently_added_label->BackColor = BackColor.Transparent; 
+        Recently_added_first_label->Parent = feed_background;
+        Recently_added_first_label->BackColor = BackColor.Transparent;
+        Recently_added_second_label->Parent = feed_background;
+        Recently_added_second_label->BackColor = BackColor.Transparent;
+        Recently_added_third_label->Parent = feed_background;
+        Recently_added_third_label->BackColor = BackColor.Transparent;
+        Recently_deleted_label->Parent = feed_background;
+        Recently_deleted_label->BackColor = BackColor.Transparent;
+        Recently_deleted_first_label->Parent = feed_background;
+        Recently_deleted_first_label->BackColor = BackColor.Transparent;
+        Recently_deleted_second_label->Parent = feed_background;
+        Recently_deleted_second_label->BackColor = BackColor.Transparent;
+        Recently_deleted_third_label->Parent = feed_background;
+        Recently_deleted_third_label->BackColor = BackColor.Transparent;
+        Title_feed->Parent = feed_background;
+        Title_feed->BackColor = BackColor.Transparent;
+        Most_name_label->Parent = feed_background;
+        Most_name_label->BackColor = BackColor.Transparent;
+        Second_Most_name_label->Parent = feed_background;
+        Second_Most_name_label->BackColor = BackColor.Transparent;
+        Third_Most_name_label->Parent = feed_background;
+        Third_Most_name_label->BackColor = BackColor.Transparent;
+        Most_value->Parent = feed_background;
+        Most_value->BackColor = BackColor.Transparent;
+        second_most_value->Parent = feed_background;
+        second_most_value->BackColor = BackColor.Transparent;
+        third_most_value->Parent = feed_background;
+        third_most_value->BackColor = BackColor.Transparent;
 
+        second_most_front_picturebox->Parent = feed_background;
+        second_most_front_picturebox->BackColor = BackColor.Transparent;
+        third_most_front_picturebox->Parent = feed_background;
+        third_most_front_picturebox->BackColor = BackColor.Transparent;
+        Most_picturebox->Parent = feed_background;
+        second_most_picturebox->Parent = feed_background;
+        third_most_picturebox->Parent = feed_background;
+
+        label13->Parent = pictureBox1;
+        label13->BackColor = BackColor.Transparent;
 
 
         textBox3->Hide();
@@ -3001,6 +4178,9 @@ namespace Project38 {
         pictureBox42->Hide();
         pictureBox39->Hide();
         pictureBox37->Hide();
+        feed_panel->Hide();
+        label13->Hide();
+        email_togglebutton->Hide();
     }
     private: System::Void Quit_Click(System::Object^ sender, System::EventArgs^ e) {
         writeAllPatients(allPatients);
@@ -3020,8 +4200,31 @@ namespace Project38 {
                 MarshalString(textBox1->Text, username);
                 MarshalString(textBox2->Text, password);
                 if (doctorLogin(allDoctors, username, password, CurrentDoctor, index_allDoctors)) {
+                    this->ActiveControl = Username;
                     panel4->Show();
                     panel5->Show();
+                    current_doctor_diseases_listbox->Hide();
+                    removed_diseases_listbox->Hide();
+                    add_disease_to_removed_button->Hide();
+                    remove_disease_from_removed_button->Hide();
+                    delete_diseases_button->Hide();
+                    clear_removed_diseases_button->Hide();
+                    remove_all_diseases_button->Hide();
+                    Current_doc_diseases_combobox->Hide();
+                    removed_symps_listbox->Hide();
+                    current_disease_symps_listbox->Hide();
+                    add_symp_to_removed_button->Hide();
+                    remove_symp_from_removed_button->Hide();
+                    delete_symps_button->Hide();
+                    clear_remove_list_button->Hide();
+                    Remove_all_symps_button->Hide();
+                    Patients_of_chosen_disease_listbox->Hide();
+                    Alldiseases_combobox->Hide();
+                    Disease_docname_textbox->Hide();
+                    Disease_doc_phone_textbox->Hide();
+                    Disease_info_textbox->Hide();
+                    Disease_symps_listbox->Hide();
+                    Disease_name_textbox->Hide();
                     label2->Hide();
                     PrintDoctorMenu();
                     Form::Width -= 200;
@@ -3032,6 +4235,7 @@ namespace Project38 {
                     label5->ForeColor = Color::FromArgb(255, 255, 255);
                 }
                 else if (patientLogin(allPatients, username, password, CurrentPatient, index_allPatients)) {
+                    this->ActiveControl = Username;
                     panel4->Show();
                     panel5->Hide();
                     label2->Hide();
@@ -3078,6 +4282,7 @@ namespace Project38 {
     private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
     }
     private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+        bool test_email = false;
         if (Next->Text == "NEXT") {
             if (Password->Text == "E-Mail") {
                 string from, pass, MessageBody;
@@ -3317,11 +4522,12 @@ namespace Project38 {
                                 org1 += char(tolower(pat_username[i]));
                             }
                             if (org1 != org2) {
-                                Username->Text = "Please select Age";
+                                Username->Text = "Mobile Phone Number";
                                 textBox2->Hide();
                                 panel2->Hide();
                                 textBox1->Hide();
                                 textBox3->Show();
+                                textBox3->Text = "";
                                 Password->Hide();
                             }
 
@@ -3337,8 +4543,55 @@ namespace Project38 {
                         label2->Show();
 
                     }
-
                 }
+                    if (Username->Text == "Mobile Phone Number") {
+                        if (textBox3->Text != "") {
+                            double mphone = System::Convert::ToDouble(textBox3->Text);
+                            textBox3->Text = "";
+                            double cphone = mphone;
+                            bool vphone = true;
+                            int lengthCount = 1;
+                            for (; cphone > 0.9; cphone /= 10, lengthCount++);//Here we count the entered numbers
+                            if (lengthCount != 11) {
+                                vphone = false;
+                                label2->Text = "Phone numbers are 11 numbers";
+                                label2->Show();
+
+                            }
+                            int check[11];
+                            for (int i = lengthCount - 1; i >= 0; i--) {
+                                check[i] = (int)mphone % 10;
+                                mphone /= 10;
+                            }
+                            if (check[2] != 1 && check[2] != 2 && check[2] != 0 && check[2] != 5) {
+                                label2->Text = "Invalid phone number";
+                                label2->Show();
+                                vphone = false;
+                            }
+                            if (vphone) {
+                                pat_phone = "";
+                                for (int i = 0; i < lengthCount; i++) {
+                                    pat_phone += to_string(check[i]);
+                                }
+                                if (check_phone(pat_phone)) {
+                                    Username->Text = "Please select Age";
+                                    textBox2->Hide();
+                                    panel2->Hide();
+                                    textBox1->Hide();
+                                    textBox3->Show();
+                                    Password->Hide();
+                                }
+                                else {
+                                    label2->Text = "phone number is already taken";
+                                    label2->Show();
+                                    textBox3->Text = "";
+                                }
+
+                            }
+                        }
+                }
+
+                
                 if (Username->Text == "Please select Age") {
                     textBox1->Text = "";
                     label2->Hide();
@@ -3367,17 +4620,45 @@ namespace Project38 {
                 }
                 if (Username->Text == "E-Mail") {
 
-                    bool check_mail = false;
                     if (textBox1->Text != "") {
-                        MarshalString(textBox1->Text, mail);
-                        for (int i = 0; i < mail.size(); i++) {
-                            if (mail[i] == '@') {
-                                check_mail = true;
+                        string new_email;
+                        MarshalString(textBox1->Text, new_email);
+                        string domains[6] = { "gmail.com","outlook.com","yahoo.com","hotmail.com","icloud.com","cis.asu.edu.eg" };
+                        int at_index = new_email.find("@");
+                        string email_username = new_email.substr(0, at_index);
+                        for (int i = 0; i < at_index; i++)
+                        {
+                            if (email_username[i] != '.' && !isalnum(email_username[i]))
+                            {
+                                test_email = false;
+                                label2->Text = "Invalid email\n";
+                                label2->Show();
+                                test_email = false;
+                                break;
+                            }
+                            else {
+                                test_email = true;
+                            }
+                        }
+                        if(test_email){
+                        for (int i = 0; i < 6; i++) {
+                            if (new_email.find(domains[i], at_index) == -1) {
+                                label2->Text = "Invalid email\n";
+                                label2->Show();
+                                test_email = false;
+                               
+                            }
+                            else {
+                                test_email = true;
                                 break;
                             }
                         }
-                        if (check_mail) {
-                            if (check_database_email(mail)) {
+                        }
+
+
+                        if (test_email) {
+                            if (check_database_email(new_email)) {
+
                                 MyCamera->Start(0);
                                 pictureBox31->Show();
                                 button9->Show();
@@ -3385,254 +4666,282 @@ namespace Project38 {
                                 button8->Show();
                                 Next->Text = "Capture";
                                 Username->Text = "Cam";
-
                             }
                             else {
                                 label2->Show();
                                 label2->Text = "This Email  is used by an another account";
                             }
                         }
+
+                    }
+                }
+
+            }
+
+                else if (label11->Text == "d") {
+
+                    bool test_name = true;
+
+                    if (Username->Text == "Please enter your Full Name.") {
+                        MarshalString(textBox1->Text, doc_name);
+                        if (doc_name.size() >= 3) {
+
+                            label2->Text = "Enter a name with more than three letters";
+                            label2->Show();
+
+                            for (int i = 0; i < doc_name.size(); i++) {
+                                char c = doc_name[i];
+                                /*Here it checks if the string has number or not*/
+                                if (islower(c) || isupper(c) || isspace(c)) {
+                                    test_name = true;
+                                    continue;
+                                }
+                                else {
+                                    test_name = false;
+                                    break;
+                                }
+                            }
+                        }
                         else {
                             label2->Show();
-                            label2->Text = "Invalid Email";
+                            test_name = false;
                         }
-                    }
-                }
-            }
-            else if (label11->Text == "d") {
-
-                bool test_name = true;
-
-                if (Username->Text == "Please enter your Full Name.") {
-                    MarshalString(textBox1->Text, doc_name);
-                    if (doc_name.size() >= 3) {
-
-                        label2->Text = "Enter a name with more than three letters";
-                        label2->Show();
-
-                        for (int i = 0; i < doc_name.size(); i++) {
-                            char c = doc_name[i];
-                            /*Here it checks if the string has number or not*/
-                            if (islower(c) || isupper(c) || isspace(c)) {
-                                test_name = true;
-                                continue;
-                            }
-                            else {
-                                test_name = false;
-                                break;
-                            }
+                        if (test_name == false) {
+                            label2->Text = "Enter a Full Name with 3 or more alphabets and without numbers.";
+                            label2->Show();
                         }
+                        else {
+                            Username->Text = "Username";
+                            textBox1->Text = "";
+                            label2->Hide();
+
+                        }
+                        label10->Hide();
                     }
-                    else {
-                        label2->Show();
+                    if (Username->Text == "Username") {
+
                         test_name = false;
-                    }
-                    if (test_name == false) {
-                        label2->Text = "Enter a Full Name with 3 or more alphabets and without numbers.";
-                        label2->Show();
-                    }
-                    else {
-                        Username->Text = "Username";
-                        textBox1->Text = "";
-                        label2->Hide();
-
-                    }
-                    label10->Hide();
-                }
-                if (Username->Text == "Username") {
-
-                    test_name = false;
-                    MarshalString(textBox1->Text, doc_username);
-                    if (doc_username.size() >= 3) {
-                        for (int i = 0; i < doc_username.size(); i++) {
-                            char c = doc_username[i];
-                            if (isalnum(c)) {
-                                test_name = true;
-                                continue;
-                            }
-                            else {
-                                label2->Text = "username cannot have symbols";
-                                label2->Show();
-                                test_name = false;
-                                break;
-                            }
-
-                        }
-
-                        bool check_username;
-                        if (test_name) {
-                            bool check_username = check_database(doc_username);
-                            if (check_username == false) {
-                                label2->Text = "this username is already taken";
-                                label2->Show();
-                            }
-                            else {
-                                label2->Hide();
-                                panel2->Show();
-                                textBox1->Text = "";
-                                Username->Text = "Password";
-                                textBox2->Text = "";
-                                textBox2->Show();
-                                Password->Text = "Renter Password";
-                                Password->Show();
-
-
-                            }
-                        }
-
-                    }
-                    else if (doc_username.size() > 0) {
-                        test_name = false;
-                        label2->Text = "Username must contain 3 or more characters";
-                        label2->Show();
-                    }
-                }
-
-                if (Username->Text == "Password") {
-                    label2->Hide();
-                    if (textBox1->Text != "") {
-                        MarshalString(textBox1->Text, doc_password);
-                        if ((textBox1->Text == textBox2->Text)) {
-                            if (textBox1->Text != "" && textBox2->Text != "") {
-                                string org2 = "";
-                                for (int i = 0; i < doc_password.size(); i++) {
-                                    org2 += char(tolower(doc_password[i]));
+                        MarshalString(textBox1->Text, doc_username);
+                        if (doc_username.size() >= 3) {
+                            for (int i = 0; i < doc_username.size(); i++) {
+                                char c = doc_username[i];
+                                if (isalnum(c)) {
+                                    test_name = true;
+                                    continue;
                                 }
-                                string org1 = "";
-                                for (int i = 0; i < doc_username.size(); i++) {
-                                    org1 += char(tolower(doc_username[i]));
-                                }
-
-                                if (org1 != org2) {
-                                    Username->Text = "Mobile Phone Number";
-                                    textBox2->Hide();
-                                    panel2->Hide();
-                                    textBox1->Hide();
-                                    textBox3->Show();
-                                    textBox3->Text = "";
-                                    Password->Hide();
-                                }
-
                                 else {
-                                    label2->Text = "Username and Password cannot be the same";
+                                    label2->Text = "username cannot have symbols";
+                                    label2->Show();
+                                    test_name = false;
+                                    break;
+                                }
+
+                            }
+
+                            bool check_username;
+                            if (test_name) {
+                                bool check_username = check_database(doc_username);
+                                if (check_username == false) {
+                                    label2->Text = "this username is already taken";
                                     label2->Show();
                                 }
+                                else {
+                                    label2->Hide();
+                                    panel2->Show();
+                                    textBox1->Text = "";
+                                    Username->Text = "Password";
+                                    textBox2->Text = "";
+                                    textBox2->Show();
+                                    Password->Text = "Renter Password";
+                                    Password->Show();
+
+
+                                }
                             }
-                        }
-                        else {
 
-                            label2->Text = "Passwords Do not match";
+                        }
+                        else if (doc_username.size() > 0) {
+                            test_name = false;
+                            label2->Text = "Username must contain 3 or more characters";
                             label2->Show();
-
                         }
-
                     }
-                }
 
-                if (Username->Text == "Mobile Phone Number") {
+                    if (Username->Text == "Password") {
+                        label2->Hide();
+                        if (textBox1->Text != "") {
+                            MarshalString(textBox1->Text, doc_password);
+                            if ((textBox1->Text == textBox2->Text)) {
+                                if (textBox1->Text != "" && textBox2->Text != "") {
+                                    string org2 = "";
+                                    for (int i = 0; i < doc_password.size(); i++) {
+                                        org2 += char(tolower(doc_password[i]));
+                                    }
+                                    string org1 = "";
+                                    for (int i = 0; i < doc_username.size(); i++) {
+                                        org1 += char(tolower(doc_username[i]));
+                                    }
 
-                    if (textBox3->Text != "") {
-                        double mphone = System::Convert::ToDouble(textBox3->Text);
-                        textBox3->Text = "";
-                        double cphone = mphone;
-                        bool vphone = true;
-                        int lengthCount = 1;
-                        for (; cphone > 0.9; cphone /= 10, lengthCount++);//Here we count the entered numbers
-                        if (lengthCount != 11) {
-                            vphone = false;
-                            label2->Text = "Phone numbers are 11 numbers";
-                            label2->Show();
+                                    if (org1 != org2) {
+                                        Username->Text = "Mobile Phone Number";
+                                        textBox2->Hide();
+                                        panel2->Hide();
+                                        textBox1->Hide();
+                                        textBox3->Show();
+                                        textBox3->Text = "";
+                                        Password->Hide();
+                                    }
 
-                        }
-                        int check[11];
-                        for (int i = lengthCount - 1; i >= 0; i--) {
-                            check[i] = (int)mphone % 10;
-                            mphone /= 10;
-                        }
-                        if (check[2] != 1 && check[2] != 2 && check[2] != 0 && check[2] != 5) {
-                            label2->Text = "Invalid phone number";
-                            label2->Show();
-                            vphone = false;
-                        }
-                        if (vphone) {
-                            doctor_phone = "";
-                            for (int i = 0; i < lengthCount; i++) {
-                                doctor_phone += to_string(check[i]);
-                            }
-                            if (check_phone(doctor_phone)) {
-                                Username->Text = "E-Mail";
-                                textBox3->Text = "";
-                                textBox3->Hide();
-                                textBox1->Show();
-                                textBox1->Text = "";
-                                label2->Hide();
+                                    else {
+                                        label2->Text = "Username and Password cannot be the same";
+                                        label2->Show();
+                                    }
+                                }
                             }
                             else {
-                                label2->Text = "phone number is already taken";
+
+                                label2->Text = "Passwords Do not match";
                                 label2->Show();
-                                textBox3->Text = "";
+
                             }
 
                         }
                     }
-                }
 
-                if (Username->Text == "E-Mail") {
-                    bool check_mail = false;
-                    if (textBox1->Text != "") {
-                        MarshalString(textBox1->Text, mail);
-                        for (int i = 0; i < mail.size(); i++) {
-                            if (mail[i] == '@') {
-                                check_mail = true;
-                                break;
-                            }
-                        }
-                        if (check_mail) {
-                            if (check_database_email(mail)) {
-                                MyCamera->Start(0);
-                                label34->Show();
-                                button9->Show();
-                                pictureBox31->Show();
-                                button8->Show();
-                                Username->Text = "Cam";
-                                Next->Text = "Capture";
+                    if (Username->Text == "Mobile Phone Number") {
 
-                            }
-                            else {
+                        if (textBox3->Text != "") {
+                            double mphone = System::Convert::ToDouble(textBox3->Text);
+                            textBox3->Text = "";
+                            double cphone = mphone;
+                            bool vphone = true;
+                            int lengthCount = 1;
+                            for (; cphone > 0.9; cphone /= 10, lengthCount++);//Here we count the entered numbers
+                            if (lengthCount != 11) {
+                                vphone = false;
+                                label2->Text = "Phone numbers are 11 numbers";
                                 label2->Show();
-                                label2->Text = "This Email  is used by an another account";
+
                             }
-                        }
-                        else {
-                            label2->Show();
-                            label2->Text = "Invalid Email";
+                            int check[11];
+                            for (int i = lengthCount - 1; i >= 0; i--) {
+                                check[i] = (int)mphone % 10;
+                                mphone /= 10;
+                            }
+                            if (check[2] != 1 && check[2] != 2 && check[2] != 0 && check[2] != 5) {
+                                label2->Text = "Invalid phone number";
+                                label2->Show();
+                                vphone = false;
+                            }
+                            if (vphone) {
+                                doctor_phone = "";
+                                for (int i = 0; i < lengthCount; i++) {
+                                    doctor_phone += to_string(check[i]);
+                                }
+                                if (check_phone(doctor_phone)) {
+                                    Username->Text = "E-Mail";
+                                    textBox3->Text = "";
+                                    textBox3->Hide();
+                                    textBox1->Show();
+                                    textBox1->Text = "";
+                                    label2->Hide();
+                                    label13->Show();
+                                    email_togglebutton->Show();
+                                }
+
+
+                                else {
+                                    label2->Text = "phone number is already taken";
+                                    label2->Show();
+                                    textBox3->Text = "";
+                                }
+
+                            }
                         }
                     }
+
+                    if (Username->Text == "E-Mail") {
+                        if (textBox1->Text != "") {
+                            string new_email;
+                            MarshalString(textBox1->Text, new_email);
+                            string domains[6] = { "gmail.com","outlook.com","yahoo.com","hotmail.com","icloud.com","cis.asu.edu.eg" };
+                            int at_index = new_email.find("@");
+                            string email_username = new_email.substr(0, at_index);
+                            for (int i = 0; i < at_index; i++)
+                            {
+                                if (email_username[i] != '.' && !isalnum(email_username[i]))
+                                {
+                                    test_email = false;
+                                    label2->Text = "Invalid email\n";
+                                    label2->Show();
+                                    test_email = false;
+                                    break;
+                                }
+                                else {
+                                    test_email = true;
+                                }
+                            }
+                            if (test_email) {
+                                for (int i = 0; i < 6; i++) {
+                                    if (new_email.find(domains[i], at_index) == -1) {
+                                        label2->Text = "Invalid email\n";
+                                        label2->Show();
+                                        test_email = false;
+                                    }
+                                    else {
+                                        test_email = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+
+                            if (test_email) {
+                                if (check_database_email(new_email)) {
+
+                                    MyCamera->Start(0);
+                                    pictureBox31->Show();
+                                    button9->Show();
+                                    label34->Show();
+                                    button8->Show();
+                                    Next->Text = "Capture";
+                                    Username->Text = "Cam";
+                                    label2->Hide();
+                                    label13->Hide();
+                                    email_togglebutton->Hide();
+                                }
+                                else {
+                                    label2->Show();
+                                    label2->Text = "This Email is used by an another account";
+                                }
+                            }
+                        }
+
+
+                    }
                 }
-
-
+            
+            else if (Next->Text == "Capture") {
+                MyCamera->Stop();
+                if (label11->Text == "d") {
+                    button8->Text = "End";
+                }
+                else {
+                    button8->Text = "Next";
+                }
+                Next->Text = "Retake";
             }
-        }
-        else if (Next->Text == "Capture") {
-            MyCamera->Stop();
-            if (label11->Text == "d") {
-                button8->Text = "End";
+            else if (Next->Text == "Retake") {
+                MyCamera->Start(0);
+                Next->Text = "Capture";
+                button8->Text = "No Profile Picture";
             }
-            else {
-                button8->Text = "Next";
+            else if (Next->Text == "Take a Picture") {
+                button8->Text = "No Profile Picture";
+                MyCamera->Start(0);
             }
-            Next->Text = "Retake";
-        }
-        else if (Next->Text == "Retake") {
-            MyCamera->Start(0);
-            Next->Text = "Capture";
-            button8->Text = "No Profile Picture";
-        }
-        else if (Next->Text == "Take a Picture") {
-            button8->Text = "No Profile Picture";
-            MyCamera->Start(0);
-        }
 
+        }
     }
 
 
@@ -3691,6 +5000,8 @@ namespace Project38 {
             timer1->Start();
             Sign_in->Text = "Sign-in.";
             button9->Hide();
+            textBox1->Focus();
+
         }
         else
 
@@ -3724,10 +5035,8 @@ namespace Project38 {
             label33->Hide();
             pictureBox6->Show();
             pictureBox7->Show();
-
             pictureBox8->Hide();
             pictureBox9->Hide();
-
             textBox1->Text = "";
             textBox2->Text = "";
             textBox1->Hide();
@@ -3751,6 +5060,7 @@ namespace Project38 {
             Sign_in->Text = "Sign-in";
             timer2->Start();
             Register->Text = "Register";
+            
         }
     }
     private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -3792,6 +5102,7 @@ namespace Project38 {
         Username->Text = "Please enter your Full Name.";
         Username->Show();
         button1->Hide();
+        textBox1->Focus();
     }
     private: System::Void pictureBox7_Click(System::Object^ sender, System::EventArgs^ e) {
         label11->Text = "p";
@@ -3816,6 +5127,7 @@ namespace Project38 {
         Username->Text = "Please enter your Full Name.";
         Username->Show();
         button1->Hide();
+        textBox1->Focus();
     }
     private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
     }
@@ -3832,10 +5144,11 @@ namespace Project38 {
             }
             pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
         }
-        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
+        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age),pat_phone };
         allPatients[index_allPatients] = New_Patient;
         CurrentPatient = &allPatients[index_allPatients];
         index_allPatients++;
+        this->ActiveControl = Username;
         panel4->Show();
         panel5->Hide();
         Form::Width -= 200;
@@ -3856,10 +5169,11 @@ namespace Project38 {
             pictureBox31->Image->Save(str2, ImageFormat::Jpeg);
         }
         Pat_gender = "F";
-        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age) };
+        Patient New_Patient = { pat_name, {pat_username, pat_password,mail}, Pat_gender[0], stoi(pat_age),pat_phone };
         allPatients[index_allPatients] = New_Patient;
         CurrentPatient = &allPatients[index_allPatients];
         index_allPatients++;
+        this->ActiveControl = Username;
         panel4->Show();
         panel5->Hide();
         Form::Width -= 200;
@@ -3869,15 +5183,6 @@ namespace Project38 {
 
     }
 
-           int counter_timer1 = 0;
-    private: System::Void timer3_Tick(System::Object^ sender, System::EventArgs^ e) {
-        if (counter_timer1 > 10) {
-            /*  pictureBox31->Hide();*/
-        }
-        else {
-            counter_timer1++;
-        }
-    }
 
     private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
     }
@@ -4244,6 +5549,8 @@ namespace Project38 {
     }
 
     private: System::Void pictureBox20_Click(System::Object^ sender, System::EventArgs^ e) {
+        label29->Text = "CCCCCCCCCCCCCCCCC";
+        button6->PerformClick();
         panel4->TabIndex -= 5;
         System::Windows::Forms::SendKeys::Send("%");
         if (MessageBox::Show("Are you sure you want to Logout?", "Logout?", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
@@ -4379,7 +5686,7 @@ namespace Project38 {
                         label28->Text = "";
                         for (int i = 1; i <= Patient_with_Disease.size(); i++) {
                             String^ index = gcnew String(to_string(i).c_str());
-                            String^ str3 = gcnew String(Patient_with_Disease[i].c_str());
+                            String^ str3 = gcnew String(Patient_with_Disease[i - 1].c_str());
                             if (i == 1 || i % 5 == 0)
                                 label28->Text += String::Format("{0}-{1}\n", index, str3);
                             else
@@ -4543,7 +5850,7 @@ namespace Project38 {
                     }
                 }
             }
-            else if (label29->Text == "Please choose Which disease you want\nto delete its symptoms..") {
+            else if (label29->Text == "Please choose Which disease you want\nto delete its symptoms....") {
                 if (textBox5->Text != "") {
                     bool check3 = true;
                     MarshalString(textBox5->Text, menuChoice);
@@ -4672,7 +5979,7 @@ namespace Project38 {
                     label31->Hide();
                     textBox6->Text = "";
                     textBox6->Hide();
-                    label29->Text = "";
+
                     label29->Hide();
                 }
             }
@@ -4761,7 +6068,7 @@ namespace Project38 {
             label31->Hide();
             textBox6->Text = "";
             textBox6->Hide();
-            label29->Text = "";
+
             label29->Hide();
             pictureBox30->Show();
         }
@@ -4889,11 +6196,13 @@ namespace Project38 {
 
     }
     private: System::Void pictureBox26_Click(System::Object^ sender, System::EventArgs^ e) {
+        
         label31->Text = "Please enter the disease name:";
         pictureBox30->Hide();
         label31->Show();
         button4->Text = "Next";
         textBox6->Show();
+        textBox6->Focus();
         textBox5->Hide();
         button4->Show();
         button6->Show();
@@ -4979,6 +6288,10 @@ namespace Project38 {
     private: System::Void label28_Click(System::Object^ sender, System::EventArgs^ e) {
     }
     private: System::Void pictureBox30_Click(System::Object^ sender, System::EventArgs^ e) {
+        feed_panel->Show();
+        timer6->Start();
+        Feed();
+
     }
     private: System::Void pictureBox12_Click_1(System::Object^ sender, System::EventArgs^ e) {
         label12->Hide();
@@ -5132,12 +6445,13 @@ namespace Project38 {
             panel2->Hide();
         }
         else if (Username->Text == "Please select Age") {
-            Username->Text = "Password";
-            Password->Text = "Renter Password";
-            textBox2->Show();
-            panel2->Show();
-            textBox1->Show();
-            textBox3->Hide();
+            Username->Text = "Mobile Phone Number";
+            textBox2->Hide();
+            panel2->Hide();
+            textBox1->Hide();
+            textBox3->Show();
+            textBox3->Text = "";
+            Password->Hide();
         }
         else if (Username->Text == "E-Mail" && label11->Text == "p") {
             textBox3->Show();
@@ -5180,6 +6494,10 @@ namespace Project38 {
             textBox2->Text = "";
         }
         else if (Next->Text == "Capture" || Next->Text == "Retake" || Next->Text == "Take a Picture") {
+        if (label11->Text == "d") {
+            label13->Show();
+            email_togglebutton->Show();
+        }
             Next->Text = "NEXT";
             button8->Hide();
             MyCamera->Stop();
@@ -5236,7 +6554,7 @@ namespace Project38 {
         if (button8->Text == "End" || (button8->Text == "No Profile Picture" && label11->Text == "d")) {
 
             MyCamera->Stop();
-                if (button8->Text == "End") {
+            if (button8->Text == "End") {
                 string wow = "PICs\\Doctors\\" + doc_username + ".jpg";
                 String^ str2 = gcnew String(wow.c_str());
                 if (System::IO::File::Exists(str2)) {
@@ -5246,10 +6564,11 @@ namespace Project38 {
             }
             label2->Hide();
             textBox3->Text = "";
-            Doctors NewDoctor = { doc_name,{doc_username, doc_password, mail }, doctor_phone };
+            Doctors NewDoctor = { doc_name,{doc_username, doc_password, mail }, doctor_phone, send_email};
             allDoctors[index_allDoctors] = NewDoctor;
             CurrentDoctor = &allDoctors[index_allDoctors];
             index_allDoctors++;
+            this->ActiveControl = Username;
             panel4->Show();
             panel5->Show();
             Form::Width -= 200;
@@ -5400,7 +6719,7 @@ namespace Project38 {
                     e->Cancel = false;
                     this->Close();
                 }
-                
+
             }
         }
     }
@@ -5430,6 +6749,7 @@ namespace Project38 {
             MarshalString(sc->GetPhone(), (*CurrentDoctor).phone);
             (*CurrentDoctor).send_email = sc->Getsend_email();
         }
+
         if (sc->logout()) {
             logout_back();
         }
@@ -5528,15 +6848,393 @@ namespace Project38 {
     private: System::Void timer4_Tick(System::Object^ sender, System::EventArgs^ e) {
         if (Opacity == 1) {
             timer4->Stop();
+       
         }
         Opacity += .2;
     }
-private: System::Void timer5_Tick(System::Object^ sender, System::EventArgs^ e) {
-    if (Opacity <= 0) {
-        timer5->Stop();
-        this->Close();
+    private: System::Void timer5_Tick(System::Object^ sender, System::EventArgs^ e) {
+        if (Opacity <= 0) {
+            timer5->Stop();
+            this->Close();
+        }
+        MyForm::Opacity -= .2;
     }
-    MyForm::Opacity -= .2;
+    private: System::Void Current_doc_diseases_combobox_SelectedValueChanged(System::Object^ sender, System::EventArgs^ e) {
+        current_disease_symps_listbox->Items->Clear();
+        string selected_disease;
+        MarshalString(Current_doc_diseases_combobox->Text, selected_disease);
+        for (int disease = 0; disease < (*CurrentDoctor).doc_diseases.size(); disease++) {
+            if ((*CurrentDoctor).doc_diseases[disease].name == selected_disease) {
+                for (int symp = 0; symp < (*CurrentDoctor).doc_diseases[disease].symps.size(); symp++) {
+                    String^ newsymp = gcnew String((*CurrentDoctor).doc_diseases[disease].symps[symp].c_str());
+                    current_disease_symps_listbox->Items->Add(newsymp);
+                }
+            }
+        }
+    }
+    private: System::Void add_symp_to_removed_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        for each (auto selecteditem in current_disease_symps_listbox->SelectedItems) {
+            removed_symps_listbox->Items->Add(selecteditem);
+
+        }
+        for (int i = current_disease_symps_listbox->SelectedItems->Count - 1; i >= 0; i--) {
+            current_disease_symps_listbox->Items->Remove(current_disease_symps_listbox->SelectedItems[i]);
+
+        }
+    }
+    private: System::Void remove_symp_from_removed_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        for each (auto selecteditem in removed_symps_listbox->SelectedItems) {
+            current_disease_symps_listbox->Items->Add(selecteditem);
+
+        }
+        for (int i = removed_symps_listbox->SelectedItems->Count - 1; i >= 0; i--) {
+            removed_symps_listbox->Items->Remove(removed_symps_listbox->SelectedItems[i]);
+
+        }
+    }
+    private: System::Void Remove_all_symps_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        while (current_disease_symps_listbox->Items->Count != 0) {
+            for (int i = 0; i < current_disease_symps_listbox->Items->Count; i++) {
+                removed_symps_listbox->Items->Add(current_disease_symps_listbox->Items[i]);
+                current_disease_symps_listbox->Items->Remove(current_disease_symps_listbox->Items[i]);
+                if (current_disease_symps_listbox->Items->Count == 0) {
+                    break;
+                }
+            }
+        }
+    }
+    private: System::Void clear_remove_list_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        while (removed_symps_listbox->Items->Count != 0) {
+            for (int i = 0; i < removed_symps_listbox->Items->Count; i++) {
+                current_disease_symps_listbox->Items->Add(removed_symps_listbox->Items[i]);
+                removed_symps_listbox->Items->Remove(removed_symps_listbox->Items[i]);
+                if (removed_symps_listbox->Items->Count == 0) {
+                    break;
+                }
+
+            }
+        }
+    }
+    private: System::Void delete_symps_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        String^ sympo;
+        string symp;
+        string selected_disease;
+        MarshalString(Current_doc_diseases_combobox->Text, selected_disease);
+
+        if (removed_symps_listbox->Items->Count > 1) {
+            if (MessageBox::Show("Are you sure you want to delete those symptoms ?", "Confirm", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                for (int disease = 0; disease < (*CurrentDoctor).doc_diseases.size(); disease++) {
+                    if ((*CurrentDoctor).doc_diseases[disease].name == selected_disease) {
+                        for each (auto removedsymp in removed_symps_listbox->Items)
+                        {
+                            sympo = removedsymp->ToString();
+                            MarshalString(sympo, symp);
+                            for (int symp_index = 0; symp_index < (*CurrentDoctor).doc_diseases[disease].symps.size(); symp_index++) {
+                                if ((*CurrentDoctor).doc_diseases[disease].symps[symp_index] == symp) {
+                                    remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease], symp_index);
+                                    remove_symptom_from_all_Disease((*CurrentDoctor).doc_diseases[disease], symp_index);
+                                    (*CurrentDoctor).doc_diseases[disease].symps.erase((*CurrentDoctor).doc_diseases[disease].symps.begin() + symp_index);
+                                }
+                            }
+                            //auto index_symp;
+
+                           //(*CurrentDoctor).doc_diseases[disease].symps.erase((*CurrentDoctor).doc_diseases[disease].symps.begin()+);
+                        }
+                        removed_symps_listbox->Items->Clear();
+                        break;
+                    }
+                }
+
+            }
+            
+
+        }
+        else if (removed_symps_listbox->Items->Count == 1) {
+            if (MessageBox::Show("Are you sure you want to delete this symptom ?", "Confirm", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                for (int disease = 0; disease < (*CurrentDoctor).doc_diseases.size(); disease++) {
+                    if ((*CurrentDoctor).doc_diseases[disease].name == selected_disease) {
+                        for each (auto removedsymp in removed_symps_listbox->Items)
+                        {
+                            sympo = removedsymp->ToString();
+                            MarshalString(sympo, symp);
+                            for (int symp_index = 0; symp_index < (*CurrentDoctor).doc_diseases[disease].symps.size(); symp_index++) {
+                                if ((*CurrentDoctor).doc_diseases[disease].symps[symp_index] == symp) {
+                                    remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease], symp_index);
+                                    remove_symptom_from_all_Disease((*CurrentDoctor).doc_diseases[disease], symp_index);
+                                    (*CurrentDoctor).doc_diseases[disease].symps.erase((*CurrentDoctor).doc_diseases[disease].symps.begin() + symp_index);
+                                }
+                            }
+                        }
+                        removed_symps_listbox->Items->Clear();
+                        allSymptoms.clear();
+                        extract_Symptoms();
+                        break;
+                    }
+                }
+            }
+        }
+        else
+            MessageBox::Show("You didn't select any symptom !!", "Alert", MessageBoxButtons::OK, MessageBoxIcon::Error);
+    }
+    private: System::Void add_disease_to_removed_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        for each (auto selecteditem in current_doctor_diseases_listbox->SelectedItems) {
+            removed_diseases_listbox->Items->Add(selecteditem);
+
+        }
+        for (int i = current_doctor_diseases_listbox->SelectedItems->Count - 1; i >= 0; i--) {
+            current_doctor_diseases_listbox->Items->Remove(current_doctor_diseases_listbox->SelectedItems[i]);
+
+        }
+    }
+    private: System::Void remove_disease_from_removed_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        for each (auto selecteditem in removed_diseases_listbox->SelectedItems) {
+            current_doctor_diseases_listbox->Items->Add(selecteditem);
+
+        }
+        for (int i = removed_diseases_listbox->SelectedItems->Count - 1; i >= 0; i--) {
+            removed_diseases_listbox->Items->Remove(removed_diseases_listbox->SelectedItems[i]);
+
+        }
+    }
+    private: System::Void remove_all_diseases_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        while (current_doctor_diseases_listbox->Items->Count != 0) {
+            for (int i = 0; i < current_doctor_diseases_listbox->Items->Count; i++) {
+                removed_diseases_listbox->Items->Add(current_doctor_diseases_listbox->Items[i]);
+                current_doctor_diseases_listbox->Items->Remove(current_doctor_diseases_listbox->Items[i]);
+                if (current_doctor_diseases_listbox->Items->Count == 0) {
+                    break;
+                }
+            }
+        }
+    }
+    private: System::Void clear_removed_diseases_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        while (removed_diseases_listbox->Items->Count != 0) {
+            for (int i = 0; i < removed_diseases_listbox->Items->Count; i++) {
+                current_doctor_diseases_listbox->Items->Add(removed_diseases_listbox->Items[i]);
+                removed_diseases_listbox->Items->Remove(removed_diseases_listbox->Items[i]);
+                if (removed_diseases_listbox->Items->Count == 0) {
+                    break;
+                }
+
+            }
+        }
+    }
+    private: System::Void delete_diseases_button_Click(System::Object^ sender, System::EventArgs^ e) {
+        String^ diso;
+        string selected_disease;
+        if (removed_diseases_listbox->Items->Count > 1) {
+            if (MessageBox::Show("Are you sure you want to delete those Diseases ?", "Confirm", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                for (int disease_index = 0; disease_index < (*CurrentDoctor).doc_diseases.size(); disease_index++) {
+                    for each (auto removeddis in removed_diseases_listbox->Items)
+                    {
+                        diso = removeddis->ToString();
+                        MarshalString(diso, selected_disease);
+                        if ((*CurrentDoctor).doc_diseases[disease_index].name == selected_disease) {
+                            remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease_index]);
+                            remove_Disease_from_all_Diseases((*CurrentDoctor).doc_diseases[disease_index]);
+                            (*CurrentDoctor).doc_diseases.erase((*CurrentDoctor).doc_diseases.begin() + disease_index);
+
+                        }
+                        /*removed_symps_listbox->Items->Clear();
+                        break;*/
+                    }
+                }
+
+            }
+
+        }
+        else if (removed_diseases_listbox->Items->Count == 1) {
+            if (MessageBox::Show("Are you sure you want to delete this Disease ?", "Confirm", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes) {
+                for (int disease_index = 0; disease_index < (*CurrentDoctor).doc_diseases.size(); disease_index++) {
+                    for each (auto removeddis in removed_diseases_listbox->Items)
+                    {
+                        diso = removeddis->ToString();
+                        MarshalString(diso, selected_disease);
+                        if ((*CurrentDoctor).doc_diseases[disease_index].name == selected_disease) {
+                            remove_symptom_from_all_Symptoms((*CurrentDoctor).doc_diseases[disease_index]);
+                            remove_Disease_from_all_Diseases((*CurrentDoctor).doc_diseases[disease_index]);
+                            (*CurrentDoctor).doc_diseases.erase((*CurrentDoctor).doc_diseases.begin() + disease_index);
+                            
+                        }
+                        removed_diseases_listbox->Items->Clear();
+                        allSymptoms.clear();
+                        extract_Symptoms();
+                        
+                        break;
+
+                    }
+                }
+
+            }
+        }
+        else
+            MessageBox::Show("You didn't select any Disease !!", "Alert", MessageBoxButtons::OK, MessageBoxIcon::Error);
+    }
+    private: System::Void current_doctor_diseases_listbox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void removed_diseases_listbox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void removed_symps_listbox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+    }
+    private: System::Void Alldiseases_combobox_SelectedValueChanged(System::Object^ sender, System::EventArgs^ e) {
+        string selected_disease;
+        if (Patients_of_chosen_disease_listbox->Visible) {
+            Patients_of_chosen_disease_listbox->Items->Clear();
+            MarshalString(Alldiseases_combobox->Text, selected_disease);
+            for (int pat = 0; pat < index_allPatients; pat++) {
+                for (int disease = 0; disease < allPatients[pat].Disease_History.size(); disease++) {
+                    if (allPatients[pat].Disease_History[disease] == selected_disease) {
+                        String^ newpat = gcnew String(allPatients[pat].patient_name.c_str());
+                        Patients_of_chosen_disease_listbox->Items->Add(newpat);
+                    }
+                }
+            }
+        }
+        else {
+            Disease_docname_textbox->Clear();
+            Disease_doc_phone_textbox->Clear();
+            Disease_info_textbox->Clear();
+            Disease_symps_listbox->Items->Clear();
+            Disease_name_textbox->Clear();
+            MarshalString(Alldiseases_combobox->Text, selected_disease);
+            for (int disease = 0; disease < allDiseases.size(); disease++) {
+                if (allDiseases[disease].name == selected_disease) {
+                    Disease_docname_textbox->Text = gcnew String(allDiseases[disease].doc_name.c_str());
+                    Disease_doc_phone_textbox->Text = gcnew String(allDiseases[disease].doc_phone.c_str());
+                    Disease_info_textbox->Text = gcnew String(allDiseases[disease].info.c_str());
+                    Disease_name_textbox->Text = gcnew String(allDiseases[disease].name.c_str());
+                    for (int symp = 0; symp < allDiseases[disease].symps.size(); symp++) {
+                        Disease_symps_listbox->Items->Add(gcnew String(allDiseases[disease].symps[symp].c_str()));
+
+                    }
+                }
+            }
+        }
+    }
+    private: System::Void button10_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+private: System::Void y_axis_picturebox_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+private: System::Void Recently_added_first_label_Click(System::Object^ sender, System::EventArgs^ e) {
+    }
+private: System::Void button11_Click(System::Object^ sender, System::EventArgs^ e) {
+    timer6->Start();
+}
+private: System::Void timer6_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (y_axis_picturebox->Height >= 400) {
+        timer7->Start();
+        timer6->Stop();
+
+    }
+    else {
+        y_axis_picturebox->Show();
+        y_axis_picturebox->Height += 10;
+    }
+}
+private: System::Void timer7_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (x_axis_picturebox->Width >= 523) {
+
+        timer7->Stop();
+        timer8->Start();
+    }
+
+    x_axis_picturebox->Show();
+    x_axis_picturebox->Width += 10;
+
+}
+private: System::Void timer8_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (most_front_picturebox->Height <= 0) {
+        timer8->Stop();
+        Most_value->Show();
+        Most_name_label->Show();
+    }
+    if (most_front_picturebox->Height <= 300) {
+        timer9->Start();
+    }
+    most_front_picturebox->Height -= 15;
+}
+private: System::Void timer9_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (second_most_front_picturebox->Height <= 0) {
+        timer9->Stop();
+        second_most_value->Show();
+        Second_Most_name_label->Show();
+    }
+    if (second_most_front_picturebox->Height <= 250) {
+        timer10->Start();
+    }
+    second_most_front_picturebox->Height -= 15;
+}
+private: System::Void timer10_Tick(System::Object^ sender, System::EventArgs^ e) {
+    if (third_most_front_picturebox->Height <=0) {
+        timer10->Stop();
+        third_most_value->Show();
+        Third_Most_name_label->Show();
+    }
+    third_most_front_picturebox->Height -= 15;
+}
+
+private: System::Void feed_background_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+
+private: System::Void pictureBox10_Click(System::Object^ sender, System::EventArgs^ e) {
+    panel5->Show();
+    feed_panel->Show();
+    Feed();
+    timer6->Start();
+}
+private: System::Void back_feed_picturebox_Click(System::Object^ sender, System::EventArgs^ e) {
+    if (who_feed == "d") {
+        feed_panel->Hide();
+        Refresh();
+    }
+    else {
+        feed_panel->Hide();
+        panel5->Hide();
+        Invalidate();
+        Refresh();
+        Invalidate();
+    }
+}
+private: System::Void feed_panel_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
+private: System::Void siticoneWinToggleSwith1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+    
+}
+
+
+
+
+
+
+
+
+private: System::Void textBox6_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+    if (e->KeyCode == Keys::Enter && panel5->Visible)
+    {
+        if (button4->Visible) {
+            button4->PerformClick();
+        }
+        e->Handled = true;
+        e->SuppressKeyPress = true;
+    }
+}
+private: System::Void textBox5_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+    if (e->KeyCode == Keys::Enter && panel5->Visible)
+    {
+        if (button5->Visible) {
+            button5->PerformClick();
+        }
+        e->Handled = true;
+        e->SuppressKeyPress = true;
+    }
+}
+private: System::Void siticoneWinToggleSwith1_CheckedChanged_1(System::Object^ sender, System::EventArgs^ e) {
+    if (email_togglebutton->Checked) {
+        send_email = 'T';
+    }
+    else {
+        send_email = 'F';
+    }
 }
 };
 }

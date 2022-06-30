@@ -103,3 +103,20 @@ C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\AForge.V
 C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\AForge.Video.dll
 C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\DarrenLee.Media.dll
 C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\Interop.WMPLib.1.0.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\Siticone.UI.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.vcxproj.AssemblyReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.vcxproj.ResolveComReference.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.Account_Settings.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.Camera_winform.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.MyForm.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.MyForm2.resources
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.vcxproj.GenerateResource.cache
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.vcxproj.CopyComplete
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.exe
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\AForge.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\AForge.Video.DirectShow.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\AForge.Video.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\DarrenLee.Media.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Siticone.UI.dll
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Interop.WMPLib.1.0.dll

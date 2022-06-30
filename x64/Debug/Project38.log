@@ -1,23 +1,21 @@
 ﻿  COM Reference 'WMPLib.1.0' is the interop assembly for ActiveX control 'AxWMPLib.1.0' but was marked to be linked by the compiler with the /link flag. This COM reference will be treated as a reference and will not be linked.
-  Account_Settings.cpp
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1378,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1566,14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1586,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
   MyForm.cpp
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm2.h(274,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1378,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1566,14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\Account_Settings.h(1586,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(763,18): warning C4101: 'check_input': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(846,18): warning C4101: 'check': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(3084,27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(3276,30): warning C4101: 'check_username': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(3462,30): warning C4101: 'check_username': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(3646,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(3945,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(4297,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.h(4550,40): warning C4101: 'symptomChoice': unreferenced local variable
-C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\MyForm.cpp(6,38): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
-  Generating Code...
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm2.h(274,10): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\Account_Settings.h(1407,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\Account_Settings.h(1595,14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\Account_Settings.h(1617,11): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\Account_Settings.h(2047,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(1055,18): warning C4101: 'check_input': unreferenced local variable
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(1139,18): warning C4101: 'check': unreferenced local variable
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4253,27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4591,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4828,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4445,30): warning C4101: 'check_username': unreferenced local variable
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4705,34): warning C4101: 'check_username': unreferenced local variable
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(4913,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(5209,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(5563,17): warning C4244: 'initializing': conversion from 'wchar_t' to 'char', possible loss of data
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.h(5816,40): warning C4101: 'symptomChoice': unreferenced local variable
+C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\MyForm.cpp(5,38): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
   Account_Settings.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Project38.vcxproj -> C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main\x64\Debug\Project38.exe
+  Project38.vcxproj -> C:\Users\karee\Desktop\Uni Projects\SP\Self-Diagnosis-Sp-main - Copy\x64\Debug\Project38.exe

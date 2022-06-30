@@ -69,8 +69,9 @@ namespace Project38 {
 
 
 	private: System::Windows::Forms::GroupBox^ NotificationGbox;
+	private: System::Windows::Forms::Label^ Email_label;
 
-	private: System::Windows::Forms::Label^ label10;
+
 	private: System::Windows::Forms::GroupBox^ SecurityGbox;
 	private: System::Windows::Forms::Label^ label8;
 	private: System::Windows::Forms::Label^ label9;
@@ -155,42 +156,43 @@ namespace Project38 {
 
 	public:
 		List<PictureBox^>^ pics = gcnew List<PictureBox^>();
-		
+
 		List<Label^>^ labels = gcnew List<Label^>();
-		
+
 		String^ old_username;
 		String^ old_phone;
 		String^ old_email;
 		String^ old_name;
 	private: System::Windows::Forms::Label^ Username_error_label;
-private: System::Windows::Forms::Label^ Fullname_error_label;
-private: System::Windows::Forms::Label^ Phone_error_label;
-private: System::Windows::Forms::TextBox^ textBox1;
-private: System::Windows::Forms::Label^ Reenter;
-private: System::Windows::Forms::PictureBox^ pictureBox7;
-private: System::Windows::Forms::PictureBox^ pictureBox8;
-private: System::Windows::Forms::Label^ Password_label_error;
-private: System::Windows::Forms::Timer^ timer1;
-private: System::Windows::Forms::Timer^ timer2;
-private: System::Windows::Forms::Label^ Reenter_error_label;
-private: System::Windows::Forms::Timer^ timer3;
+	private: System::Windows::Forms::Label^ Fullname_error_label;
+	private: System::Windows::Forms::Label^ Phone_error_label;
+	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::Label^ Reenter;
+	private: System::Windows::Forms::PictureBox^ pictureBox7;
+	private: System::Windows::Forms::PictureBox^ pictureBox8;
+	private: System::Windows::Forms::Label^ Password_label_error;
+	private: System::Windows::Forms::Timer^ timer1;
+	private: System::Windows::Forms::Timer^ timer2;
+	private: System::Windows::Forms::Label^ Reenter_error_label;
+	private: System::Windows::Forms::Timer^ timer3;
 	public:
 		String^ old_pass;
 
-		bool ufunC(function<bool(string)>func, string username) {
-			return func(username);
-		}
 		bool changed = false;
 		char s_key = '0';
 		List<String^>^ EMAILS = gcnew List<String^>;
 		List<String^>^ PHONES = gcnew List<String^>;
+	private: System::Windows::Forms::Label^ email_error_label;
+	public:
+
+	public:
 		List<String^>^ UNAMES = gcnew List<String^>;
 		void Blue(PictureBox^ p, Label^ l) {
 			l->ForeColor = Color::FromArgb(0, 102, 204);
 			p->BackColor = Color::FromArgb(0, 102, 204);
 		}
 		void Green(PictureBox^ p, Label^ l) {
-			l->ForeColor = Color::FromArgb(0,255, 0);
+			l->ForeColor = Color::FromArgb(0, 255, 0);
 			p->BackColor = Color::FromArgb(0, 255, 0);
 		}
 		void Red(PictureBox^ p, Label^ l) {
@@ -202,14 +204,13 @@ private: System::Windows::Forms::Timer^ timer3;
 			p->BackColor = Color::FromArgb(0, 0, 0);
 		}
 		void Bluen(PictureBox^ p, Label^ l) {
-			
+
 			for (int i = 0; i < labels->Count; i++) {
 				if (labels[i]->ForeColor != Color::FromArgb(0, 255, 0))
-				Blacken(pics[i], labels[i]);
+					Blacken(pics[i], labels[i]);
 			}
 			Blue(p, l);
 		}
-
 
 		char Logoutkey = '0';
 		//Camera^ MyCamera = gcnew Camera();
@@ -270,6 +271,12 @@ private: System::Windows::Forms::Timer^ timer3;
 		}
 		String^ GetPhone() {
 			return Phone_Textbox->Text;
+		}
+		bool change_occured() {
+			if (changed == false)
+				return false;
+			else
+				return true;
 		}
 		char Getsend_email() {
 			if (Email_checkBox->Checked)
@@ -351,6 +358,7 @@ private: System::Windows::Forms::Timer^ timer3;
 			step2_phone_label->Hide();
 			step2_phone_Textbox->Hide();
 			Send_code_button->Hide();
+			email_error_label->Hide();
 			step2_code_label->Hide();
 			step2_code_Textbox->Hide();
 			Vphone_pictureBox->Hide();
@@ -382,13 +390,21 @@ private: System::Windows::Forms::Timer^ timer3;
 			who = 'p';
 			String^ name = gcnew String(Fullname.c_str());
 			String^ uname = gcnew String(username.c_str());
-
-			string OLD_username = username;
 			String^ p = gcnew String(pass.c_str());
 			String^ Em = gcnew String(email.c_str());
+			/*String^ pho = gcnew String(phone.c_str());*/
 			Fullname_Textbox->Text = name;
+			if (gender == 'M')
+				Hello_label->Text = "Hello Mr. " + name;
+			else
+				Hello_label->Text = "Hello Ms/Mrs.{0}" + name;
+
 			Username_Textbox->Text = uname;
 			Email_Textbox->Text = Em;
+			/*Phone_Textbox->Text = pho;*/
+			//step2_phone_Textbox->Text = pho;
+			Password_Textbox->Text = p;
+
 			string wow = "PICs\\Patients\\" + username + ".jpg";
 			String^ str3 = gcnew String(wow.c_str());
 			if (System::IO::File::Exists(str3)) {
@@ -439,8 +455,8 @@ private: System::Windows::Forms::Timer^ timer3;
 				delete components;
 			}
 		}
-private: System::ComponentModel::IContainer^ components;
-protected:
+	private: System::ComponentModel::IContainer^ components;
+	protected:
 
 	private:
 		/// <summary>
@@ -479,8 +495,9 @@ protected:
 			this->Username_picturebox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->Username_picturebox = (gcnew System::Windows::Forms::PictureBox());
 			this->NotificationGbox = (gcnew System::Windows::Forms::GroupBox());
+			this->email_error_label = (gcnew System::Windows::Forms::Label());
 			this->Email_Textbox = (gcnew System::Windows::Forms::TextBox());
-			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->Email_label = (gcnew System::Windows::Forms::Label());
 			this->pictureBox6 = (gcnew System::Windows::Forms::PictureBox());
 			this->Email_picturebox = (gcnew System::Windows::Forms::PictureBox());
 			this->label11 = (gcnew System::Windows::Forms::Label());
@@ -785,8 +802,9 @@ protected:
 			// NotificationGbox
 			// 
 			this->NotificationGbox->BackColor = System::Drawing::Color::White;
+			this->NotificationGbox->Controls->Add(this->email_error_label);
 			this->NotificationGbox->Controls->Add(this->Email_Textbox);
-			this->NotificationGbox->Controls->Add(this->label10);
+			this->NotificationGbox->Controls->Add(this->Email_label);
 			this->NotificationGbox->Controls->Add(this->pictureBox6);
 			this->NotificationGbox->Controls->Add(this->Email_picturebox);
 			this->NotificationGbox->Controls->Add(this->label11);
@@ -798,6 +816,15 @@ protected:
 			this->NotificationGbox->TabIndex = 7;
 			this->NotificationGbox->TabStop = false;
 			// 
+			// email_error_label
+			// 
+			this->email_error_label->AutoSize = true;
+			this->email_error_label->Location = System::Drawing::Point(455, 284);
+			this->email_error_label->Name = L"email_error_label";
+			this->email_error_label->Size = System::Drawing::Size(42, 17);
+			this->email_error_label->TabIndex = 19;
+			this->email_error_label->Text = L"label1";
+			// 
 			// Email_Textbox
 			// 
 			this->Email_Textbox->BorderStyle = System::Windows::Forms::BorderStyle::None;
@@ -808,16 +835,17 @@ protected:
 			this->Email_Textbox->TabIndex = 7;
 			this->Email_Textbox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Account_Settings::Email_Textbox_MouseClick);
 			this->Email_Textbox->TextChanged += gcnew System::EventHandler(this, &Account_Settings::Email_Textbox_TextChanged);
+			this->Email_Textbox->Validating += gcnew System::ComponentModel::CancelEventHandler(this, &Account_Settings::Email_Textbox_Validating);
 			// 
-			// label10
+			// Email_label
 			// 
-			this->label10->AutoSize = true;
-			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
-			this->label10->Location = System::Drawing::Point(78, 239);
-			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(74, 26);
-			this->label10->TabIndex = 6;
-			this->label10->Text = L"Email:";
+			this->Email_label->AutoSize = true;
+			this->Email_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
+			this->Email_label->Location = System::Drawing::Point(78, 239);
+			this->Email_label->Name = L"Email_label";
+			this->Email_label->Size = System::Drawing::Size(74, 26);
+			this->Email_label->TabIndex = 6;
+			this->Email_label->Text = L"Email:";
 			// 
 			// pictureBox6
 			// 
@@ -1291,9 +1319,9 @@ protected:
 			this->ClientSize = System::Drawing::Size(1054, 715);
 			this->Controls->Add(this->Current_Tab_label);
 			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->SecurityGbox);
 			this->Controls->Add(this->NotificationGbox);
 			this->Controls->Add(this->AccountGbox);
+			this->Controls->Add(this->SecurityGbox);
 			this->Name = L"Account_Settings";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Account_Settings";
@@ -1335,8 +1363,8 @@ protected:
 	public:
 		int curr_loc;
 	private: System::Void Account_Settings_Load(System::Object^ sender, System::EventArgs^ e) {
-		
-		curr_loc= Password_Textbox->Location.Y;
+
+		curr_loc = Password_Textbox->Location.Y;
 		Show_Account();
 		changed = false;
 		old_username = Username_Textbox->Text;
@@ -1350,11 +1378,11 @@ protected:
 		labels->Add(Name_label);
 		labels->Add(Phone);
 		labels->Add(Username);
-		labels->Add(label10);
+		labels->Add(Email_label);
 		labels->Add(step2_phone_label);
 		labels->Add(step2_code_label);
 		labels->Add(Reenter);
-		
+
 		pics->Add(Password_pictureBox);
 		pics->Add(Name_picturebox);
 		pics->Add(Phone_picturebox);
@@ -1374,8 +1402,7 @@ protected:
 		Reenter_error_label->Hide();
 		Phone_error_label->Hide();
 	}
-	private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
+
 	private: System::Void Phone_Textbox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		char ch = e->KeyChar;
 		if (!isdigit(ch) && ch != 8)
@@ -1549,7 +1576,7 @@ protected:
 			}
 		}
 		else {
-			
+
 			System::Windows::Forms::DialogResult Quit_result = MessageBox::Show("You still have errors, do you want to logout without saving?", "Errors", MessageBoxButtons::YesNo, MessageBoxIcon::Exclamation);
 			if (Quit_result == System::Windows::Forms::DialogResult::Yes) {
 				Logoutkey = 'b';
@@ -1582,6 +1609,8 @@ protected:
 			step2_code_Textbox->Hide();
 			Vphone_pictureBox->Hide();
 			pictureBox4->Hide();
+			Send_code_button->Hide();
+
 		}
 	}
 	private: System::Void step2_phone_Textbox_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
@@ -1594,10 +1623,14 @@ protected:
 	private: System::Void Account_button_MouseHover(System::Object^ sender, System::EventArgs^ e) {
 		Account_button->BackColor = Color::FromArgb(255, 255, 255);
 		Account_button->ForeColor = Color::FromArgb(0, 0, 0);
+		Account_button->Image = System::Drawing::Image::FromFile("PICs\\sys\\Avatar_black.GIF");
+		Account_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 	}
 	private: System::Void Account_button_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		Account_button->BackColor = Color::FromArgb(0, 102, 204);
 		Account_button->ForeColor = Color::FromArgb(255, 255, 255);
+		Account_button->Image = System::Drawing::Image::FromFile("PICs\\sys\\Avatar_white.GIF");
+		Account_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 	}
 	private: System::Void Security_button_MouseHover(System::Object^ sender, System::EventArgs^ e) {
 		Security_button->BackColor = Color::FromArgb(255, 255, 255);
@@ -1610,18 +1643,24 @@ protected:
 	private: System::Void Notification_button_MouseHover(System::Object^ sender, System::EventArgs^ e) {
 		Notification_button->BackColor = Color::FromArgb(255, 255, 255);
 		Notification_button->ForeColor = Color::FromArgb(0, 0, 0);
+		Notification_button->Image = System::Drawing::Image::FromFile("PICs\\sys\\Notification_black.GIF");
+		Notification_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 	}
 	private: System::Void Notification_button_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		Notification_button->BackColor = Color::FromArgb(0, 102, 204);
 		Notification_button->ForeColor = Color::FromArgb(255, 255, 255);
+		Notification_button->Image = System::Drawing::Image::FromFile("PICs\\sys\\Notification_white.GIF");
+		Notification_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
 	}
 	private: System::Void Save_button_MouseHover(System::Object^ sender, System::EventArgs^ e) {
 		Save_button->BackColor = Color::FromArgb(255, 255, 255);
 		Save_button->ForeColor = Color::FromArgb(0, 0, 0);
+
 	}
 	private: System::Void Save_button_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 		Save_button->BackColor = Color::FromArgb(0, 102, 204);
 		Save_button->ForeColor = Color::FromArgb(255, 255, 255);
+
 	}
 	private: System::Void Logout_button_MouseHover(System::Object^ sender, System::EventArgs^ e) {
 		Logout_button->BackColor = Color::FromArgb(255, 255, 255);
@@ -1676,7 +1715,7 @@ protected:
 			string new_p;
 			MarshalString(Password_Textbox->Text, new_p);
 			string curr_uname;
-			MarshalString(Username_Textbox->Text, curr_uname);	
+			MarshalString(Username_Textbox->Text, curr_uname);
 			if (old_p != new_p) {
 				string org2 = "";
 				for (int i = 0; i < curr_uname.size(); i++) {
@@ -1700,7 +1739,7 @@ protected:
 				}
 			}
 		}
-		
+
 	}
 	private: System::Void step2_phone_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		changed = true;
@@ -1711,8 +1750,9 @@ protected:
 
 	}
 	private: System::Void Email_Textbox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		changed = true;
-
+		if (Email_Textbox->Text != old_email) {
+			changed = true;
+		}
 	}
 	private: System::Void Email_checkBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		changed = true;
@@ -1730,10 +1770,10 @@ protected:
 				for (int i = 0; i < new_uname.size(); i++) {
 					char c = new_uname[i];
 					if (!isalnum(c)) {
-					
+
 						/*label2->Text = "username cannot have symbols";
 						label2->Show();*/
-						Username_error_label->Text+= "Username cannot have symbols\n";
+						Username_error_label->Text += "Username cannot have symbols\n";
 						Username_error_label->Show();
 						test_name = false;
 						Red(Username_picturebox, Username);
@@ -1744,7 +1784,7 @@ protected:
 					Blacken(Username_picturebox, Username);
 					e->Cancel = false;
 				}
-				
+
 			}
 			else {
 				Username_error_label->Text += "Username should be 3 characters or more\n";
@@ -1773,12 +1813,13 @@ protected:
 						}
 					}
 
-					if (org==org2) {
+					if (org == org2) {
 						Username_error_label->Text = "This Username is already taken\n";
 						Username_error_label->Show();
 
 						Red(Username_picturebox, Username);
 						e->Cancel = true;
+						break;
 					}
 					else {
 						Green(Username_picturebox, Username);
@@ -1792,6 +1833,7 @@ protected:
 		}
 		else {
 			Blacken(Username_picturebox, Username);
+			changed = false;
 		}
 	}
 	private: System::Void AccountGbox_Enter(System::Object^ sender, System::EventArgs^ e) {
@@ -1800,174 +1842,288 @@ protected:
 	}
 	private: System::Void Password_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		Bluen(Password_pictureBox, label9);
+		if (Reenter->Visible)
+			this->ActiveControl = label9;
 	}
 	private: System::Void step2_phone_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		Bluen(Vphone_pictureBox, step2_phone_label);
 	}
 	private: System::Void Email_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-		Bluen(Email_picturebox, label10);
+		Bluen(Email_picturebox, Email_label);
 	}
 	private: System::Void step2_code_Textbox_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 	}
-private: System::Void Fullname_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-	string old_fullname;
-	MarshalString(old_name, old_fullname);
-	string new_fullname;
-	MarshalString(Fullname_Textbox->Text, new_fullname);
-	bool check_name = false;
-	if (old_fullname != new_fullname) {
-		if (new_fullname.size() >= 3) {
-			for (int i = 0; i < new_fullname.size(); i++) {
-				if (!isalnum(new_fullname[i])) {
-					check_name = true;
-					break;
-				}
+	private: System::Void Fullname_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		string old_fullname;
+		MarshalString(old_name, old_fullname);
+		string new_fullname;
+		MarshalString(Fullname_Textbox->Text, new_fullname);
+		bool check_name = false;
+		if (old_fullname != new_fullname) {
+			if (new_fullname.size() >= 3) {
+				for (int i = 0; i < new_fullname.size(); i++) {
+					if (!isalnum(new_fullname[i]) && new_fullname[i] != ' ') {
+						check_name = true;
+						break;
+					}
 
+				}
+				Fullname_error_label->Hide();
+				Green(Name_picturebox, Name_label);
+				e->Cancel = false;
 			}
-			Fullname_error_label->Hide();
+			else {
+				Fullname_error_label->Text = "Full Name should be more than three characters";
+				Fullname_error_label->Show();
+				Red(Name_picturebox, Name_label);
+				e->Cancel = true;
+			}
+			if (check_name) {
+				Fullname_error_label->Text = "Full Name should not contain special characters";
+				Fullname_error_label->Show();
+				Red(Name_picturebox, Name_label);
+				e->Cancel = true;
+			}
+			else {
+				Green(Name_picturebox, Name_label);
+				e->Cancel = false;
+			}
+		}
+		else {
 			Blacken(Name_picturebox, Name_label);
-			e->Cancel = false;
+			changed = false;
 		}
-		else {
-			Fullname_error_label->Text = "Full Name should be more than three characters";
-			Fullname_error_label->Show();
-			Red(Name_picturebox, Name_label);
-			e->Cancel = true;  
-		}
-	}
-	if (check_name) {
-		Fullname_error_label->Text = "Full Name should not contain special characters";
-		Red(Name_picturebox, Name_label);
-		e->Cancel = true;
-	}
 
-}
-private: System::Void Phone_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-	string old_p;
-	MarshalString(old_phone, old_p);
-	string new_p;
-	MarshalString(Phone_Textbox->Text, new_p);
-	double mphone = System::Convert::ToDouble(Phone_Textbox->Text);
-	double cphone = mphone;
-	bool vphone = true;
-	int lengthCount = 1;
-	if (old_p != new_p) {
-		for (; cphone > 0.9; cphone /= 10, lengthCount++);//Here we count the entered numbers
-		if (lengthCount != 11) {
-			vphone = false;
-			Phone_error_label->Text = "Phone numbers are 11 numbers";
-			Phone_error_label->Show();
+	}
+	private: System::Void Phone_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		string old_p;
+		MarshalString(old_phone, old_p);
+		string new_p;
+		MarshalString(Phone_Textbox->Text, new_p);
+		double mphone = System::Convert::ToDouble(Phone_Textbox->Text);
+		double cphone = mphone;
+		bool vphone = true;
+		int lengthCount = 1;
+		if (old_p != new_p) {
+			for (; cphone > 0.9; cphone /= 10, lengthCount++);//Here we count the entered numbers
+			if (lengthCount != 11) {
+				vphone = false;
+				Phone_error_label->Text = "Phone numbers are 11 numbers";
+				Phone_error_label->Show();
 
-		}
-		int check[11];
-		for (int i = lengthCount - 1; i >= 0; i--) {
-			check[i] = (int)mphone % 10;
-			mphone /= 10;
-		}
-		if (check[2] != 1 && check[2] != 2 && check[2] != 0 && check[2] != 5) {
-			Phone_error_label->Text = "Invalid phone number";
-			Phone_error_label->Show();
-			vphone = false;
-		}
-		if (vphone) {
-			Blacken(Phone_picturebox, Phone);
-			e->Cancel = false;
-			for (int i = 0; i < PHONES->Count; i++) {
-				if (Phone_Textbox->Text == PHONES[i]) {
-					Red(Phone_picturebox, Phone);
-					e->Cancel = true;
-					Phone_error_label->Text = "This phone number is already taken\n";
-					Phone_error_label->Show();
+			}
+			int check[11];
+			for (int i = lengthCount - 1; i >= 0; i--) {
+				check[i] = (int)mphone % 10;
+				mphone /= 10;
+			}
+			if (check[2] != 1 && check[2] != 2 && check[2] != 0 && check[2] != 5) {
+				Phone_error_label->Text = "Invalid phone number";
+				Phone_error_label->Show();
+				vphone = false;
+			}
+			if (vphone) {
+				Blacken(Phone_picturebox, Phone);
+				e->Cancel = false;
+				bool check_phone = false;
+				for (int i = 0; i < PHONES->Count; i++) {
+					if (Phone_Textbox->Text == PHONES[i]) {
+						Red(Phone_picturebox, Phone);
+						e->Cancel = true;
+						Phone_error_label->Text = "This phone number is already taken\n";
+						Phone_error_label->Show();
+						check_phone = true;
+						break;
+					}
 				}
+				if (!check_phone) {
+					Phone_error_label->Hide();
+					Green(Phone_picturebox, Phone);
+					step2_phone_Textbox->Text = Phone_Textbox->Text;
+				}
+			}
+			else {
+				Red(Phone_picturebox, Phone);
+				e->Cancel = true;
 			}
 		}
 		else {
-			Red(Phone_picturebox, Phone);
+			Blacken(Phone_picturebox, Phone);
+			changed = false;
+		}
+		step2_phone_Textbox->Text = Phone_Textbox->Text;
+	}
+	private: System::Void Password_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		if (label9->ForeColor == Color::Red) {
 			e->Cancel = true;
 		}
-	}
-}
-private: System::Void Password_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-	if (label9->ForeColor == Color::Red) {
-		e->Cancel = true;
-	}
-	else 
-		e->Cancel = false;
-}
-private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
-	if (timer1_counter2 == 120) {
-		if (curr_loc != Password_Textbox->Location.Y + 70) {
-			if (timer1_counter == 70) {
-				timer1_counter = 0;
-				timer1->Stop();
+		else {
+			if (old_pass == Password_Textbox->Text) {
+				Blacken(Password_pictureBox, label9);
 			}
-			timer1_counter += 10;
-			Password_Textbox->Location = Drawing::Point(Password_Textbox->Location.X, Password_Textbox->Location.Y - 10);
-			Password_label_error->Location = Drawing::Point(Password_label_error->Location.X, Password_label_error->Location.Y - 10);
-			Password_pictureBox->Location = Drawing::Point(Password_pictureBox->Location.X, Password_pictureBox->Location.Y - 10);
-			pictureBox3->Location = Drawing::Point(pictureBox3->Location.X, pictureBox3->Location.Y - 10);
-			label9->Location = Drawing::Point(label9->Location.X, label9->Location.Y - 10);
-			Reenter->Show();
-			pictureBox7->Show();
-			pictureBox8->Show();
-			textBox1->Show();
-			Blacken(pictureBox8, Reenter);
-			textBox1->Focus();
+			else
+				Green(Password_pictureBox, label9);
+			e->Cancel = false;
 		}
 	}
-	else
-		timer1_counter2 += 5;	
-	
-}
-private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
-	if (timer2_counter2 == 120) {
-		if (timer2_counter == 70) {
-		timer2_counter2 = 0;
-			timer2_counter = 0;		
-			timer2->Stop();
-			Reenter->Hide();
-			pictureBox7->Hide();
-			pictureBox8->Hide();
-			textBox1->Hide();
-			textBox1->Text = "";
+	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
+		if (timer1_counter2 == 120) {
+			if (curr_loc != Password_Textbox->Location.Y + 70) {
+				if (timer1_counter == 70) {
+					timer1_counter = 0;
+					timer1->Stop();
+				}
+				timer1_counter += 10;
+				Password_Textbox->Location = Drawing::Point(Password_Textbox->Location.X, Password_Textbox->Location.Y - 10);
+				Password_label_error->Location = Drawing::Point(Password_label_error->Location.X, Password_label_error->Location.Y - 10);
+				Password_pictureBox->Location = Drawing::Point(Password_pictureBox->Location.X, Password_pictureBox->Location.Y - 10);
+				pictureBox3->Location = Drawing::Point(pictureBox3->Location.X, pictureBox3->Location.Y - 10);
+				label9->Location = Drawing::Point(label9->Location.X, label9->Location.Y - 10);
+				Reenter->Show();
+				pictureBox7->Show();
+				pictureBox8->Show();
+				textBox1->Show();
+				Blacken(pictureBox8, Reenter);
+				textBox1->Focus();
+			}
 		}
-		timer2_counter += 10;
-		Password_Textbox->Location = Drawing::Point(Password_Textbox->Location.X, Password_Textbox->Location.Y + 10);
-		Password_label_error->Location = Drawing::Point(Password_label_error->Location.X, Password_label_error->Location.Y + 10);
-		Password_pictureBox->Location = Drawing::Point(Password_pictureBox->Location.X, Password_pictureBox->Location.Y + 10);
-		pictureBox3->Location = Drawing::Point(pictureBox3->Location.X, pictureBox3->Location.Y + 10);
-		label9->Location = Drawing::Point(label9->Location.X, label9->Location.Y + 10);
-
+		else
+			timer1_counter2 += 5;
 
 	}
-	else
-	timer2_counter2 += 5;
-}
-private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	
-}
-private: System::Void timer3_Tick(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void textBox1_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-	if (textBox1->Text == Password_Textbox->Text) {
-		timer2->Start();
-		Green(pictureBox8, Reenter);
-		Reenter_error_label->Hide();
-		this->ActiveControl = label9;
-		e->Cancel = false;
+	private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
+		if (timer2_counter2 == 120) {
+			if (curr_loc != Password_Textbox->Location.Y) {
+				if (timer2_counter == 70) {
+					timer2_counter2 = 0;
+					timer2_counter = 0;
+					timer2->Stop();
+					Reenter->Hide();
+					pictureBox7->Hide();
+					pictureBox8->Hide();
+					textBox1->Hide();
+					textBox1->Text = "";
+					Green(Password_pictureBox, label9);
+				}
+				timer2_counter += 10;
+				Password_Textbox->Location = Drawing::Point(Password_Textbox->Location.X, Password_Textbox->Location.Y + 10);
+				Password_label_error->Location = Drawing::Point(Password_label_error->Location.X, Password_label_error->Location.Y + 10);
+				Password_pictureBox->Location = Drawing::Point(Password_pictureBox->Location.X, Password_pictureBox->Location.Y + 10);
+				pictureBox3->Location = Drawing::Point(pictureBox3->Location.X, pictureBox3->Location.Y + 10);
+				label9->Location = Drawing::Point(label9->Location.X, label9->Location.Y + 10);
+
+
+			}
+		}
+		else
+			timer2_counter2 += 5;
 	}
-	else {
-		if (Reenter->ForeColor != Color::FromArgb(0, 255, 0)) {
+	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void timer3_Tick(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void textBox1_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		if (textBox1->Text == "") {
+			Red(pictureBox8, Reenter);
 			Reenter_error_label->Text = "Passwords do not match";
 			Reenter_error_label->Show();
-			Red(pictureBox8, Reenter);
+			e->Cancel = true;
+		}
+		if (Reenter->ForeColor == Color::FromArgb(255, 0, 0)) {
 			e->Cancel = true;
 		}
 		else {
-			Blacken(pictureBox8, Reenter);
+			e->Cancel = false;
 		}
-
 	}
-}
-};
+	private: System::Void Email_Textbox_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+		string new_email;
+		MarshalString(Email_Textbox->Text, new_email);
+		string s_old_email;
+		MarshalString(old_email, s_old_email);
+		bool test_email = false;
+		email_error_label->Text = "";
+		string domains[6] = { "gmail.com","outlook.com","yahoo.com","hotmail.com","icloud.com","cis.asu.edu.eg" };
+		int at_index = new_email.find("@");
+		if (new_email != s_old_email) {
+			string email_username = new_email.substr(0, at_index);
+			for (int i = 0; i < at_index; i++)
+			{
+				if (email_username[i] != '.' && !isalnum(email_username[i]))
+				{
+					test_email = false;
+					email_error_label->Text += "Invalid email\n";
+					email_error_label->Show();
+					test_email = false;
+					Red(Email_picturebox, Email_label);
+					e->Cancel = true;
+					break;
+				}
+				else {
+					test_email = true;
+					Blacken(Email_picturebox, Email_label);
+					e->Cancel = false;
+				}
+			}
+			for (int i = 0; i < 6; i++) {
+				if (new_email.find(domains[i], at_index) == -1) {
+					email_error_label->Text += "Invalid email\n";
+					email_error_label->Show();
+					test_email = false;
+					Red(Email_picturebox, Email_label);
+					e->Cancel = true;
+					break;
+				}
+				else {
+					test_email = true;
+					Blacken(Email_picturebox, Email_label);
+					e->Cancel = false;
+					break;
+				}
+			}
+
+			string org = "";
+			for (int j = 0; j < new_email.size(); j++) {
+				if (isalpha(new_email[j]))
+					org += char(tolower(new_email[j]));
+				else {
+					org += new_email[j];
+				}
+			}
+			if (test_email) {
+				for (int i = 0; i < EMAILS->Count; i++) {
+					string u;
+					MarshalString(EMAILS[i], u);
+					string org2 = "";
+					for (int j = 0; j < u.size(); j++) {
+						if (isalpha(u[j]))
+							org2 += char(tolower(u[j]));
+						else {
+							org2 += u[j];
+						}
+					}
+					if (org == org2) {
+						email_error_label->Text = "This E-mail is already taken\n";
+						email_error_label->Show();
+
+						Red(Email_picturebox, Email_label);
+						e->Cancel = true;
+						break;
+					}
+					else {
+						Green(Email_picturebox, Email_label);
+						email_error_label->Hide();
+						e->Cancel = false;
+					}
+
+				}
+
+			}
+		}
+		else {
+			Blacken(Email_picturebox, Email_label);
+			changed = false;
+		}
+	}
+	};
 }
